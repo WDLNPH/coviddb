@@ -1,4 +1,5 @@
-
+USE coviddb;
+##DROP TABLE Pesron;
 CREATE TABLE Person(
 serialID     	INT,
 firstName    	VARCHAR(30),
