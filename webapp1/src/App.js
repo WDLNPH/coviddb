@@ -1,7 +1,7 @@
 import logo from './logo.svg';
-import './CSS/App.css';
-import StyledNavbar from "./Components/Navbar"
-import SearchForm from "./Components/SearchForm"
+import './css/App.css';
+import StyledNavbar from "./components/Navbar"
+import SearchForm from "./components/SearchForm"
 import {header, footer, body} from 'react-bootstrap';
 function App() {
   return (
