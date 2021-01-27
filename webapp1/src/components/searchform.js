@@ -1,10 +1,11 @@
 import React from "react";
+
 import {Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
 
-function SearchForm(){
+function searchform(){
     return(
-        <p>test</p>
+        <p>test3</p>
 
     );
 }
-export default SearchForm;
+export default searchform;
