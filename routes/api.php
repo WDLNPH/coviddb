@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function () {
-    return response()->json(['food' => 'lahmajoun']);
+Route::group(['prefix' => 'queries'], function () {
+    Route::get('case-one', 'Api\QueryController@caseOne');
+    Route::get('case-two', 'Api\QueryController@caseTwo');
+    Route::get('case-three', 'Api\QueryController@caseThree');
+    Route::get('case-four', 'Api\QueryController@caseFour');
+    Route::get('case-five', 'Api\QueryController@caseFive');
+    Route::get('case-six', 'Api\QueryController@caseSix');
 });
