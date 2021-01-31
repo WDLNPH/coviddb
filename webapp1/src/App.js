@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import StyledNavbar from "./components/navbar"
 import home from "./components/home";
 import aboutus from "./components/aboutus";
-import {Database} from "./components/Database";
+import Database from "./components/Database";
 import searchform from "./components/searchform"
 import StyledFooter from "./components/footer";
 import {header,} from 'react-bootstrap';
