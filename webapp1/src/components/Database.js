@@ -23,7 +23,7 @@ export function Database() {
                     .then(function (response) {
                         console.log(response.data);
                         console.log(JSON.stringify(response.data));
-                        setPeople(response.data);
+                        // setPeople(response.data);
                         setPerson(response.data);
                         console.log("this is people ", people.name);
                         console.log("this is person", person);
@@ -46,7 +46,7 @@ export function Database() {
                     <Button variant="secondary">Employees</Button>
                 </ButtonGroup>
             </Row>
-            <Row >
+            <Row>
                 {person ? (<div id="displayer">{person.name}</div>) :
                          (<div id="displayer"> person loaded yet</div>)}
                 {people.map(function(people) {return (<div>{people.name}</div>)})}
