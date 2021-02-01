@@ -1,55 +1,38 @@
 import React, {useState} from 'react';
 import {body, Col, Row, Button, ButtonGroupProps, ButtonGroup, Nav} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
+import DBtests from "./DBtests";
+import DBlinks from "./DBlinks";
+import DBhcworker from "./DBhcworker";
+import DBfacilities from "./DBfacilities";
+import DBemployees from "./DBemployees";
+import DBparticipants from "./DBparticipants";
 
-const axios = require('axios').default;
 
-function patients() {
-    let abc = document.getElementById("displayer");
-    let cbd = document.createElement("p");
-    cbd.className="bg-red rounded-pill";
-    cbd.innerHTML="test";
-    return (abc.appendChild(cbd));
-}
 
 export function Database() {
 
-    const [person, setPerson] = useState(null);
-    const [people, setPeople] = useState([]);
-
-        function gUA() {
-            return (
-                axios.get('https://swapi.dev/api/people/4/')
-                    .then(function (response) {
-                        console.log(response.data);
-                        console.log(JSON.stringify(response.data));
-                        // setPeople(response.data);
-                        setPerson(response.data);
-                        console.log("this is people ", people.name);
-                        console.log("this is person", person);
-                    })
-                    .catch(function (error) {console.log("ERROR");})
-                    .then(function () {console.log(people);})
-            );
-        }
+    const[option, setOption]=useState(0);
 
     return (
-        <body className="container" style={{border: "solid"}}>
-            <p>Database tabs</p>
+        <body className="container">
             <Row style={{margin:"10px"}}>
-                <ButtonGroup aria-label="Basic example">
-                    <Button variant="secondary" onClick={patients}>Participants</Button>
-                    <Button variant="secondary" onClick={gUA}>Parental Links</Button>
-                    <Button variant="secondary">Administered Tests</Button>
-                    <Button variant="secondary">Health Care Workers</Button>
-                    <Button variant="secondary">Health Care Facilities</Button>
-                    <Button variant="secondary">Employees</Button>
-                </ButtonGroup>
+    <ButtonGroup aria-label="Basic example">
+        <Button variant="secondary" onClick={() => {return setOption(1)}}>Participants</Button>
+        <Button variant="secondary" onClick={() => {return setOption(2)}}>Parental Links</Button>
+        <Button variant="secondary" onClick={() => {return setOption(3)}}>Administered Tests</Button>
+        <Button variant="secondary" onClick={() => {return setOption(4)}}>Health Care Workers</Button>
+        <Button variant="secondary" onClick={() => {return setOption(5)}}>Health Care Facilities</Button>
+        <Button variant="secondary" onClick={() => {return setOption(6)}}>Employees</Button>
+    </ButtonGroup>
             </Row>
-            <Row>
-                {person ? (<div id="displayer">{person.name}</div>) :
-                         (<div id="displayer"> person loaded yet</div>)}
-                {people.map(function(people) {return (<div>{people.name}</div>)})}
+            <Row style={{marginLeft:"10px"}}>
+                {option==1 ? (<p><br/> participants works 1 <br/> <DBparticipants/></p>) : (<p></p>)}
+                {option == 2 ? (<p><br/> links works <br/> <DBlinks/> </p>) : (<p><br/></p>)}
+                {option == 3 ?(<p> <br/> test works <br/> <DBtests/> </p>):(<p><br/></p>)}
+                {option == 4 ? (<p><br/> hs cowkrers works <br/> <DBhcworker/></p>) : (<p><br/></p>)}
+                {option == 5? (<p><br/> facilities works <br/> <DBfacilities/></p>) : (<p><br/></p>)}
+                {option == 6 ? (<p><br/> employees works <br/> <DBemployees/></p>) : (<p><br/></p>)}
             </Row>
             <Row></Row>
         </body>

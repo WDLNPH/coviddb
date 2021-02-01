@@ -19,3 +19,13 @@ footer{
     align-content: center;
     align-self: center;
 }
+
+#DBcol{
+    border-color:black;
+    margin-left:2px;
+    margin-right:2px;
+    border-right: solid;
+    border-left:solid;
+    border-width:1px;
+
+}

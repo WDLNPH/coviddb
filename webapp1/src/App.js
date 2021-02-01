@@ -5,6 +5,8 @@ import aboutus from "./components/aboutus";
 import Database from "./components/Database";
 import searchform from "./components/searchform"
 import StyledFooter from "./components/footer";
+import DBtests from "./components/DBtests";
+import DBparticipants from "./components/DBparticipants";
 import {header,} from 'react-bootstrap';
 import {
     BrowserRouter as Router,
@@ -30,6 +32,8 @@ function App() {
                     <Route path="/aboutus" exact component={aboutus}/>
                 </div>
         </header>
+            <body>
+            </body>
         <StyledFooter/>
     </Router>
 </div>
