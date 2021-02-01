@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {div, Button, Row, Col, Table} from "react-bootstrap";
 import "../css/generalStyling.css";
-import ReactDOM from 'react-dom';
 
 const axios = require('axios').default;
-
 // Whenever you return react elements, the function must be capitalized
 const Person = props =>{
     return (
@@ -17,7 +15,6 @@ const Person = props =>{
 };
 
 export function DBparticipants() {
-    let count = 0;
     // If you remember, this is what I used last time to get the array in the Database Component
     const [people, setPeople] = useState([])
 
@@ -31,7 +28,6 @@ export function DBparticipants() {
                 // Instead of doing the foreach, i add all of my results here
                 // I then run 1 call instead of 10, which is more efficient
                 setPeople(response.data.results);
-                // console.log("1. this is a count : ", count);
             })
             .catch(function (error) {console.log("ERROR");})
             .then(function () {console.log("hi1");})
@@ -40,23 +36,7 @@ export function DBparticipants() {
     /**
      *
      * These are no longer needed, and you'll see by the way the state is used below
-    let i=0;
-    function printOut() {
-        for(i=1; i<=count; i++){
-            let strAdd = 'https://swapi.dev/api/people/' + i;
-            console.log("this is strAdd : ", strAdd);
-            axios.get(strAdd)
-                .then(function (response) {
-                    let obj1 = response.data;
-                    console.log(". this is a obj1: ", obj1);
-                    console.dir(obj1);
-                })
-                .catch(function (error) {console.log("ERROR");})
-                .then(function () {console.log("hi");})
-//            ReactDOM.render(eleRow, document.getElementByID(rows));
-        }
-    }
-    */
+*/
 
 
     return (

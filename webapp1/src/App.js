@@ -4,6 +4,7 @@ import home from "./components/home";
 import aboutus from "./components/aboutus";
 import Database from "./components/Database";
 import searchform from "./components/searchform"
+import Search from "./components/Search"
 import StyledFooter from "./components/footer";
 import DBtests from "./components/DBtests";
 import DBparticipants from "./components/DBparticipants";
@@ -28,7 +29,7 @@ function App() {
                 <div>
                     <Route path="/home" exact component={home}/>
                     <Route path="/database" exact component={Database}/>
-                    <Route path="/search" exact component={searchform}/>
+                    <Route path="/search" exact component={Search}/>
                     <Route path="/aboutus" exact component={aboutus}/>
                 </div>
         </header>

@@ -8,7 +8,6 @@ function searchform(){
     return(
         <div className="container productwrap shadow-lg rounded mb-0"
              style={{padding: '20px', width: '40%', marginTop: '50px'}}>
-
         <form>
             <Row>
                 <Col>
