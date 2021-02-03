@@ -1,0 +1,31 @@
+#homeP{
+    border:solid;
+    border-radius:10px;
+    border-width: 1px;
+    border-color: lightslategrey;
+}
+
+footer{
+    margin: 35%;
+    width: 25%;
+    height:15%;
+    border: solid;
+    border-width:1px;
+    border-radius:15px;
+    border-color: lightslategrey;
+    font-color: #45515D;
+    font-size:13px;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+}
+
+#DBcol{
+    border-color:black;
+    margin-left:2px;
+    margin-right:2px;
+    border-right: solid;
+    border-left:solid;
+    border-width:1px;
+
+}
