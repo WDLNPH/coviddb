@@ -75,7 +75,7 @@ class QueryController extends Controller
                 ON p.person_id = pt.person_id
             WHERE
                 p.address = '95 Robert St.'
-            GROUP BY p.patient_id";
+            GROUP BY p.person_id";
         return $this->getDefaultResponse();
     }
 
@@ -146,11 +146,11 @@ class QueryController extends Controller
                 p.phone,
                 p.city
             FROM Person p
-            JOIN Employee e
-                ON p.person_id = e.person_id
-            JOIN Facility f
-                ON f.facility_id = e.facility_id
-            WHERE f.facility_name = 'Viau'";
+            JOIN PublicHealthWorker phw
+                ON p.person_id = phw.person_id
+            JOIN PublicHealthCenter phc
+                ON phc.health_center_id = phw.health_center_id
+            WHERE phc.name = 'Viau'";
         return $this->getDefaultResponse();
     }
 
