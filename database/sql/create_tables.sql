@@ -97,6 +97,7 @@ CREATE TABLE `Diagnostic`
 (
     `diagnostic_id`    INT(32) UNSIGNED NOT NULL AUTO_INCREMENT,
     `patient_id`       INT(16) UNSIGNED NOT NULL,
+    `diagnostic_date` datetime NOT NULL,
     `health_worker_id` INT(32) UNSIGNED NOT NULL,
     `health_center_id` INT(16) UNSIGNED NOT NULL,
     `result` BOOLEAN DEFAULT FALSE,
