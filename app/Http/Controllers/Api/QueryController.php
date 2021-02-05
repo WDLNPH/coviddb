@@ -26,7 +26,7 @@ class QueryController extends Controller
             JOIN GroupZone gz
                 ON gz.group_id = gzp.group_id
             WHERE
-                gz.group_name = 'MontrealPrimaryGrade1_Group_1'";
+                gz.name = 'MontrealPrimaryGrade1_Group_1'";
         return $this->getDefaultResponse();
     }
 
