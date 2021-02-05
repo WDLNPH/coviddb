@@ -56,11 +56,17 @@ CREATE TABLE `Diagnostic`
 
 CREATE TABLE `GroupZone`
 (
-    `person_id` INTEGER(16) UNSIGNED NOT NULL,
-    `group_id`  VARCHAR(32) NOT NULL,
+    `group_id`  INTEGER(16) UNSIGNED NOT NULL,
+    `name`      VARCHAR(32) NOT NULL,
     `activity`  VARCHAR(32) NOT NULL,
     PRIMARY KEY (`group_id`)
-        #FOREIGN KEYS needed(person_id)
+);
+
+CREATE TABLE `GroupZonePersonPivot`
+(
+    `group_id`  INTEGER(16) UNSIGNED NOT NULL,
+    `person_id` INTEGER(16) UNSIGNED NOT NULL,
+    #FOREIGN KEYS needed(person_id, group_id)
 );
 
 CREATE TABLE `Patient`
