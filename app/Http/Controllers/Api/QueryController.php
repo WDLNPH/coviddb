@@ -66,15 +66,16 @@ class QueryController extends Controller
                 p.dob,
                 p.email,
                 p.phone,
-                d.diagnostic_date, # TODO: Last Diagnostic Date
-                GROUP_CONCAT() # TODO: History of diagnosis
-            FROM Person p
+                MAX(d.diagnostic_date), # TODO: Last Diagnostic Date
+                GROUP_CONCAT(d.result) # TODO: History of diagnosis
+            FROM Diagnostic d
             JOIN Patient pt
-                ON p.person_id = pt.person_id
-            JOIN Diagnostic d
                 ON pt.patient_id = d.patient_id
+            JOIN Person p
+                ON p.person_id = pt.person_id
             WHERE
-                p.address = '95 Robert St.'";
+                p.address = '95 Robert St.'
+            GROUP BY p.patient_id";
         return $this->getDefaultResponse();
     }
 
