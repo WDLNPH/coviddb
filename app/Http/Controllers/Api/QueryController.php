@@ -27,7 +27,7 @@ class QueryController extends Controller
                 ON gz.group_id = gzp.group_id
             WHERE
                 gz.name = 'MontrealPrimaryGrade1_Group_1'";
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
     /**
@@ -51,7 +51,7 @@ class QueryController extends Controller
                 d.result = TRUE
                 AND d.diagnostic_date BETWEEN '2021-01-10 00:00:00'
                     AND '2021-01-10 23:59:59'";
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
     /**
@@ -76,7 +76,7 @@ class QueryController extends Controller
             WHERE
                 p.address = '95 Robert St.'
             GROUP BY p.person_id";
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
     /**
@@ -100,7 +100,7 @@ class QueryController extends Controller
                         AND last_name = 'Macdonald'
                 )";
 
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
     /**
@@ -130,7 +130,7 @@ class QueryController extends Controller
                     AND p.last_name = 'Macdonald'
                 )";
 
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
     /**
@@ -151,13 +151,13 @@ class QueryController extends Controller
             JOIN PublicHealthCenter phc
                 ON phc.health_center_id = phw.health_center_id
             WHERE phc.name = 'Viau'";
-        return $this->getDefaultResponse();
+        return $this->getDefaultResponse($query);
     }
 
-    private function getDefaultResponse()
+    private function getDefaultResponse($query = null)
     {
         return response()->json([
-            'query' => 'SELECT * FROM some_table WHERE condition = value;',
+            'query' => $query,
             'result' => [
                 ['field1' => 'value1', 'field2' => 'value2']
             ]
