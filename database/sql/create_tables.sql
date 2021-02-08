@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `Person`;
 
 CREATE TABLE `Person`
 (
-    `person_id`   INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `person_id`   INT(16) UNSIGNED NOT NULL AUTO_INCREMENT ,
     `medicare`    VARCHAR(16) DEFAULT NULL,
     `first_name`  VARCHAR(32) NOT NULL,
     `last_name`   VARCHAR(32) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `Person`
 CREATE TABLE `PublicHealthCenter`
 (
     `health_center_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name`             VARCHAR(32)  NOT NULL DEFAULT '',
+    `name`             VARCHAR(128)  NOT NULL DEFAULT '',
     `phone`            VARCHAR(16)  NOT NULL,
     `address`          VARCHAR(32)  NOT NULL,
     `city`             VARCHAR(32)  NOT NULL,
