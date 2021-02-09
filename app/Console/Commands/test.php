@@ -170,10 +170,15 @@ class test extends Command
         $personId = $this->createPerson($faker);
 
         $this->giveGroupZones($personId, rand(1, 3), $groupZones);
+        $this->createDiagnostics($personId, rand(1,10));
         return DB::table("patient")->insertGetId([
             "health_center_id" => $healthCenterId,
             "person_id" => $personId,
         ]);
+    }
+
+    public function createDiagnostics($personId, $amount) {
+
     }
 
     public function giveGroupZones($personId, $amount, $groupZones) {
