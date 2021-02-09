@@ -19,7 +19,7 @@ CREATE TABLE `Person`
     `province`    VARCHAR(4)  NOT NULL,
     `citizenship` VARCHAR(32) NOT NULL,
     `email`       VARCHAR(64) DEFAULT NULL,
-    `phone`       VARCHAR(16) NOT NULL,
+    `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
     PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -28,7 +28,7 @@ CREATE TABLE `PublicHealthCenter`
 (
     `health_center_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name`             VARCHAR(128)  NOT NULL DEFAULT '',
-    `phone`            VARCHAR(16)  NOT NULL,
+    `phone`            VARCHAR(32)  NOT NULL,
     `address`          VARCHAR(32)  NOT NULL,
     `city`             VARCHAR(32)  NOT NULL,
     `province`         VARCHAR(4)   NOT NULL,
