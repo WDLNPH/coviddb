@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Col, Row, Button, Tabs, Tab, ButtonGroup, Nav, Container} from "react-bootstrap";
+import { Col, Row, Container} from "react-bootstrap";
 import {useParams, useRouteMatch} from "react-router";
 import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 
 export default function QueryResult() {
     const match = useRouteMatch();
-    const [option, setOption] = useState(0);
 
     return (
         <Container>
@@ -45,12 +44,13 @@ function CaseView() {
     const [query, setQuery] = useState("");
     useEffect(() => {
         setLoading(true);
-        axios.get('https://swapi.dev/api/people/')
+        axios.get(`/api/queries/${caseNumber}`)
             .then((response) => {
                 // Instead of doing the foreach, i add all of my results here
                 // I then run 1 call instead of 10, which is more efficient
-                console.log(response.data.results);
-                setTuples(response.data.results);
+                console.log(response.data.result);
+                setTuples(response.data.result);
+                setQuery(response.data.query);
 
                 // setPeople(response.data.results);
             })
@@ -60,7 +60,38 @@ function CaseView() {
             })
         console.log(caseNumber);
     },[caseNumber])
-    return loading ? (
-            <>loading</>
-        ) : tuples.map(tuple => <>{JSON.stringify(tuple)}<br/></>);
+    return (
+        <>
+            <Row className="mt-4">
+                <Col>Query:</Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>
+                    <div className="card">
+                        <div className="card-body">
+                            <pre>
+                                <code>
+                                    {loading ? '...' : query}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>Result:</Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>
+                    <div className="card">
+                        <div className="card-body">
+                            {loading ? (
+                                <>loading</>
+                            ) : tuples.map(tuple => <>{JSON.stringify(tuple)}<br/></>)}
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+        </>
+    );
 }

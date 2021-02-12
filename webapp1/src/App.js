@@ -1,9 +1,8 @@
-import logo from './logo.svg';
-import StyledNavbar from "./components/navbar"
+import StyledNavbar from "./components/NavBar"
 import Home from "./components/Home";
 import QueryResult from "./components/QueryResult"
 import Search from "./components/Search"
-import StyledFooter from "./components/footer";
+import StyledFooter from "./components/Footer";
 import {
     BrowserRouter,
     Switch,
@@ -12,25 +11,22 @@ import {
 
 
 function App() {
-    const Route = require("react-router-dom").Route;
-    const Link = require("react-router-dom").Link;
-
     return (
-    <div>
-        <BrowserRouter>
-            <header>
-                <StyledNavbar/>
-            </header>
-            <body>
-                <Switch>
-                    <Route path="/query-result" component={QueryResult}/>
-                    <Route path="/application" component={Search}/>
-                    <Route component={Home}/>
-                </Switch>
-            </body>
-        <StyledFooter/>
-    </BrowserRouter>
-</div>
+        <div>
+            <BrowserRouter basename="/portal">
+                <header>
+                    <StyledNavbar/>
+                </header>
+                <body>
+                    <Switch>
+                        <Route path="/query-result" component={QueryResult}/>
+                        <Route path="/application" component={Search}/>
+                        <Route component={Home}/>
+                    </Switch>
+                </body>
+                <StyledFooter/>
+            </BrowserRouter>
+        </div>
   );
 }
 

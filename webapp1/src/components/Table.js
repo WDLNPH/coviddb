@@ -1,20 +1,18 @@
 import React, {useState} from 'react';
 import "../css/generalStyling.css";
-import {useTable, useSortBy, useFilters, setFilter} from "react-table";
-//import {input} from 'react-dom';
+import {useTable, useSortBy, useFilters} from "react-table";
 
 
 
 export default function Table({columns, data}) {
     const [filterInput, setFilterInput] = useState("");
 
-// Update the state when input changes
+    // Update the state when input changes
     const handleFilterChange = e => {
         const value = e.target.value || undefined;
         setFilter("show.name", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
         setFilterInput(value);
     };
-
 
     // Use the useTable Hook to send the columns and data to build the table
     const {
