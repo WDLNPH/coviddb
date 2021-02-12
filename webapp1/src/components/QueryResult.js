@@ -44,7 +44,7 @@ function CaseView() {
     const [query, setQuery] = useState("");
     useEffect(() => {
         setLoading(true);
-        axios.get(`/api/queries/${caseNumber}`)
+        axios.get(`${process.env.MIX_APP_ENV === 'production' ? '/coviddb' : ''}/api/queries/${caseNumber}`)
             .then((response) => {
                 // Instead of doing the foreach, i add all of my results here
                 // I then run 1 call instead of 10, which is more efficient
