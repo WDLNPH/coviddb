@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap'
+import {NavLink} from 'react-router-dom';
 
 function StyledNavbar(){
     return (
@@ -10,13 +10,14 @@ function StyledNavbar(){
                     height: "60px",
                 }}
                 variant="dark">
-            <Navbar.Brand href="/home">Covid Database</Navbar.Brand>
+            <Navbar.Brand to="/home">COVID-19 Database</Navbar.Brand>
             <Nav className="mr-auto">
-                <LinkContainer to="/database"><Nav.Link>Our Database</Nav.Link></LinkContainer>
-                <Nav.Link href="/search">Search Our DataBase</Nav.Link>
-            </Nav>
-            <Nav style={{fontColor:"black"}}>
-            <Nav.Link href="/aboutus" > About Us</Nav.Link>
+                <NavLink className="nav-link" to="/query-result">
+                    Query/Result
+                </NavLink>
+                <NavLink className="nav-link" to="/application">
+                    Application
+                </NavLink>
             </Nav>
         </Navbar>
     );
