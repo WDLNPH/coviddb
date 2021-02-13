@@ -19,7 +19,7 @@ CREATE TABLE `Person`
     `province`    VARCHAR(4)  NOT NULL,
     `citizenship` VARCHAR(32) NOT NULL,
     `email`       VARCHAR(64) DEFAULT NULL,
-    `phone`       VARCHAR(16) NOT NULL,
+    `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
     PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -27,8 +27,8 @@ CREATE TABLE `Person`
 CREATE TABLE `PublicHealthCenter`
 (
     `health_center_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name`             VARCHAR(32)  NOT NULL DEFAULT '',
-    `phone`            VARCHAR(16)  NOT NULL,
+    `name`             VARCHAR(128) NOT NULL DEFAULT '',
+    `phone`            VARCHAR(32)  NOT NULL,
     `address`          VARCHAR(32)  NOT NULL,
     `city`             VARCHAR(32)  NOT NULL,
     `province`         VARCHAR(4)   NOT NULL,
@@ -46,8 +46,8 @@ CREATE TABLE `PublicHealthWorker`
     `schedule`         VARCHAR(256) DEFAULT NULL,
     `health_center_id` INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`health_worker_id`),
-    KEY `person_id` (`person_id`),
-    KEY `health_center_id` (`health_center_id`),
+    KEY                `person_id` (`person_id`),
+    KEY                `health_center_id` (`health_center_id`),
     CONSTRAINT `publichealthworker_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `publichealthworker_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -62,22 +62,19 @@ CREATE TABLE `GroupZone`
 
 CREATE TABLE `Patient`
 (
-    `patient_id`       INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `person_id`        INT(16) UNSIGNED NOT NULL,
-    `health_center_id` INT(16) UNSIGNED NOT NULL,
+    `patient_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `person_id`  INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`patient_id`),
-    KEY `person_id` (`person_id`),
-    KEY `health_center_id` (`health_center_id`),
-    CONSTRAINT `patient_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `patient_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY          `person_id` (`person_id`),
+    CONSTRAINT `patient_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `GroupZonePersonPivot`
 (
     `group_id`  INT(16) UNSIGNED NOT NULL,
     `person_id` INT(16) UNSIGNED NOT NULL,
-    KEY `group_id` (`group_id`),
-    KEY `person_id` (`person_id`),
+    KEY         `group_id` (`group_id`),
+    KEY         `person_id` (`person_id`),
     CONSTRAINT `groupzonepersonpivot_group_id_fk_idx` FOREIGN KEY (`group_id`) REFERENCES `GroupZone` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `groupzonepersonpivot_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -97,14 +94,14 @@ CREATE TABLE `Diagnostic`
 (
     `diagnostic_id`    INT(32) UNSIGNED NOT NULL AUTO_INCREMENT,
     `patient_id`       INT(16) UNSIGNED NOT NULL,
-    `diagnostic_date` datetime NOT NULL,
+    `diagnostic_date`  datetime NOT NULL,
     `health_worker_id` INT(32) UNSIGNED NOT NULL,
     `health_center_id` INT(16) UNSIGNED NOT NULL,
-    `result` BOOLEAN DEFAULT FALSE,
+    `result`           BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (`diagnostic_id`),
-    KEY `patient_id` (`patient_id`),
-    KEY `health_worker_id` (`health_worker_id`),
-    KEY `health_center_id` (`health_center_id`),
+    KEY                `patient_id` (`patient_id`),
+    KEY                `health_worker_id` (`health_worker_id`),
+    KEY                `health_center_id` (`health_center_id`),
     CONSTRAINT `diagnostic_patient_id_fk_idx` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `diagnostic_hw_id_fk_idx` FOREIGN KEY (`health_worker_id`) REFERENCES `PublicHealthWorker` (`health_worker_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `diagnostic_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
