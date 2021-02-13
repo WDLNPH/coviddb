@@ -1,8 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { Col, Row, Container} from "react-bootstrap";
 import {useParams, useRouteMatch} from "react-router";
 import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
+import Table from "./Table";
+
+
+const COLUMN_NAMES = [
+    'first_name',
+    'last_name',
+    'dob',
+    'email',
+    'phone',
+    'city'
+];
 
 export default function QueryResult() {
     const match = useRouteMatch();
@@ -42,6 +53,7 @@ function CaseView() {
     const [loading, setLoading] = useState(false);
     const [tuples, setTuples] = useState([]);
     const [query, setQuery] = useState("");
+    const [description, setDescription] = useState("");
     useEffect(() => {
         setLoading(true);
         axios.get(`${process.env.NODE_ENV === 'production' ? '/coviddb' : ''}/api/queries/${caseNumber}`)
@@ -51,6 +63,7 @@ function CaseView() {
                 console.log(response.data.result);
                 setTuples(response.data.result);
                 setQuery(response.data.query);
+                setDescription(response.data.description);
 
                 // setPeople(response.data.results);
             })
@@ -59,11 +72,22 @@ function CaseView() {
                 setLoading(false);
             })
         console.log(caseNumber);
-    },[caseNumber])
+    },[caseNumber]);
+
+    const columns = useMemo(() => COLUMN_NAMES.map(col => ({
+        accessor: col
+    })), []);
+    
     return (
         <>
             <Row className="mt-4">
-                <Col>Query:</Col>
+                <Col>Case Description:</Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>{description}</Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>Description:</Col>
             </Row>
             <Row className="mt-4">
                 <Col>
@@ -87,7 +111,11 @@ function CaseView() {
                         <div className="card-body">
                             {loading ? (
                                 <>loading</>
-                            ) : tuples.map(tuple => <>{JSON.stringify(tuple)}<br/></>)}
+                            ) : (
+                                <>
+                                    <Table columns={columns} data={tuples}/>
+                                </>
+                            )}
                         </div>
                     </div>
                 </Col>

@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import "../css/generalStyling.css";
 import {useTable, useSortBy, useFilters} from "react-table";
 
-
-
 export default function Table({columns, data}) {
     const [filterInput, setFilterInput] = useState("");
 

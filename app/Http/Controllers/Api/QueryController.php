@@ -89,7 +89,8 @@ class QueryController extends Controller
                 p.last_name,
                 p.dob,
                 p.email,
-                p.phone
+                p.phone,
+                p.city
             FROM Person p
             WHERE
                 p.address = (

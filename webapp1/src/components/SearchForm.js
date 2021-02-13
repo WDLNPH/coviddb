@@ -35,7 +35,6 @@ export default function SearchForm(){
                     block="true"
                 />
             </Row>
-
         </form>
         </div>
 
