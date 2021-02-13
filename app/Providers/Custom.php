@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 
+use Carbon\Carbon;
+
 class Custom extends \Faker\Provider\DateTime
 {
     protected static $medicare = ['???? #### ####'];
@@ -11,14 +13,9 @@ class Custom extends \Faker\Provider\DateTime
     protected static $hcType = ['Hospital', 'Clinic', 'Special Installment'];
     protected static $schedule;
 
-
-
-
-
-
     public static function schedule_builder()
     {
-        $schedule = time('H:00:00-H:00:00');
+        $schedule = Carbon::now()->format('H:00:00-H:00:00');
         return static::toUpper($schedule);
     }
 
