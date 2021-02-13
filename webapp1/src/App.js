@@ -17,13 +17,11 @@ function App() {
                 <header>
                     <StyledNavbar/>
                 </header>
-                <body>
-                    <Switch>
-                        <Route path="/query-result" component={QueryResult}/>
-                        <Route path="/application" component={Search}/>
-                        <Route component={Home}/>
-                    </Switch>
-                </body>
+                <Switch>
+                    <Route path="/query-result" component={QueryResult}/>
+                    <Route path="/application" component={Search}/>
+                    <Route component={Home}/>
+                </Switch>
                 <StyledFooter/>
             </BrowserRouter>
         </div>
