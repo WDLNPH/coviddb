@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace Faker\Provider\en_CA;
 
-use Faker\Provider\Base;
-
-class Custom extends Base
+class Custom extends \Faker\Provider\Base
 {
     protected static $medicare = ['???? #### ####'];
     protected static $letter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
@@ -17,7 +15,7 @@ class Custom extends Base
         array("Saab",5,2),
         array("Land Rover",17,15)
       );
-
+      
     public static function randomMedicareLetter()
     {
         return static::randomElement(static::$letter);
@@ -44,5 +42,6 @@ class Custom extends Base
         return static::toUpper($string);
 
     }
-}
 
+    
+}

@@ -1,0 +1,200 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Providers\Custom;
+use Illuminate\Console\Command;
+use Faker;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use mysqli;
+
+class test extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'run:test';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "coviddb";
+
+        $faker = Faker\Factory::create();
+
+        $faker->addProvider(new Faker\Provider\en_CA\Address($faker));
+        $faker->addProvider(new Faker\Provider\fr_CA\Person($faker));
+        $faker->addProvider(new Faker\Provider\en_CA\Custom($faker));
+
+        $healthCenterIds = [];
+        $healthWorkerIds = [];
+        $patient_ids = [];
+
+        for ($i = 1; $i < 20; $i++) {
+            $personId = $this->createPerson($faker);
+
+            $center_id = DB::table("publichealthcenter")->insertGetId([
+                //Health center ID
+                "name"      => $faker->company,
+                "phone"     => $faker->phoneNumber,
+                "address" => $faker->streetAddress,
+                "city" => $faker->city,
+                "province" => $faker->provinceAbbr,
+                "postal_code" => $faker->postcode,
+                "type"       => $faker->type,
+                "website"  => $faker->url,
+            ]);
+            array_push($healthCenterIds, $center_id);
+
+            $patient_id = DB::table("patient")->insertGetId([
+                "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
+                "person_id" => $personId,
+            ]);
+            array_push($patient_ids, $patient_id);
+
+            $healthWorkerId = DB::table("publichealthworker")->insertGetId([
+                "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
+                "person_id" => $personId,
+                "schedule" => $faker->type,
+                "position" => $faker->position,
+            ]);
+            array_push($healthWorkerIds, $healthWorkerId);
+        }
+
+        for ($i = 0; $i < 10; $i++) {
+            // need Health Center
+            $this->createWorker($faker, $healthCenterIds[array_rand($healthCenterIds)]);
+        }
+
+        // for ($i = 0; $i < 10; $i++) {
+        // Patient Id
+        //      $this->createPatient($faker, $healthCenterIds[array_rand($healthCenterIds)]);
+        //  }
+
+
+        for ($i = 0; $i < 10; $i++) {
+            // diagnostic Id
+            $this->createDiagnostics($faker, $healthCenterIds[array_rand($healthCenterIds)], $patient_ids[array_rand($patient_ids)], $healthWorkerIds[array_rand($healthWorkerIds)]);
+        }
+
+
+
+        die;
+
+        for ($i = 0; $i < 20; $i++) {
+            $personId = DB::table("person")->insertGetId([
+                // Person ID
+                "medicare" => 'abc',
+                "first_name" => $faker->firstName,
+                "last_name" => $faker->lastName,
+                "address" => $faker->streetAddress,
+                "city"   => $faker->city,
+                "postal_code" => $faker->postcode,
+                "province" => $faker->provinceAbbr,
+                "citizenship" => $faker->countryCode,
+                "email"   => $faker->email,
+                "phone" => $faker->phoneNumber,
+                "dob" =>  $faker->date(),
+            ]);
+        }
+    }
+
+    public function createPerson($faker)
+    {
+        return DB::table("person")->insertGetId([
+            // Person ID
+            "medicare" => $faker->medicare,
+            "first_name" => $faker->firstName,
+            "last_name" => $faker->lastName,
+            "address" => $faker->streetAddress,
+            "city"   => $faker->city,
+            "postal_code" => $faker->postcode,
+            "province" => $faker->provinceAbbr,
+            "citizenship" => $faker->countryCode,
+            "email"   => $faker->email,
+            "phone" => $faker->phoneNumber,
+            "dob" =>  $faker->date(),
+        ]);
+    }
+
+
+    public function createWorker($faker, $healthCenterId)
+    {
+        $personId = $this->createPerson($faker);
+
+        return DB::table("publichealthworker")->insertGetId([
+            "health_center_id" => $healthCenterId,
+            "person_id" => $personId,
+            "schedule" => $faker->type,
+            "position" => $faker->position,
+        ]);
+    }
+
+
+    public function createDiagnostics($faker, $healthCenterId, $patient_id, $healthWorkerId)
+    {
+
+
+        return DB::table("diagnostic")->insertGetId([
+            //diagnotic_id AUTO
+            "health_center_id" => $healthCenterId,
+            "patient_id" => $patient_id,
+            "diagnostic_date" =>  $faker->dateTimeBetween('-1 year', '+1 week'),
+            "result" => $faker->boolean(50),
+            "health_worker_id" => $healthWorkerId
+
+
+        ]);
+    }
+
+    public function createPublicHealthWorker($faker, $healthCenterId)
+    {
+        $personId = $this->createPerson($faker);
+
+
+        return DB::table("publichealthworker")->insertGetId([
+            //Auto
+            "health_center_id" => $healthCenterId,
+        ]);
+    }
+
+
+
+
+
+
+    public function giveGroupZones($personId, $amount, $groupZones)
+    {
+        //        DB::table("groupzonepersonpivot")->insert([
+        //            'person_id' => $personId,
+        //            'group_id' => $groupZones[array_rand($groupZones)]
+        //        ]);
+    }
+}
