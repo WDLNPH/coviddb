@@ -50,7 +50,6 @@ class RunCustomSeeder extends Command
 
 //        $conn = new mysqli($servername, $username, $password, $dbname);
 
-
         $faker = Faker\Factory::create();
 
         $faker->addProvider(new Faker\Provider\en_CA\Address($faker));
@@ -84,11 +83,11 @@ class RunCustomSeeder extends Command
          */
         $groupZones = [];
         for ($i = 1; $i < 10; $i++) {
-            $zoneId = DB::table("group_zones")->insertGetId([
-                //Health center ID
+            $zoneId = DB::table("groupzone")->insertGetId([
                 "name" => Str::snake($faker->city),
+                "activity" => $faker->name
             ]);
-            // Push available healthcenter ids here
+            // Push available group zone ids here
             array_push($groupZones, $zoneId);
         }
 
@@ -203,7 +202,7 @@ class RunCustomSeeder extends Command
     public function createDiagnostics(Faker\Generator $faker, $patientId, $workers, $healthCenterIds, $amount)
     {
         for ($i = 0; $i < $amount; $i++) {
-            DB::table("diagnostics")->insertGetId([
+            DB::table("diagnostic")->insertGetId([
                 "health_worker_id" => $workers[array_rand($workers)],
                 "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
                 "patient_id" => $patientId,
