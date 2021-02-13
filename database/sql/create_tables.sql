@@ -13,7 +13,7 @@ CREATE TABLE `Person`
     `medicare`    VARCHAR(16) DEFAULT NULL,
     `first_name`  VARCHAR(32) NOT NULL,
     `last_name`   VARCHAR(32) NOT NULL,
-    `address`     VARCHAR(64) NOT NULL,
+    `address`     VARCHAR(128) NOT NULL,
     `city`        VARCHAR(32) NOT NULL,
     `postal_code` VARCHAR(8)  NOT NULL,
     `province`    VARCHAR(4)  NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `PublicHealthCenter`
     `health_center_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name`             VARCHAR(128)  NOT NULL DEFAULT '',
     `phone`            VARCHAR(32)  NOT NULL,
-    `address`          VARCHAR(32)  NOT NULL,
+    `address`          VARCHAR(128)  NOT NULL,
     `city`             VARCHAR(32)  NOT NULL,
     `province`         VARCHAR(4)   NOT NULL,
     `postal_code`      VARCHAR(8)   NOT NULL,
@@ -88,8 +88,8 @@ CREATE TABLE `Parental`
     `person_id`   INT(16) UNSIGNED NOT NULL,
     `parent_1_id` INT(16) UNSIGNED NOT NULL,
     `parent_2_id` INT(16) UNSIGNED NOT NULL,
-    `guardian_id` INT(16) UNSIGNED NOT NULL,
-    `child_id`    INT(16) DEFAULT NULL,
+    `guardian_id` INT(16) UNSIGNED DEFAULT NULL,
+    `child_id`    INT(16) UNSIGNED DEFAULT NULL,
     PRIMARY KEY (`parental_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

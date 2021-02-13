@@ -2,20 +2,27 @@
 
 namespace Faker\Provider\en_CA;
 
-class Custom extends \Faker\Provider\Base
+
+class Custom extends \Faker\Provider\DateTime
 {
     protected static $medicare = ['???? #### ####'];
-    protected static $letter = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    protected static $letter = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     protected static $hcPosition = ['Janitor', 'Doctor', 'Nurse', 'Psycho', 'Intern'];
-    protected static $hcType = ['Hospital' , 'Clinic', 'Special Installment'];
+    protected static $hcType = ['Hospital', 'Clinic', 'Special Installment'];
+    protected static $schedule;
 
-    protected static $schedule = array (
-        array("Volvo",22,18),
-        array("BMW",15,13),
-        array("Saab",5,2),
-        array("Land Rover",17,15)
-      );
-      
+
+
+
+
+
+    public static function schedule_builder()
+    {
+        $schedule = time('H:00:00-H:00:00');
+        return static::toUpper($schedule);
+    }
+
+
     public static function randomMedicareLetter()
     {
         return static::randomElement(static::$letter);
@@ -34,14 +41,10 @@ class Custom extends \Faker\Provider\Base
     {
         $string = static::randomElement(static::$hcPosition);
         return static::toUpper($string);
-
     }
     public static function type()
     {
         $string = static::randomElement(static::$hcType);
         return static::toUpper($string);
-
     }
-
-    
 }
