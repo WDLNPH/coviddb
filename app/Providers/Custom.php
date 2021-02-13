@@ -1,6 +1,6 @@
 <?php
 
-namespace Faker\Provider\en_CA;
+namespace App\Providers;
 
 
 class Custom extends \Faker\Provider\DateTime
