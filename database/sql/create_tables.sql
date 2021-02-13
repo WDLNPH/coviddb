@@ -64,12 +64,9 @@ CREATE TABLE `Patient`
 (
     `patient_id`       INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `person_id`        INT(16) UNSIGNED NOT NULL,
-    `health_center_id` INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`patient_id`),
     KEY `person_id` (`person_id`),
-    KEY `health_center_id` (`health_center_id`),
     CONSTRAINT `patient_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `patient_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `GroupZonePersonPivot`

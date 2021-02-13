@@ -7,9 +7,10 @@ use Illuminate\Console\Command;
 use Faker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use mysqli;
 
-class test extends Command
+class RunCustomSeeder extends Command
 {
     /**
      * The name and signature of the console command.
@@ -56,6 +57,9 @@ class test extends Command
         $faker->addProvider(new Faker\Provider\fr_CA\Person($faker));
         $faker->addProvider(new Custom($faker));
 
+        /**
+         * Create Health Centers
+         */
         $healthCenterIds = [];
         for ($i = 1; $i < 10; $i++) {
             $center_id = DB::table("publichealthcenter")->insertGetId([
@@ -73,14 +77,40 @@ class test extends Command
             // Push available healthcenter ids here
             array_push($healthCenterIds, $center_id);
         }
-        for ($i = 0; $i < 10; $i++) {
-            // need Health Center
-            $this->createWorker($faker, $healthCenterIds[array_rand($healthCenterIds)]);
+
+
+        /**
+         * Create GroupZones
+         */
+        $groupZones = [];
+        for ($i = 1; $i < 10; $i++) {
+            $zoneId = DB::table("group_zones")->insertGetId([
+                //Health center ID
+                "name" => Str::snake($faker->city),
+            ]);
+            // Push available healthcenter ids here
+            array_push($groupZones, $zoneId);
         }
 
+        /**
+         * Create Health Workers
+         */
+        $workers = [];
         for ($i = 0; $i < 10; $i++) {
-            // Patient Id
-            $this->createPatient($faker, $healthCenterIds[array_rand($healthCenterIds)]);
+            $personId = $this->createPerson($faker);
+            $workerId = $this->createWorker($faker, $personId, $healthCenterIds[array_rand($healthCenterIds)]);
+            array_push($workers, $workerId);
+        }
+
+        /**
+         * Create Patients
+         */
+        for ($i = 0; $i < 10; $i++) {
+            $personId = $this->createPerson($faker);
+            $this->giveGroupZones($personId, rand(1, 3), $groupZones);
+            $patientId = $this->createPatient($faker, $personId);
+
+            $this->createDiagnostics($faker, $patientId, $workers, $healthCenterIds, rand(1,3));
         }
 
         die;
@@ -153,10 +183,8 @@ class test extends Command
         ]);
     }
 
-    public function createWorker($faker, $healthCenterId)
+    public function createWorker($faker, $personId, $healthCenterId)
     {
-        $personId = $this->createPerson($faker);
-
         return DB::table("publichealthworker")->insertGetId([
             "health_center_id" => $healthCenterId,
             "person_id" => $personId,
@@ -165,26 +193,32 @@ class test extends Command
         ]);
     }
 
-    public function createPatient($faker, $healthCenterId, $groupZones)
+    public function createPatient($faker, $personId)
     {
-        $personId = $this->createPerson($faker);
-
-        $this->giveGroupZones($personId, rand(1, 3), $groupZones);
-        $this->createDiagnostics($personId, rand(1,10));
         return DB::table("patient")->insertGetId([
-            "health_center_id" => $healthCenterId,
             "person_id" => $personId,
         ]);
     }
 
-    public function createDiagnostics($personId, $amount) {
-
+    public function createDiagnostics(Faker\Generator $faker, $patientId, $workers, $healthCenterIds, $amount)
+    {
+        for ($i = 0; $i < $amount; $i++) {
+            DB::table("diagnostics")->insertGetId([
+                "health_worker_id" => $workers[array_rand($workers)],
+                "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
+                "patient_id" => $patientId,
+                "diagnostic_date" => $faker->dateTimeBetween('-1 years'),
+                "result" => $faker->boolean,
+            ]);
+        }
     }
 
     public function giveGroupZones($personId, $amount, $groupZones) {
-//        DB::table("groupzonepersonpivot")->insert([
-//            'person_id' => $personId,
-//            'group_id' => $groupZones[array_rand($groupZones)]
-//        ]);
+        for ($i = 0; $i < $amount; $i++) {
+            DB::table("groupzonepersonpivot")->insert([
+                'person_id' => $personId,
+                'group_id' => $groupZones[array_rand($groupZones)]
+            ]);
+        }
     }
 }
