@@ -56,7 +56,7 @@ function CaseView() {
     const [description, setDescription] = useState("");
     useEffect(() => {
         setLoading(true);
-        axios.get(`${process.env.NODE_ENV === 'production' ? '/coviddb' : ''}/api/queries/${caseNumber}`)
+        axios.get(`${process.env.REACT_APP_ENV === 'production' ? '/coviddb' : ''}/api/queries/${caseNumber}`)
             .then((response) => {
                 // Instead of doing the foreach, i add all of my results here
                 // I then run 1 call instead of 10, which is more efficient
@@ -75,9 +75,10 @@ function CaseView() {
     },[caseNumber]);
 
     const columns = useMemo(() => COLUMN_NAMES.map(col => ({
+        Header: col,
         accessor: col
     })), []);
-    
+
     return (
         <>
             <Row className="mt-4">
