@@ -1,10 +1,8 @@
 import React from "react";
-import {StyledButton} from "../components/styledbutton"
-import {forminput} from "../components/forminput"
-import {form, FormControl, Input, Row, Col,  body} from 'react-bootstrap';
+import {StyledButton} from "../components/StyledButton"
+import {Row, Col} from 'react-bootstrap';
 
-
-function searchform(){
+export default function SearchForm(){
     return(
         <div className="container productwrap shadow-lg rounded mb-0"
              style={{padding: '20px', width: '40%', marginTop: '50px'}}>
@@ -37,10 +35,8 @@ function searchform(){
                     block="true"
                 />
             </Row>
-
         </form>
         </div>
 
     );
 }
-export default searchform;

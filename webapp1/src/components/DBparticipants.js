@@ -22,16 +22,16 @@ export function DBparticipants() {
     // Basically, this makes it so when the component runs for the first time, it loads
     // the API call to initialize your values. its a replacement for componentDidMount
     // See it here: https://reactjs.org/docs/hooks-effect.html
-    useEffect(() => {
-        axios.get('https://swapi.dev/api/people/')
-            .then((response) => {
-                // Instead of doing the foreach, i add all of my results here
-                // I then run 1 call instead of 10, which is more efficient
-                setPeople(response.data.results);
-            })
-            .catch(function (error) {console.log("ERROR");})
-            .then(function () {console.log("hi1");})
-    },[])
+        useEffect(() => {
+            axios.get('https://swapi.dev/api/people/')
+                .then((response) => {
+                    // Instead of doing the foreach, i add all of my results here
+                    // I then run 1 call instead of 10, which is more efficient
+                    setPeople(response.data.results);
+                })
+                .catch(function (error) {console.log("ERROR");})
+                .then(function () {console.log("hi1");})
+        },[])
 
     /**
      *
