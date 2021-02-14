@@ -55,19 +55,15 @@ class test extends Command
      */
     public function handle()
     {
-<<<<<<< HEAD
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "coviddb";
-=======
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
 
         $faker = Faker\Factory::create();
 
         $faker->addProvider(new Faker\Provider\en_CA\Address($faker));
         $faker->addProvider(new Faker\Provider\fr_CA\Person($faker));
-<<<<<<< HEAD
         $faker->addProvider(new Faker\Provider\en_CA\Custom($faker));
 
         $healthCenterIds = [];
@@ -80,8 +76,7 @@ class test extends Command
             $personId = $this->createPerson($faker);
             }
 
-            $center_id = DB::table("publichealthcenter")->insertGetId([
-=======
+            
         // Saving Custom under the right namespace
         $faker->addProvider(new Custom($faker));
 
@@ -95,7 +90,6 @@ class test extends Command
          */
         for ($i = 1; $i < 10; $i++) {
             $centerId = DB::table("publichealthcenter")->insertGetId([
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
                 //Health center ID
                 "name" => $faker->company,
                 "phone" => $faker->phoneNumber,
@@ -106,7 +100,6 @@ class test extends Command
                 "type" => $faker->type,
                 "website" => $faker->url,
             ]);
-<<<<<<< HEAD
             array_push($healthCenterIds, $center_id);
 
             $patient_id = DB::table("patient")->insertGetId([
@@ -145,7 +138,6 @@ class test extends Command
 
 
 
-=======
 
             // Push available healthcenter ids here
             array_push($healthCenterIds, $centerId);
@@ -215,7 +207,6 @@ class test extends Command
        $this->createDiagnostics($faker, $healthCenterIds[array_rand($healthCenterIds)], $patient_ids[array_rand($patient_ids)], $healthWorkerIds[array_rand($healthWorkerIds)]);
 
 
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
         die;
 
     }
@@ -238,17 +229,15 @@ class test extends Command
         ]);
     }
 
-<<<<<<< HEAD
 
     public function createWorker($faker, $healthCenterId)
     {
         $personId = $this->createPerson($faker);
+    }
 
 
-=======
     public function createWorker($faker, $personId, $healthCenterId)
     {
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
         return DB::table("publichealthworker")->insertGetId([
             "health_center_id" => $healthCenterId,
             "person_id" => $personId,
@@ -257,7 +246,6 @@ class test extends Command
         ]);
     }
 
-<<<<<<< HEAD
 
     public function createDiagnostics($faker, $healthCenterId, $patient_id, $healthWorkerId)
     {
@@ -283,7 +271,6 @@ class test extends Command
 
 
 
-=======
     public function createPatient($faker, $personId)
     {
         return DB::table("patient")->insertGetId([
@@ -312,5 +299,4 @@ class test extends Command
             ]);
         }
     }
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
 }
