@@ -25,6 +25,19 @@ class test extends Command
      */
     protected $description = 'Command description';
 
+    const GROUP_ZONES = [
+        ['MontrealPrimaryGrade1_Group_1', 'Education'],
+        ['MontrealPrimaryGrade1_Group_2', 'Education'],
+        ['MontrealChurch_Group_1', 'House Of Worship'],
+        ['MontrealChurch_Group_2', 'House Of Worship'],
+        ['Basketball_Group_1', 'Sports'],
+        ['WeightLifting_Group_1', 'Sports'],
+        ['Soccer_Group_1', 'Sports'],
+        ['SainteCatherineRetail_Group_1', 'Shopping'],
+        ['QuartierDixTrente_Group_1', 'Shopping'],
+        ['Rockland_Group_1', 'Shopping'],
+    ];
+
     /**
      * Create a new command instance.
      *
@@ -143,10 +156,10 @@ class test extends Command
          * Create GroupZones
          */
         $groupZones = [];
-        for ($i = 1; $i < 10; $i++) {
+        foreach (self::GROUP_ZONES as $groupZone) {
             $zoneId = DB::table("groupzone")->insertGetId([
-                "name" => Str::snake($faker->city),
-                "activity" => $faker->name
+                "name" => $groupZone[0],
+                "activity" => $groupZone[1]
             ]);
             // Push available group zone ids here
             array_push($groupZones, $zoneId);
