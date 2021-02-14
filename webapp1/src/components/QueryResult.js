@@ -19,7 +19,7 @@ export default function QueryResult() {
     const match = useRouteMatch();
 
     return (
-        <Container>
+        <>
             <ul className="nav nav-tabs">
                 <li className="nav-item">
                     <NavLink className="nav-link" to={`${match.url}/case-one`}>Case One</NavLink>
@@ -44,7 +44,7 @@ export default function QueryResult() {
                 <Route path={`${match.url}/:caseNumber`} component={CaseView}/>
             </Switch>
             <Row></Row>
-        </Container>
+        </>
     );
 }
 
@@ -53,6 +53,7 @@ function CaseView() {
     const [loading, setLoading] = useState(false);
     const [tuples, setTuples] = useState([]);
     const [query, setQuery] = useState("");
+    const [columns, setColumns] = useState([]);
     const [description, setDescription] = useState("");
     useEffect(() => {
         setLoading(true);
@@ -64,8 +65,7 @@ function CaseView() {
                 setTuples(response.data.result);
                 setQuery(response.data.query);
                 setDescription(response.data.description);
-
-                // setPeople(response.data.results);
+                setColumns(response.data.columns)
             })
             .catch(function (error) {console.log("ERROR");})
             .finally(function () {
@@ -74,21 +74,26 @@ function CaseView() {
         console.log(caseNumber);
     },[caseNumber]);
 
-    const columns = useMemo(() => COLUMN_NAMES.map(col => ({
+    const memoizedColumns = useMemo(() => columns.map(col => ({
         Header: col,
         accessor: col
-    })), []);
-
+    })), [columns])
     return (
         <>
             <Row className="mt-4">
                 <Col>Case Description:</Col>
             </Row>
             <Row className="mt-4">
-                <Col>{description}</Col>
+                <Col>
+                    <div className="card">
+                        <div className="card-body">
+                            <Col>{loading ? '...' : description}</Col>
+                        </div>
+                    </div>
+                </Col>
             </Row>
             <Row className="mt-4">
-                <Col>Description:</Col>
+                <Col>SQL Query:</Col>
             </Row>
             <Row className="mt-4">
                 <Col>
@@ -110,13 +115,7 @@ function CaseView() {
                 <Col>
                     <div className="card">
                         <div className="card-body">
-                            {loading ? (
-                                <>loading</>
-                            ) : (
-                                <>
-                                    <Table columns={columns} data={tuples}/>
-                                </>
-                            )}
+                            {loading ? '...' : <Table columns={memoizedColumns} data={tuples}/>}
                         </div>
                     </div>
                 </Col>
