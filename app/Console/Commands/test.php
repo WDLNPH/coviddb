@@ -55,10 +55,6 @@ class test extends Command
      */
     public function handle()
     {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "coviddb";
 
         $faker = Faker\Factory::create();
 
@@ -66,17 +62,6 @@ class test extends Command
         $faker->addProvider(new Faker\Provider\fr_CA\Person($faker));
         // Saving Custom under the right namespace
         $faker->addProvider(new Custom($faker));
-
-        $healthCenterIds = [];
-        $patient_ids = [];
-
-        for ($i = 0; $i < 10; $i++) {
-
-            for ($j = 0; $j < 10; $j++) {
-            $personId = $this->createPerson($faker);
-            }
-
-
 
         $healthCenterIds = [];
         $healthWorkerIds = [];
@@ -98,44 +83,6 @@ class test extends Command
                 "type" => $faker->type,
                 "website" => $faker->url,
             ]);
-            array_push($healthCenterIds, $center_id);
-
-            $patient_id = DB::table("patient")->insertGetId([
-                "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
-                "person_id" => $personId,
-            ]);
-
-
-            array_push($patient_ids, $patient_id);
-
-
-
-            $healthWorkerId = DB::table("publichealthworker")->insertGetId([
-                "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
-                "person_id" => $personId,
-                "position" => $faker->position,
-                "schedule" => $faker->schedule_builder,
-            ]);
-
-
-            array_push($healthWorkerIds, $healthWorkerId);
-
-
-
-           $this->createWorker($faker, $healthCenterIds[array_rand($healthCenterIds)]);
-
-
-           $this->createDiagnostics($faker, $healthCenterIds[array_rand($healthCenterIds)], $patient_ids[array_rand($patient_ids)], $healthWorkerIds[array_rand($healthWorkerIds)]);
-        }
-
-
-        // for ($i = 0; $i < 10; $i++) {
-        // Patient Id
-        //      $this->createPatient($faker, $healthCenterIds[array_rand($healthCenterIds)]);
-        //  }
-
-
-
 
             // Push available healthcenter ids here
             array_push($healthCenterIds, $centerId);
@@ -176,37 +123,6 @@ class test extends Command
             $this->createDiagnostics($faker, $patientId, $workers, $healthCenterIds, rand(1,3));
         }
         die;
-
-        $patient_id = DB::table("patient")->insertGetId([
-            "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
-            "person_id" => $personId,
-        ]);
-
-
-        array_push($patient_ids, $patient_id);
-
-
-
-        $healthWorkerId = DB::table("publichealthworker")->insertGetId([
-            "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
-            "person_id" => $personId,
-            "position" => $faker->position,
-            "schedule" => $faker->schedule_builder,
-        ]);
-
-
-        array_push($healthWorkerIds, $healthWorkerId);
-
-
-
-       $this->createWorker($faker, $healthCenterIds[array_rand($healthCenterIds)]);
-
-
-       $this->createDiagnostics($faker, $healthCenterIds[array_rand($healthCenterIds)], $patient_ids[array_rand($patient_ids)], $healthWorkerIds[array_rand($healthWorkerIds)]);
-
-
-        die;
-
     }
 
     public function createPerson($faker)
@@ -227,13 +143,6 @@ class test extends Command
         ]);
     }
 
-
-    public function createWorker($faker, $healthCenterId)
-    {
-        $personId = $this->createPerson($faker);
-    }
-
-
     public function createWorker($faker, $personId, $healthCenterId)
     {
         return DB::table("publichealthworker")->insertGetId([
@@ -243,31 +152,6 @@ class test extends Command
             "position" => $faker->position,
         ]);
     }
-
-
-    public function createDiagnostics($faker, $healthCenterId, $patient_id, $healthWorkerId)
-    {
-
-
-        return DB::table("diagnostic")->insertGetId([
-            //diagnotic_id AUTO
-            "health_center_id" => $healthCenterId,
-            "patient_id" => $patient_id,
-            "diagnostic_date" =>  $faker->dateTimeBetween('-1 year', '+1 week'),
-            "result" => $faker->boolean(50),
-            "health_worker_id" => $healthWorkerId
-
-
-        ]);
-    }
-
-
-
-
-
-
-
-
 
     public function createPatient($faker, $personId)
     {
