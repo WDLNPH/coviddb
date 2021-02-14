@@ -5,12 +5,6 @@ import {useTable, useSortBy, useFilters} from "react-table";
 export default function Table({columns, data}) {
     const [filterInput, setFilterInput] = useState("");
 
-    // Update the state when input changes
-    const handleFilterChange = e => {
-        const value = e.target.value || undefined;
-        setFilter("show.name", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
-        setFilterInput(value);
-    };
 
     // Use the useTable Hook to send the columns and data to build the table
     const {
@@ -29,18 +23,19 @@ export default function Table({columns, data}) {
         useSortBy // This plugin Hook will help to sort our table columns
     );
 
+    // Update the state when input changes
+    const handleFilterChange = e => {
+        const value = e.target.value || undefined;
+        // setFilter("show.name", value);
+        // setFilterInput(value);
+    };
+
     /*
       Render the UI for your table
       - react-table doesn't have UI, it's headless. We just need to put the react-table props from the Hooks, and it will do its magic automatically
     */
     return (
         <table {...getTableProps()}>
-            <input
-                value={filterInput}
-                onChange={handleFilterChange}
-                placeholder={"Search name"}
-            />
-
             <thead>
             {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
