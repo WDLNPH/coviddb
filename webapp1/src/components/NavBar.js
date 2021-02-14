@@ -15,9 +15,9 @@ function StyledNavbar(){
                 <NavLink className="nav-link" to="/query-result">
                     Query/Result
                 </NavLink>
-                <NavLink className="nav-link" to="/application">
-                    Application
-                </NavLink>
+                {/*<NavLink className="nav-link" to="/application">*/}
+                {/*    Application*/}
+                {/*</NavLink>*/}
             </Nav>
         </Navbar>
     );

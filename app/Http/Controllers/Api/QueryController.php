@@ -38,6 +38,7 @@ WHERE
      * of all the people who tested positive for the COVID-19 on January 10 , 2021
      */
     public function caseTwo() {
+        $description = 'ii. Get details (first-name, last-name, date of birth, email, phone, city) of all the people who tested positive for the COVID-19 on January 10 , 2021';
         $query = "SELECT
     p.first_name,
     p.last_name,
@@ -54,7 +55,7 @@ WHERE
     d.result = TRUE
     AND d.diagnostic_date BETWEEN '2021-01-10 00:00:00'
         AND '2021-01-10 23:59:59'";
-        return $this->getDefaultResponse($query);
+        return $this->getDefaultResponse($query, $description);
     }
 
     /**
@@ -63,6 +64,7 @@ WHERE
      * Include the history of the diagnosis if a person have been tested more than once).
      */
     public function caseThree() {
+        $description = 'iii. Give details of the diagnosis of the people who live at 95 Robert St. (first- name, last-name, date of birth, email, phone, date of diagnosis, test result, Include the history of the diagnosis if a person have been tested more than once).';
         $query = "SELECT
     p.first_name,
     p.last_name,
@@ -79,7 +81,7 @@ JOIN Person p
 WHERE
     p.address = '95 Robert St.'
 GROUP BY p.person_id";
-        return $this->getDefaultResponse($query);
+        return $this->getDefaultResponse($query, $description);
     }
 
     /**
@@ -87,6 +89,7 @@ GROUP BY p.person_id";
      * first- name, last-name, date of birth, email, phone).
      */
     public function caseFour() {
+        $description = 'iv. Provide a list of all the people who live with Roger Macdonald (first- name, last-name, date of birth, email, phone).';
         $query = "SELECT
     p.first_name,
     p.last_name,
@@ -104,7 +107,7 @@ WHERE
             AND last_name = 'Macdonald'
     )";
 
-        return $this->getDefaultResponse($query);
+        return $this->getDefaultResponse($query, $description);
     }
 
     /**
@@ -113,16 +116,20 @@ WHERE
      * of people in that specific GroupZone).
      */
     public function caseFive() {
+        $description = 'v. Provide a list of all the people who are members of the same GroupZones of Roger Macdonald (If he is a member of more than on GroupZone, give the name of each GroupZone and the list of people in that specific GroupZone).';
         $query = "SELECT
     p.first_name,
     p.last_name,
     p.dob,
     p.email,
     p.phone,
-    p.city
+    p.city,
+    gz.name
 FROM Person p
 JOIN GroupZonePersonPivot gzp
     ON p.person_id = gzp.person_id
+JOIN GroupZone gz
+    ON gz.group_id = gzp.group_id
 WHERE
     gzp.group_id IN (
         SELECT
@@ -134,7 +141,7 @@ WHERE
         AND p.last_name = 'Macdonald'
     )";
 
-        return $this->getDefaultResponse($query);
+        return $this->getDefaultResponse($query, $description);
     }
 
     /**
@@ -142,6 +149,7 @@ WHERE
      *  (first-name, last-name, date of birth, email, phone, city).
      */
     public function caseSix() {
+        $description = 'vi. Get details of all Public Health Workers who work in Viau Public Health Center (first-name, last-name, date of birth, email, phone, city).';
         $query = "SELECT
     p.first_name,
     p.last_name,
@@ -155,15 +163,21 @@ JOIN PublicHealthWorker phw
 JOIN PublicHealthCenter phc
     ON phc.health_center_id = phw.health_center_id
 WHERE phc.name = 'Viau'";
-        return $this->getDefaultResponse($query);
+        return $this->getDefaultResponse($query, $description);
     }
 
     private function getDefaultResponse($query = null, $description = null)
     {
+        $result = DB::select($query);
+        $columns = [];
+        if (count($result) > 0) {
+            $columns = array_keys(json_decode(json_encode($result[0]), true));
+        }
         return response()->json([
             'description' => $description,
             'query' => $query,
-            'result' => DB::select($query)
+            'columns' => $columns,
+            'result' => $result
         ]);
     }
 }

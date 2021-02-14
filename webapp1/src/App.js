@@ -8,20 +8,25 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
+import {Redirect} from "react-router";
+import {Container} from "react-bootstrap";
+import React from "react";
 
 
 function App() {
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
             <BrowserRouter basename="/portal">
                 <header>
                     <StyledNavbar/>
                 </header>
-                <Switch>
-                    <Route path="/query-result" component={QueryResult}/>
-                    <Route path="/application" component={Search}/>
-                    <Route component={Home}/>
-                </Switch>
+                <Container className="content">
+                    <Switch>
+                        <Route path="/query-result" component={QueryResult}/>
+                        <Route path="/application" component={Search}/>
+                        <Route render={() => <Redirect to={'/query-result'}/>}/>
+                    </Switch>
+                </Container>
                 <StyledFooter/>
             </BrowserRouter>
         </div>

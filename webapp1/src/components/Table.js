@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "../css/generalStyling.css";
 import {useTable, useSortBy, useFilters} from "react-table";
 
 export default function Table({columns, data}) {
-    const [filterInput, setFilterInput] = useState("");
-
+    // const [filterInput, setFilterInput] = useState("");
 
     // Use the useTable Hook to send the columns and data to build the table
     const {
@@ -13,7 +12,7 @@ export default function Table({columns, data}) {
         headerGroups,
         rows,
         prepareRow,
-        setFilter
+        // setFilter
     } = useTable(
         {
             columns,
@@ -24,11 +23,11 @@ export default function Table({columns, data}) {
     );
 
     // Update the state when input changes
-    const handleFilterChange = e => {
+    /*const handleFilterChange = e => {
         const value = e.target.value || undefined;
         // setFilter("show.name", value);
         // setFilterInput(value);
-    };
+    };*/
 
     /*
       Render the UI for your table

@@ -57,10 +57,6 @@ export default function Search() {
         []
     );
 
-    return (
-        <div className="App">
-            <Table columns={columns} data={data}/>
-        </div>
-    );
+    return <Table columns={columns} data={data}/>
 }
 
