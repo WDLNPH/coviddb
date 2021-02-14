@@ -1,7 +1,7 @@
 import React from 'react';
 import {body} from "react-bootstrap";
 
-function aboutus() {
+function aboutUs() {
     return (
         <body className="container" style={{border: "solid"}}>
         <p>test4</p>
@@ -10,4 +10,4 @@ function aboutus() {
     );
 }
 
-export default aboutus;
+export default aboutUs;
