@@ -64,10 +64,10 @@ class test extends Command
 
         $faker->addProvider(new Faker\Provider\en_CA\Address($faker));
         $faker->addProvider(new Faker\Provider\fr_CA\Person($faker));
-        $faker->addProvider(new Faker\Provider\en_CA\Custom($faker));
+        // Saving Custom under the right namespace
+        $faker->addProvider(new Custom($faker));
 
         $healthCenterIds = [];
-        $healthWorkerIds = [];
         $patient_ids = [];
 
         for ($i = 0; $i < 10; $i++) {
@@ -76,9 +76,7 @@ class test extends Command
             $personId = $this->createPerson($faker);
             }
 
-            
-        // Saving Custom under the right namespace
-        $faker->addProvider(new Custom($faker));
+
 
         $healthCenterIds = [];
         $healthWorkerIds = [];
@@ -106,30 +104,30 @@ class test extends Command
                 "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
                 "person_id" => $personId,
             ]);
-            
-            
+
+
             array_push($patient_ids, $patient_id);
-            
-            
-            
+
+
+
             $healthWorkerId = DB::table("publichealthworker")->insertGetId([
                 "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
                 "person_id" => $personId,
                 "position" => $faker->position,
                 "schedule" => $faker->schedule_builder,
             ]);
-            
-            
+
+
             array_push($healthWorkerIds, $healthWorkerId);
 
 
-            
+
            $this->createWorker($faker, $healthCenterIds[array_rand($healthCenterIds)]);
-            
-           
+
+
            $this->createDiagnostics($faker, $healthCenterIds[array_rand($healthCenterIds)], $patient_ids[array_rand($patient_ids)], $healthWorkerIds[array_rand($healthWorkerIds)]);
         }
- 
+
 
         // for ($i = 0; $i < 10; $i++) {
         // Patient Id

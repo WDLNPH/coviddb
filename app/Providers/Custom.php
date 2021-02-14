@@ -1,16 +1,9 @@
 <?php
 
-<<<<<<< HEAD
-namespace Faker\Provider\en_CA;
-
-
-=======
 namespace App\Providers;
 
 
 use Carbon\Carbon;
-
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
 class Custom extends \Faker\Provider\DateTime
 {
     protected static $medicare = ['???? #### ####'];
@@ -19,23 +12,11 @@ class Custom extends \Faker\Provider\DateTime
     protected static $hcType = ['Hospital', 'Clinic', 'Special Installment'];
     protected static $schedule;
 
-<<<<<<< HEAD
-
-
-
-
-
-    public static function schedule_builder()
-    {
-        $schedule = time('H:00:00-H:00:00');
-=======
     public static function schedule_builder()
     {
         $schedule = Carbon::now()->format('H:00:00-H:00:00');
->>>>>>> 44a5caef88d2bc72e9b10627df717e188c174a1c
         return static::toUpper($schedule);
     }
-
 
     public static function randomMedicareLetter()
     {
