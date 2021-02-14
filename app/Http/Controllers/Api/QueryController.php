@@ -69,8 +69,8 @@ WHERE
     p.dob,
     p.email,
     p.phone,
-    MAX(d.diagnostic_date), # TODO: Last Diagnostic Date
-    GROUP_CONCAT(d.result) # TODO: History of diagnosis
+    MAX(d.diagnostic_date) as 'last_diagnostic_date', # TODO: Last Diagnostic Date
+    GROUP_CONCAT(CONCAT(if(d.result , 'Positive', 'Negative'), ' (', DATE(diagnostic_date), ')')) as 'history_of_diagnostic' # TODO: History of diagnosis
 FROM Diagnostic d
 JOIN Patient pt
     ON pt.patient_id = d.patient_id
