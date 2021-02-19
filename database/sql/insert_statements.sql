@@ -36,23 +36,23 @@ VALUES
 INSERT INTO `PublicHealthCenter` (`health_center_id`, `name`, `phone`, `address`, `city`, `province`, `postal_code`, `type`, `website`)
 VALUES
 (1,'Pelletier, Gilbert and Gingras','464-325-3448','340 Patrice Rue','Perreaultburgh','NU','R8M-8M3','CLINIC','http://morin.com/'),
-(2,'Viau','(395) 998-0000','16492 Champagne Camp','Sophieview','NS','J0G-7Y4','SPECIAL INSTALLMENT','http://www.arsenault.com/repellendus-ea-alias-odio-dolores-voluptates-tempore-rem'),
-(3,'Desrosiers-Vachon','(770) 266-7676','197 Christiane Crossroad Suite 678','North Élise','NB','C8J 7X0','HOSPITAL','http://www.nadeau.com/quidem-nam-sint-asperiores-ut-a-ipsam'),
-(4,'Therrien Group','652-803-4032','76834 Gingras Extensions Apt. 959','South Monique','BC','V9K 9N5','HOSPITAL','http://langlois.com/numquam-consequuntur-exercitationem-laborum-eos-autem'),
+(2,'Viau','(395) 998-0000','16492 Champagne Camp','Sophieview','NS','J0G-7Y4','SPECIAL INSTALLMENT','http://www.arsenault.com'),
+(3,'Desrosiers-Vachon','(770) 266-7676','197 Christiane Crossroad Suite 678','North Élise','NB','C8J 7X0','HOSPITAL','http://www.nadeau.com'),
+(4,'Therrien Group','652-803-4032','76834 Gingras Extensions Apt. 959','South Monique','BC','V9K 9N5','HOSPITAL','http://langlois.com'),
 (5,'Paquette Group','(650) 598-0815','2258 Léon Springs Apt. 873','Étienneton','BC','R4L-7N1','CLINIC','http://www.champagne.org/'),
-(6,'Bouchard, Martin and Lambert','+18763586286','693 Michel Square Suite 752','Fourniermouth','AB','L7C 7S4','SPECIAL INSTALLMENT','http://lambert.com/et-aut-nesciunt-modi-ea-iusto'),
-(7,'Lemay-Giguère','+1-560-942-7885','174 Paulette Key Apt. 564','East Bernard','AB','R2N 3A9','CLINIC','http://www.jean.info/consectetur-itaque-fuga-illum-sit-molestiae-maxime-aut-dolorum.html'),
-(8,'Goulet Group','1-629-416-3945','4563 Carrier Course Apt. 494','North Marguerite','NB','E1B-9B5','CLINIC','http://www.carrier.com/omnis-aut-amet-ut-cum-repellat'),
-(9,'Caron, Nguyen and Lalonde','(813) 562-9856','5332 Poulin Key','Martineport','PE','N0H-2H8','SPECIAL INSTALLMENT','http://www.bertrand.biz/mollitia-a-libero-deleniti-sunt-necessitatibus.html'),
-(10,'Boudreau, Renaud and Beaulieu','+1-248-707-1293','7050 Lapointe Curve Suite 357','Lake Alfredton','SK','B8H 4S9','CLINIC','http://www.robert.com/fugiat-accusantium-nam-voluptatem-nisi.html'),
-(11,'Perreault-Thibault','+18706759613','969 Jacques Shoal Apt. 048','Gilbertborough','AB','R4L4A8','HOSPITAL','http://www.leclerc.net/adipisci-facilis-quia-quod-quod.html'),
-(12,'Fillion-Gilbert','1-519-986-0816','3693 René Fields Suite 835','Huguesborough','NB','L5V-5P4','HOSPITAL','http://www.villeneuve.biz/sed-perferendis-accusamus-aliquid.html'),
+(6,'Bouchard, Martin and Lambert','+18763586286','693 Michel Square Suite 752','Fourniermouth','AB','L7C 7S4','SPECIAL INSTALLMENT','http://lambert.com'),
+(7,'Lemay-Giguère','+1-560-942-7885','174 Paulette Key Apt. 564','East Bernard','AB','R2N 3A9','CLINIC','http://www.jean.info'),
+(8,'Goulet Group','1-629-416-3945','4563 Carrier Course Apt. 494','North Marguerite','NB','E1B-9B5','CLINIC','http://www.carrier.com'),
+(9,'Caron, Nguyen and Lalonde','(813) 562-9856','5332 Poulin Key','Martineport','PE','N0H-2H8','SPECIAL INSTALLMENT','http://www.bertrand.biz'),
+(10,'Boudreau, Renaud and Beaulieu','+1-248-707-1293','7050 Lapointe Curve Suite 357','Lake Alfredton','SK','B8H 4S9','CLINIC','http://www.robert.com'),
+(11,'Perreault-Thibault','+18706759613','969 Jacques Shoal Apt. 048','Gilbertborough','AB','R4L4A8','HOSPITAL','http://www.leclerc.net'),
+(12,'Fillion-Gilbert','1-519-986-0816','3693 René Fields Suite 835','Huguesborough','NB','L5V-5P4','HOSPITAL','http://www.villeneuve.biz'),
 (13,'Rousseau Inc','+1.442.453.4384','53882 Bernier Creek','Moreauborough','NU','C9J7M2','CLINIC','http://leblanc.org/'),
-(14,'Dion, Roy and Bérubé','653.389.9807','789 Rolande Lock Apt. 106','Gosselinton','NS','K1G3K1','HOSPITAL','http://www.turcotte.com/veritatis-reiciendis-ullam-amet-ipsam-voluptate-debitis-dolore.html'),
+(14,'Dion, Roy and Bérubé','653.389.9807','789 Rolande Lock Apt. 106','Gosselinton','NS','K1G3K1','HOSPITAL','http://www.turcotte.com'),
 (15,'Labelle, Gagné and Plante','+1-313-609-5565','93886 Jacques Rest Apt. 656','South Rolande','MB','C4V 8K1','SPECIAL INSTALLMENT','http://www.lambert.com/'),
-(16,'Simard-Lauzon','878.979.9748','222 Moreau Springs Apt. 480','Martinefort','AB','N0M 9S9','CLINIC','http://www.boudreau.com/ad-harum-voluptatem-placeat-et-reiciendis-saepe-est'),
-(17,'Mercier and Sons','1-568-596-7358','39269 Desjardins Mission Apt. 698','South Arianne','PE','L4H 8E1','HOSPITAL','http://www.rioux.com/cumque-et-quae-molestias-architecto-ullam-tempora'),
-(18,'Simard and Sons','(243) 789-1851','550 Blais Gardens Apt. 197','East Agathe','MB','N6H 4J8','SPECIAL INSTALLMENT','http://perreault.net/sint-repudiandae-corrupti-quis-saepe.html');
+(16,'Simard-Lauzon','878.979.9748','222 Moreau Springs Apt. 480','Martinefort','AB','N0M 9S9','CLINIC','http://www.boudreau.com'),
+(17,'Mercier and Sons','1-568-596-7358','39269 Desjardins Mission Apt. 698','South Arianne','PE','L4H 8E1','HOSPITAL','http://www.rioux.com'),
+(18,'Simard and Sons','(243) 789-1851','550 Blais Gardens Apt. 197','East Agathe','MB','N6H 4J8','SPECIAL INSTALLMENT','http://perreault.net');
 
 # Dump of table Person
 # ------------------------------------------------------------
