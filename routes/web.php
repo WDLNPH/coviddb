@@ -17,3 +17,4 @@ Route::redirect('/', '/portal');
 Route::get('/portal/{path?}', function () {
     return File::get(base_path('webapp1/build/index.html'));
 })->where('path', '.*');;
+Route::view('/app/{path?}', 'app');
