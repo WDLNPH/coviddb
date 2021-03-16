@@ -29,7 +29,7 @@ function App() {
                 <StyledFooter/>
             </BrowserRouter>
         </div>
-  );
+    );
 }
 
 export default App;
