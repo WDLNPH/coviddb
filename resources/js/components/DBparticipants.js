@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {div, Button, Row, Col, Table} from "react-bootstrap";
-import "../css/generalStyling.css";
 
 const axios = require('axios').default;
 // Whenever you return react elements, the function must be capitalized

@@ -1,8 +1,7 @@
-import StyledNavbar from "./components/NavBar"
-import Home from "./components/Home";
-import QueryResult from "./components/QueryResult"
-import Search from "./components/Search"
-import StyledFooter from "./components/Footer";
+import StyledNavbar from "./NavBar"
+import QueryResult from "./QueryResult"
+import Search from "./Search"
+import StyledFooter from "./Footer";
 import {
     BrowserRouter,
     Switch,
@@ -16,7 +15,7 @@ import React from "react";
 function App() {
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
-            <BrowserRouter basename="/portal">
+            <BrowserRouter basename="/app">
                 <header>
                     <StyledNavbar/>
                 </header>
@@ -30,7 +29,7 @@ function App() {
                 <StyledFooter/>
             </BrowserRouter>
         </div>
-  );
+    );
 }
 
 export default App;

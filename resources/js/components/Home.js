@@ -1,5 +1,4 @@
 import React from 'react';
-import "../css/generalStyling.css";
 
 export default function Home(){
     return (
