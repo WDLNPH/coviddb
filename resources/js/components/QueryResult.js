@@ -5,16 +5,6 @@ import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 import Table from "./Table";
 
-
-const COLUMN_NAMES = [
-    'first_name',
-    'last_name',
-    'dob',
-    'email',
-    'phone',
-    'city'
-];
-
 export default function QueryResult() {
     const match = useRouteMatch();
 

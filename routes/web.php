@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::redirect('/', '/portal');
+Route::redirect('/', '/app');
 Route::get('/portal/{path?}', function () {
     return File::get(base_path('webapp1/build/index.html'));
 })->where('path', '.*');;
