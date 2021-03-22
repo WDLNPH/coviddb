@@ -5,9 +5,75 @@ import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 import Table from "./Table";
 
+function TableHeader({name}) {
+    return (
+        <th className="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">
+            {name}
+        </th>
+    );
+}
+function TableTest() {
+    return (
+        <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
+             style={{height: '405px'}}>
+        <table className="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+            <thead>
+                <tr className="text-left">
+                    <th className="py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100">
+                        <label
+                            className="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
+                            <input type="checkbox" className="form-checkbox focus:outline-none focus:shadow-outline"/>
+                        </label>
+                    </th>
+                    <th className="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">
+                        ID
+                    </th>
+                    <TableHeader name="firstName"/>
+                    <TableHeader name="lastName"/>
+                    <TableHeader name="email"/>
+                    <TableHeader name="gender"/>
+                    <TableHeader name="phone"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td className="border-dashed border-t border-gray-200 px-3">
+                        <label
+                            className="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
+                            <input type="checkbox" className="form-checkbox rowCheckbox focus:outline-none focus:shadow-outline"/>
+                        </label>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 userId">
+                        <span className="text-gray-700 px-6 py-3 flex items-center" x-text="user.userId">User</span>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 firstName">
+                        <span className="text-gray-700 px-6 py-3 flex items-center" x-text="user.firstName">aa</span>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 lastName">
+                        <span className="text-gray-700 px-6 py-3 flex items-center" x-text="user.lastName">aa</span>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 emailAddress">
+                        <span className="text-gray-700 px-6 py-3 flex items-center"
+                              x-text="user.emailAddress">aa</span>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 gender">
+                        <span className="text-gray-700 px-6 py-3 flex items-center"
+                              x-text="user.gender">aa</span>
+                    </td>
+                    <td className="border-dashed border-t border-gray-200 phoneNumber">
+                        <span className="text-gray-700 px-6 py-3 flex items-center"
+                              x-text="user.phoneNumber">aaa</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    )
+}
 export default function QueryResult() {
     const match = useRouteMatch();
 
+    return <TableTest/>
     return (
         <>
             <ul className="nav nav-tabs">
