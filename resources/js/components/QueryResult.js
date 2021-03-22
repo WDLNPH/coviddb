@@ -5,13 +5,6 @@ import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
 import Table from "./Table";
 
-function TableHeader({name}) {
-    return (
-        <th className="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">
-            {name}
-        </th>
-    );
-}
 function TableTest() {
     return (
         <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
@@ -73,33 +66,33 @@ function TableTest() {
 export default function QueryResult() {
     const match = useRouteMatch();
 
-    return <TableTest/>
     return (
         <>
-            <ul className="nav nav-tabs">
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-one`}>Case One</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-two`}>Case Two</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-three`}>Case Three</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-four`}>Case Four</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-five`}>Case Five</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-six`}>Case Six</NavLink>
-                </li>
-            </ul>
+            <div style={{borderBottom: '2px solid #eaeaea'}}>
+                <ul className='flex cursor-pointer'>
+                    <li className='py-2 px-6 bg-white rounded-t-lg'>
+                        <NavLink className="nav-link" to={`${match.url}/case-one`}>Case One</NavLink>
+                    </li>
+                    <li className='py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200'>
+                        <NavLink className="nav-link" to={`${match.url}/case-two`}>Case Two</NavLink>
+                    </li>
+                    <li className='py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200'>
+                        <NavLink className="nav-link" to={`${match.url}/case-three`}>Case Three</NavLink>
+                    </li>
+                    <li className='py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200'>
+                        <NavLink className="nav-link" to={`${match.url}/case-four`}>Case Four</NavLink>
+                    </li>
+                    <li className='py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200'>
+                        <NavLink className="nav-link" to={`${match.url}/case-five`}>Case Five</NavLink>
+                    </li>
+                    <li className='py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200'>
+                        <NavLink className="nav-link" to={`${match.url}/case-six`}>Case Six</NavLink>
+                    </li>
+                </ul>
+            </div>
             <Switch>
                 <Route path={`${match.url}/:caseNumber`} component={CaseView}/>
             </Switch>
-            <Row></Row>
         </>
     );
 }

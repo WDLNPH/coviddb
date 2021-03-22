@@ -1,6 +1,8 @@
 import React from 'react';
 import {useTable} from "react-table";
 
+
+
 export default function Table({columns, data}) {
     // Use the useTable Hook to send the columns and data to build the table
     const {
@@ -16,39 +18,42 @@ export default function Table({columns, data}) {
         }
     );
     return (
-        <table className="table table-striped" {...getTableProps()}>
-            <thead>
-            {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map(column => (
-                        <th
-                            {...column.getHeaderProps(column.getSortByToggleProps())}
-                            className={
-                                column.isSorted
-                                    ? column.isSortedDesc
-                                    ? "sort-desc"
-                                    : "sort-asc"
-                                    : ""
-                            }
-                        >
-                            {column.render("Header")}
-                        </th>
+        <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style={{height: '405px'}}>
+            <table className="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative" {...getTableProps()}>
+                <thead>
+                    {headerGroups.map(headerGroup => (
+                        <tr className="text-left" {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th
+                                    className="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
+                                >
+                                    {column.render("Header")}
+                                </th>
+                            ))}
+                        </tr>
                     ))}
-                </tr>
-            ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-                prepareRow(row);
-                return (
-                    <tr {...row.getRowProps()}>
-                        {row.cells.map(cell => {
-                            return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-                        })}
-                    </tr>
-                );
-            })}
-            </tbody>
-        </table>
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                {rows.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                return (
+                                    <td
+                                        className="border-dashed border-t border-gray-200"
+                                        {...cell.getCellProps()}>
+                                        <span className="text-gray-700 px-6 py-3 flex items-center">
+                                            {cell.render("Cell")}
+                                        </span>
+                                    </td>
+                                );
+                            })}
+                        </tr>
+                    );
+                })}
+                </tbody>
+            </table>
+        </div>
     );
 }

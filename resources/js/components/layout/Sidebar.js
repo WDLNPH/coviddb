@@ -1,21 +1,24 @@
 // https://tailwindcomponents.com/component/dashboard-layout-with-dark-light-mode
 // https://tailwindcomponents.com/component/table-ui-with-tailwindcss-and-alpinejs
-function MenuButton({name}) {
+import {NavLink} from "react-router-dom";
+
+function MenuButton({name, to}) {
     return (
-        <a
-            href="#"
+        <NavLink
+            to={to}
+            activeClassName="text-gray-700"
             role="menuitem"
             className="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
         >
             {name}
-        </a>
+        </NavLink>
     )
 }
 
 function Dropdown({name, icon, children}) {
     return (
         <div>
-            <a href="#"
+            <a
                className="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-blue-100 dark:hover:bg-blue-600"
                role="button"
                aria-haspopup="true">
@@ -64,13 +67,13 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="People"/>
-                        <MenuButton name="Workers"/>
-                        <MenuButton name="Facilities"/>
-                        <MenuButton name="Regions"/>
-                        <MenuButton name="GroupZones"/>
-                        <MenuButton name="Recommendations"/>
-                        <MenuButton name="Alerts"/>
+                        <MenuButton name="People" to={'/people'}/>
+                        <MenuButton name="Workers" to={'/workers'}/>
+                        <MenuButton name="Facilities" to={'facilities'}/>
+                        <MenuButton name="Regions" to={'regions'}/>
+                        <MenuButton name="GroupZones" to={'groupzones'}/>
+                        <MenuButton name="Recommendations" to={'recommendations'}/>
+                        <MenuButton name="Alerts" to={'alerts'}/>
                     </Dropdown>
                     <Dropdown
                         name="User"
@@ -90,7 +93,27 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Create Follow-Up Form"/>
+                        <MenuButton name="Create Follow-Up Form" to={'follow-up-form'}/>
+                    </Dropdown>
+                    <Dropdown
+                        name="Warm-Up Project"
+                        icon={(
+                            <svg
+                                className="w-5 h-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                            </svg>
+                        )}>
+                        <MenuButton name="Query Result" to={'query-result'}/>
                     </Dropdown>
                 </nav>
             </div>

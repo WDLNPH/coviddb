@@ -7,7 +7,6 @@ import {
     Route,
 } from "react-router-dom";
 import {Redirect} from "react-router";
-import {Container} from "react-bootstrap";
 import Sidebar from "./layout/Sidebar";
 import Navbar from "./layout/Navbar";
 import React from "react";
@@ -30,7 +29,7 @@ function App() {
                     <Navbar/>
                     <Switch>
                         <Route path="/query-result" component={QueryResult}/>
-                        <Route path="/persons" component={AllPeople}/>
+                        <Route path="/people" component={AllPeople}/>
                         <Route path="/workers" component={AllWorkers}/>
                         <Route path="/facilities" component={AllFacilities}/>
                         <Route path="/regions" component={AllRegions}/>
