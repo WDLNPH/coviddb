@@ -23,22 +23,23 @@ function App() {
     return (
         <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
             <BrowserRouter basename="/app">
-                {/*<StyledNavbar/>*/}
                 <Sidebar/>
                 <div className="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
                     <Navbar/>
-                    <Switch>
-                        <Route path="/query-result" component={QueryResult}/>
-                        <Route path="/people" component={AllPeople}/>
-                        <Route path="/workers" component={AllWorkers}/>
-                        <Route path="/facilities" component={AllFacilities}/>
-                        <Route path="/regions" component={AllRegions}/>
-                        <Route path="/groupzones" component={AllGroupZones}/>
-                        <Route path="/recommendations" component={AllRecommendations}/>
-                        <Route path="/alerts" component={AllAlerts}/>
-                        <Route path="/follow-up-form" component={CreateForm}/>
-                        <Route render={() => <Redirect to={'/query-result'}/>}/>
-                    </Switch>
+                    <div className="flex flex-1 flex-col p-5">
+                        <Switch>
+                            <Route path="/query-result" component={QueryResult}/>
+                            <Route path="/people" component={AllPeople}/>
+                            <Route path="/workers" component={AllWorkers}/>
+                            <Route path="/facilities" component={AllFacilities}/>
+                            <Route path="/regions" component={AllRegions}/>
+                            <Route path="/groupzones" component={AllGroupZones}/>
+                            <Route path="/recommendations" component={AllRecommendations}/>
+                            <Route path="/alerts" component={AllAlerts}/>
+                            <Route path="/follow-up-form" component={CreateForm}/>
+                            <Route render={() => <Redirect to={'/query-result'}/>}/>
+                        </Switch>
+                    </div>
                     <StyledFooter/>
                 </div>
 

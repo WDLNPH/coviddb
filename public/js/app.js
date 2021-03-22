@@ -2207,41 +2207,44 @@ function App() {
       basename: "/app",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_layout_Sidebar__WEBPACK_IMPORTED_MODULE_3__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
         className: "flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_layout_Navbar__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Switch, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/query-result",
-            component: _QueryResult__WEBPACK_IMPORTED_MODULE_1__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/people",
-            component: _pages_Person_AllPeople__WEBPACK_IMPORTED_MODULE_6__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/workers",
-            component: _pages_Worker_AllWorkers__WEBPACK_IMPORTED_MODULE_12__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/facilities",
-            component: _pages_Facility_AllFacilities__WEBPACK_IMPORTED_MODULE_9__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/regions",
-            component: _pages_Region_AllRegions__WEBPACK_IMPORTED_MODULE_7__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/groupzones",
-            component: _pages_GroupZone_AllGroupZones__WEBPACK_IMPORTED_MODULE_10__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/recommendations",
-            component: _pages_Recommendation_AllRecommendations__WEBPACK_IMPORTED_MODULE_11__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/alerts",
-            component: _pages_Alert_AllAlerts__WEBPACK_IMPORTED_MODULE_8__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            path: "/follow-up-form",
-            component: _pages_Form_CreateForm__WEBPACK_IMPORTED_MODULE_13__.default
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
-            render: function render() {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Redirect, {
-                to: '/query-result'
-              });
-            }
-          })]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_layout_Navbar__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+          className: "flex flex-1 flex-col p-5",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Switch, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/query-result",
+              component: _QueryResult__WEBPACK_IMPORTED_MODULE_1__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/people",
+              component: _pages_Person_AllPeople__WEBPACK_IMPORTED_MODULE_6__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/workers",
+              component: _pages_Worker_AllWorkers__WEBPACK_IMPORTED_MODULE_12__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/facilities",
+              component: _pages_Facility_AllFacilities__WEBPACK_IMPORTED_MODULE_9__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/regions",
+              component: _pages_Region_AllRegions__WEBPACK_IMPORTED_MODULE_7__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/groupzones",
+              component: _pages_GroupZone_AllGroupZones__WEBPACK_IMPORTED_MODULE_10__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/recommendations",
+              component: _pages_Recommendation_AllRecommendations__WEBPACK_IMPORTED_MODULE_11__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/alerts",
+              component: _pages_Alert_AllAlerts__WEBPACK_IMPORTED_MODULE_8__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              path: "/follow-up-form",
+              component: _pages_Form_CreateForm__WEBPACK_IMPORTED_MODULE_13__.default
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+              render: function render() {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Redirect, {
+                  to: '/query-result'
+                });
+              }
+            })]
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_2__.default, {})]
       })]
     })
@@ -2270,7 +2273,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function StyledFooter() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("footer", {
-    className: "footer",
+    style: {
+      flexBasis: '50px'
+    },
+    className: "justify-center flex flex-col flex-grow-0 flex-shrink-0 relative bg-white dark:bg-darker",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
       className: "align-middle",
       style: {
@@ -2374,102 +2380,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-function TableTest() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    className: "overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative",
-    style: {
-      height: '405px'
-    },
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
-      className: "border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-          className: "text-left",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-            className: "py-2 px-3 sticky top-0 border-b border-gray-200 bg-gray-100",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              className: "text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "checkbox",
-                className: "form-checkbox focus:outline-none focus:shadow-outline"
-              })
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-            className: "bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs",
-            children: "ID"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TableHeader, {
-            name: "firstName"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TableHeader, {
-            name: "lastName"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TableHeader, {
-            name: "email"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TableHeader, {
-            name: "gender"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TableHeader, {
-            name: "phone"
-          })]
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 px-3",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-              className: "text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "checkbox",
-                className: "form-checkbox rowCheckbox focus:outline-none focus:shadow-outline"
-              })
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 userId",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.userId",
-              children: "User"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 firstName",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.firstName",
-              children: "aa"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 lastName",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.lastName",
-              children: "aa"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 emailAddress",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.emailAddress",
-              children: "aa"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 gender",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.gender",
-              children: "aa"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-            className: "border-dashed border-t border-gray-200 phoneNumber",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-gray-700 px-6 py-3 flex items-center",
-              "x-text": "user.phoneNumber",
-              children: "aaa"
-            })
-          })]
-        })
-      })]
-    })
-  });
-}
-
 function QueryResult() {
   var match = (0,react_router__WEBPACK_IMPORTED_MODULE_4__.useRouteMatch)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
@@ -2480,44 +2390,44 @@ function QueryResult() {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("ul", {
         className: "flex cursor-pointer",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
+            activeClassName: "bg-white",
             to: "".concat(match.url, "/case-one"),
             children: "Case One"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            activeClassName: "bg-white",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
             to: "".concat(match.url, "/case-two"),
             children: "Case Two"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            activeClassName: "bg-white",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
             to: "".concat(match.url, "/case-three"),
             children: "Case Three"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            activeClassName: "bg-white",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
             to: "".concat(match.url, "/case-four"),
             children: "Case Four"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            activeClassName: "bg-white",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
             to: "".concat(match.url, "/case-five"),
             children: "Case Five"
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("li", {
-          className: "py-2 px-6 bg-white rounded-t-lg text-gray-500 bg-gray-200",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.NavLink, {
-            className: "nav-link",
+            activeClassName: "bg-white",
+            className: "py-2 px-6 rounded-t-lg text-gray-500 bg-gray",
             to: "".concat(match.url, "/case-six"),
             children: "Case Six"
           })
