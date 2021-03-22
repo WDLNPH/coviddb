@@ -2878,6 +2878,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // https://tailwindcomponents.com/component/dashboard-layout-with-dark-light-mode
+// https://tailwindcomponents.com/component/table-ui-with-tailwindcss-and-alpinejs
 function MenuButton(_ref) {
   var name = _ref.name;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("a", {
