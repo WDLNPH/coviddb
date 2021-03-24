@@ -32,6 +32,8 @@
         "react-scripts": "4.0.1",
         "react-table": "^7.6.3",
         "reactstrap": "^8.9.0",
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0",
         "tailwindcss": "^2.0.4",
         "web-vitals": "^0.2.4"
     }
