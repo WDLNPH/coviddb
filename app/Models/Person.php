@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Person\PublicHealthWorker;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Person extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'Person';
+
+    protected $primaryKey = 'person_id';
     /**
      * The attributes that are mass assignable.
      *
@@ -32,6 +35,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'role'
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -40,4 +47,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function worker()
+    {
+        return $this->hasOne(PublicHealthWorker::class, 'person_id', 'person_id');
+    }
+    public function getRoleAttribute()
+    {
+        if ($this->worker !== null) {
+            return 'worker';
+        }
+
+        return 'person';
+    }
 }

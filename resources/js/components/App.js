@@ -7,7 +7,8 @@ import {
     Route,
 } from "react-router-dom";
 import {Redirect} from "react-router";
-import {Container} from "react-bootstrap";
+import Sidebar from "./layout/Sidebar";
+import Navbar from "./layout/Navbar";
 import React from "react";
 import AllPeople from "./pages/Person/AllPeople";
 import AllRegions from "./pages/Region/AllRegions";
@@ -20,24 +21,29 @@ import CreateForm from "./pages/Form/CreateForm";
 
 function App() {
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
             <BrowserRouter basename="/app">
-                <StyledNavbar/>
-                <Container className="content">
-                    <Switch>
-                        <Route path="/query-result" component={QueryResult}/>
-                        <Route path="/persons" component={AllPeople}/>
-                        <Route path="/workers" component={AllWorkers}/>
-                        <Route path="/facilities" component={AllFacilities}/>
-                        <Route path="/regions" component={AllRegions}/>
-                        <Route path="/groupzones" component={AllGroupZones}/>
-                        <Route path="/recommendationd" component={AllRecommendations}/>
-                        <Route path="/alerts" component={AllAlerts}/>
-                        <Route path="/follow-up-form" component={CreateForm}/>
-                        <Route render={() => <Redirect to={'/query-result'}/>}/>
-                    </Switch>
-                </Container>
-                <StyledFooter/>
+                <Sidebar/>
+                <div className="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
+                    <Navbar/>
+                    <div className="flex flex-1 flex-col p-5">
+                        <Switch>
+                            <Route path="/query-result" component={QueryResult}/>
+                            <Route path="/people" component={AllPeople}/>
+                            <Route path="/workers" component={AllWorkers}/>
+                            <Route path="/facilities" component={AllFacilities}/>
+                            <Route path="/regions" component={AllRegions}/>
+                            <Route path="/groupzones" component={AllGroupZones}/>
+                            <Route path="/recommendations" component={AllRecommendations}/>
+                            <Route path="/alerts" component={AllAlerts}/>
+                            <Route path="/follow-up-form" component={CreateForm}/>
+                            <Route render={() => <Redirect to={'/query-result'}/>}/>
+                        </Switch>
+                    </div>
+                    <StyledFooter/>
+                </div>
+
+
             </BrowserRouter>
         </div>
     );

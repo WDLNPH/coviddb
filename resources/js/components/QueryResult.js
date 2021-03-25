@@ -10,30 +10,31 @@ export default function QueryResult() {
 
     return (
         <>
-            <ul className="nav nav-tabs">
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-one`}>Case One</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-two`}>Case Two</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-three`}>Case Three</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-four`}>Case Four</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-five`}>Case Five</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to={`${match.url}/case-six`}>Case Six</NavLink>
-                </li>
-            </ul>
+            <div style={{borderBottom: '2px solid #eaeaea'}}>
+                <ul className='flex cursor-pointer'>
+                    <li>
+                        <NavLink className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" activeClassName="bg-white" to={`${match.url}/case-one`}>Case One</NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="bg-white" className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" to={`${match.url}/case-two`}>Case Two</NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="bg-white" className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" to={`${match.url}/case-three`}>Case Three</NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="bg-white" className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" to={`${match.url}/case-four`}>Case Four</NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="bg-white" className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" to={`${match.url}/case-five`}>Case Five</NavLink>
+                    </li>
+                    <li>
+                        <NavLink activeClassName="bg-white" className="py-2 px-6 rounded-t-lg text-gray-500 bg-gray" to={`${match.url}/case-six`}>Case Six</NavLink>
+                    </li>
+                </ul>
+            </div>
             <Switch>
                 <Route path={`${match.url}/:caseNumber`} component={CaseView}/>
             </Switch>
-            <Row></Row>
         </>
     );
 }
