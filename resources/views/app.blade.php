@@ -9,6 +9,9 @@
 <div id="root">
 
 </div>
+<script>
+    window.user = JSON.parse('{!! json_encode(auth()->user())!!}');
+</script>
 <script src="{{mix('js/app.js')}}"></script>
 </body>
 </html>
