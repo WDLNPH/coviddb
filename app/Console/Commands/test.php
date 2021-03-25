@@ -125,11 +125,13 @@ class test extends Command
         die;
     }
 
-    public function createPerson($faker)
+    public function createPerson(Faker\Generator $faker)
     {
+        $date = $faker->date();
         return DB::table("person")->insertGetId([
             // Person ID
             "medicare" => $faker->medicare,
+            "password" => bcrypt(str_replace('-', '', $date)),
             "first_name" => $faker->firstName,
             "last_name" => $faker->lastName,
             "address" => $faker->streetAddress,
@@ -139,7 +141,7 @@ class test extends Command
             "citizenship" => $faker->countryCode,
             "email"   => $faker->email,
             "phone" => $faker->phoneNumber,
-            "dob" =>  $faker->date(),
+            "dob" => $date
         ]);
     }
 
