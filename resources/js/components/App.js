@@ -42,8 +42,6 @@ function App() {
                     </div>
                     <StyledFooter/>
                 </div>
-
-
             </BrowserRouter>
         </div>
     );

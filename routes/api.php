@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'symptoms'], function () {
+    Route::get('/', 'Api\\SymptomController@readAll');
+});
+
 Route::group(['prefix' => 'queries'], function () {
     Route::get('case-one', 'Api\\QueryController@caseOne');
     Route::get('case-two', 'Api\\QueryController@caseTwo');

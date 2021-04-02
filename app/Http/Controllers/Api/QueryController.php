@@ -166,19 +166,5 @@ WHERE phc.name = 'Viau'";
         return $this->getDefaultResponse($query, $description);
     }
 
-    private function getDefaultResponse($query = null, $description = null)
-    {
-        $result = DB::select($query);
-        $columns = [];
-        if (count($result) > 0) {
-            $columns = array_keys(json_decode(json_encode($result[0]), true));
-        }
-        return response()->json([
-            'description' => $description,
-            'query' => $query,
-            'columns' => $columns,
-            'result' => $result
-        ]);
-    }
 }
 
