@@ -1,7 +1,15 @@
 import React from 'react';
 
 export default function () {
-    return <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+
+
+
+    function handleSubmit() {
+        alert('A form was submitted: ' );
+    }
+
+    return  (       <form onSubmit={handleSubmit}>
+        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
         <div className="-mx-3 md:flex mb-6">
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -40,7 +48,7 @@ export default function () {
                 </label>
                 <input
                     className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                    id="grid-city" type="text" placeholder=""/>
+                    id="grid-city" type="date" placeholder=""/>
             </div>
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -176,7 +184,7 @@ export default function () {
                 </label>
                 <input
                     className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                    id="grid-city" type="text" placeholder="Parent 1 full name"/>
+                    id="grid-city" type="date" placeholder="Parent 1 full name"/>
             </div>
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -187,6 +195,11 @@ export default function () {
                     className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                     id="grid-city" type="text" placeholder="Parent 2     full name"/>
             </div>
+        </div >
+            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+            <button type="submit" class="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit </button>
+            </div>
         </div>
-    </div>
+</form>)
+
 }
