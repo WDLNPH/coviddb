@@ -1,13 +1,18 @@
 import React from 'react';
+//this.state = {        inputLinkClicked: false}
 
-export default function () {
-
-
+ //   function addChild(){        this.setState({ inputLinkClicked: true})    }
 
     function handleSubmit() {
-        alert('A form was submitted: ' );
+        alert('A form was submitted ' );
     }
 
+export default function () {
+    function addChild() {       // this.setState({ inputLinkClicked: true})
+    }
+    function handleSubmit() {
+        alert('A form was submitted ' );
+    }
     return  (       <form onSubmit={handleSubmit}>
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
         <div className="-mx-3 md:flex mb-6">
@@ -167,6 +172,11 @@ export default function () {
                     id="grid-city" type="text" placeholder="Parent 2     full name"/>
             </div>
         </div>
+            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                <button onClick={addChild()}    type="button"
+                        className="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Add a child section
+                </button>
+            </div>
         <div className="-mx-3 md:flex mb-2">
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"

@@ -6464,12 +6464,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+ //this.state = {        inputLinkClicked: false}
+//   function addChild(){        this.setState({ inputLinkClicked: true})    }
 
 
+
+
+function handleSubmit() {
+  alert('A form was submitted ');
+}
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
+  function addChild() {// this.setState({ inputLinkClicked: true})
+  }
+
   function handleSubmit() {
-    alert('A form was submitted: ');
+    alert('A form was submitted ');
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("form", {
@@ -6691,6 +6701,14 @@ __webpack_require__.r(__webpack_exports__);
             placeholder: "Parent 2     full name"
           })]
         })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "md:w-1/2 px-3 mb-6 md:mb-0",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          onClick: addChild(),
+          type: "button",
+          className: "bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2",
+          children: " Add a child section"
+        })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "-mx-3 md:flex mb-2",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
