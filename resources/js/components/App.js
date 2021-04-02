@@ -10,7 +10,7 @@ import {Redirect} from "react-router";
 import Sidebar from "./layout/Sidebar";
 import Navbar from "./layout/Navbar";
 import React from "react";
-import AllPeople from "./pages/Person/AllPeople";
+import AllPatients from "./pages/Person/AllPeople";
 import AllRegions from "./pages/Region/AllRegions";
 import AllAlerts from "./pages/Alert/AllAlerts";
 import AllFacilities from "./pages/Facility/AllFacilities";
@@ -29,7 +29,7 @@ function App() {
                     <div className="flex flex-1 flex-col p-5">
                         <Switch>
                             <Route path="/query-result" component={QueryResult}/>
-                            <Route path="/people" component={AllPeople}/>  {/*      */}
+                            <Route path="/patients" component={AllPatients}/>  {/*      */}
                             <Route path="/workers" component={AllWorkers}/>
                             <Route path="/facilities" component={AllFacilities}/>
                             <Route path="/regions" component={AllRegions}/>

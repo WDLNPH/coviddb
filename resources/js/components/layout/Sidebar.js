@@ -67,7 +67,7 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="People" to={'/people'}/>
+                        <MenuButton name="Patients" to={'/patients'}/>
                         <MenuButton name="Workers" to={'/workers'}/>
                         <MenuButton name="Facilities" to={'facilities'}/>
                         <MenuButton name="Regions" to={'regions'}/>
