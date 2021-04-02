@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS `Person`;
 CREATE TABLE `Person`
 (
     `person_id`   INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `medicare`    VARCHAR(16) DEFAULT NULL,
+    `medicare`    VARCHAR(16) NOT NULL,
+    `password`    VARCHAR(64) NOT NULL,
     `first_name`  VARCHAR(32) NOT NULL,
     `last_name`   VARCHAR(32) NOT NULL,
     `address`     VARCHAR(128) NOT NULL,
