@@ -29,7 +29,7 @@ function App() {
                     <div className="flex flex-1 flex-col p-5">
                         <Switch>
                             <Route path="/query-result" component={QueryResult}/>
-                            <Route path="/people" component={AllPeople}/>
+                            <Route path="/people" component={AllPeople}/>  {/*      */}
                             <Route path="/workers" component={AllWorkers}/>
                             <Route path="/facilities" component={AllFacilities}/>
                             <Route path="/regions" component={AllRegions}/>
