@@ -1,11 +1,7 @@
 import React from 'react';
 //this.state = {        inputLinkClicked: false}
 
- //   function addChild(){        this.setState({ inputLinkClicked: true})    }
 
-    function handleSubmit() {
-        alert('A form was submitted ' );
-    }
 
 export default function () {
     function addChild() {       // this.setState({ inputLinkClicked: true})

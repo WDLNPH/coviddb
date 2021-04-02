@@ -6465,14 +6465,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
  //this.state = {        inputLinkClicked: false}
-//   function addChild(){        this.setState({ inputLinkClicked: true})    }
 
 
-
-
-function handleSubmit() {
-  alert('A form was submitted ');
-}
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
   function addChild() {// this.setState({ inputLinkClicked: true})
@@ -6823,12 +6817,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: "Implement list here"
+  var _jsx2;
+
+  function addChild() {// this.setState({ inputLinkClicked: true})
+  }
+
+  function handleSubmit() {
+    alert('A form was submitted ');
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("form", {
+    onSubmit: handleSubmit,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "-mx-3 md:flex mb-6",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-first-name",
+            children: "First Name"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3",
+            id: "grid-first-name",
+            type: "text",
+            placeholder: "Jane"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-last-name",
+            children: "Last Name"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-last-name",
+            type: "text",
+            placeholder: "Doe"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "-mx-3 md:flex mb-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Poste"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: ""
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Employee ID"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "date",
+            placeholder: ""
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Facility"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: ""
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-zip",
+            children: "Facility ID"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-zip",
+            type: "text",
+            placeholder: ""
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "-mx-3 md:flex mb-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            children: "Time"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            children: ["Start", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {})]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            children: "End"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Monday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", (_jsx2 = {
+            type: "time",
+            min: "09:00",
+            max: "18:00",
+            required: true,
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city"
+          }, _defineProperty(_jsx2, "type", "text"), _defineProperty(_jsx2, "placeholder", "time"), _jsx2))]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Tuesday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Wednesday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Thursday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Friday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Saturday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "md:w-1/2 px-3 mb-6 md:mb-0",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2",
+            htmlFor: "grid-city",
+            children: "Sunday"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            className: "appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4",
+            id: "grid-city",
+            type: "text",
+            placeholder: "time"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "md:w-1/2 px-3 mb-6 md:mb-0",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          type: "submit",
+          "class": "bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2",
+          children: " Submit "
+        })
+      })]
+    })
   });
 }
 
