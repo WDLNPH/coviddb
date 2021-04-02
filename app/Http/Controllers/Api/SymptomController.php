@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class SymptomController extends Controller
 {
@@ -19,13 +20,12 @@ class SymptomController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function readAll(Request $request)
     {
-        //
+        return response()->json(DB::select("SELECT * FROM Symptom"));
     }
 
     /**
