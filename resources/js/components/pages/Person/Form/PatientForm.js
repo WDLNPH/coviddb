@@ -4,7 +4,7 @@ import {Field, Formik} from 'formik';
 export default function ({patientRequestPromise}) {
     async function handleSubmit(values) {
         try {
-            await {data} = patientRequestPromise(values);
+            const {data} = await patientRequestPromise(values);
             console.log(data);
             alert("done boi")
         } catch (exception) {
