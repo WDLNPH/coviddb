@@ -1,10 +1,12 @@
-import React from 'react';
-import {Field, Formik} from 'formik';
+import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import CreatePatient from "./CreatePatient";
 import EditPatient from "./EditPatient";
-import {Redirect, useRouteMatch} from "react-router";
+import {useRouteMatch} from "react-router";
+import Table from "../../Table";
+import {readAllPatients} from "../../../api";
 
+const PATIENT_COLUMNS = ['first_name','last_name', 'medicare','dob'];
 
 export default function ({patientRequestPromise}) {
     async function handleSubmit(values) {
@@ -25,11 +27,36 @@ export default function ({patientRequestPromise}) {
                 <Route render={() => (
                     <>
                         <NavLink to={`${match.url}/create`}>Create a new patient</NavLink>
-                        to be continued
+                        <ListPatients/>
                     </>
                 )}/>
             </Switch>
         </>
     )
+}
 
+function ListPatients() {
+    const [patients, setPatients] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        async function loadPatients() {
+            setLoading(true);
+            try {
+                const {data} = await readAllPatients();
+                setPatients(data);
+            } catch (e) {
+                // skip
+            }
+            setLoading(false);
+        }
+        loadPatients()
+    },[]);
+
+    const memoizedColumns = useMemo(() => PATIENT_COLUMNS.map(col => ({
+        Header: col,
+        accessor: col
+    })), []);
+
+    return loading ? '...' : <Table columns={memoizedColumns} data={patients}/>;
 }
