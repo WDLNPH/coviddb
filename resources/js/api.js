@@ -36,3 +36,19 @@ export function createWorker(worker) {
 export function updateWorker(worker_Id, worker) {
     return axios.put(`workers/${worker_Id}`, worker);
 }
+
+export function readAllFacilities() {
+    return axios.get('facilities');
+}
+
+export function readOneFacilities(facilitiesId) {
+    return axios.get('facilities');
+}
+
+export function createFacilities(facilities) {
+    return axios.post('facilities', facilities);
+}
+
+export function updateFacilities(facilities_Id, facilities) {
+    return axios.put(`facilities/${facilities_Id}`, facilities);
+}

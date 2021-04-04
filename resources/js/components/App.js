@@ -13,7 +13,7 @@ import React from "react";
 import AllPatients from "./pages/Person/AllPeople";
 import AllRegions from "./pages/Region/AllRegions";
 import AllAlerts from "./pages/Alert/AllAlerts";
-import AllFacilities from "./pages/Facility/AllFacilities";
+import AllFacilities from "./pages/Facility/FacilitiesForm";
 import AllGroupZones from "./pages/GroupZone/AllGroupZones";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
 import AllWorkers from "./pages/Worker/WorkerForm";
