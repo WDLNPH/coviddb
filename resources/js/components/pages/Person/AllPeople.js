@@ -8,22 +8,15 @@ import {readAllPatients} from "../../../api";
 
 const PATIENT_COLUMNS = ['first_name','last_name', 'medicare','dob'];
 
-export default function ({patientRequestPromise}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await patientRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-           // skip
-        }
-    }
+
+export default function () {
+    // /patients
     const match = useRouteMatch();
     return  (
         <>
             <Switch>
                 <Route path={`${match.url}/create`} component={CreatePatient}/>
-                <Route path={`${match.url}/:patientId`} component={EditPatient}/>
+                <Route path={`${match.url}/:patientId`} component={EditPatient}/> {/* const {patientId} = useParams(); */}
                 <Route render={() => (
                     <>
                         <NavLink to={`${match.url}/create`}>Create a new patient</NavLink>
@@ -39,6 +32,7 @@ function ListPatients() {
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // componentDidMount
     useEffect(() => {
         async function loadPatients() {
             setLoading(true);
@@ -51,7 +45,7 @@ function ListPatients() {
             setLoading(false);
         }
         loadPatients()
-    },[]);
+    }, []);
 
     const memoizedColumns = useMemo(() => PATIENT_COLUMNS.map(col => ({
         Header: col,
