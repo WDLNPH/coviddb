@@ -205,9 +205,17 @@ export default function ({patientRequestPromise}) {
                                 <div className="w-full svelte-1l8159u">
                                     <div className="my-2 p-1 flex border border-gray-200 bg-white rounded svelte-1l8159u">
                                         <div className="flex flex-auto flex-wrap">
-                                            <Badge name="HTML"/>
-                                            <Badge name="JavaScript"/>
-                                            <Badge name="Ruby"/>
+                                            <Badge name="MontrealPrimaryGrade1_Group_1"/>
+                                            <Badge name="MontrealPrimaryGrade1_Group_2"/>
+                                            <Badge name="MontrealChurch_Group_1"/>
+                                            <Badge name="MontrealChurch_Group_2"/>
+                                            <Badge name="Basketball_Group_1"/>
+                                            <Badge name="WeightLifting_Group_1"/>
+                                            <Badge name="Soccer_Group_1"/>
+                                            <Badge name="SainteCatherineRetail_Group_1"/>
+                                            <Badge name="QuartierDixTrente_Group_1"/>
+                                            <Badge name="Rockland_Group_1"/>
+
                                             <div className="flex-1">
                                                 <input
                                                     placeholder=""
@@ -220,7 +228,7 @@ export default function ({patientRequestPromise}) {
                                                 className="cursor-pointer w-6 h-6 text-gray-600 outline-none focus:outline-none">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
                                                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
-                                                     strokeLinecap="round" strokeLinejoin="round"
+                                                     strokeLinecap="round" stroke-linejoin="round"
                                                      className="feather feather-chevron-up w-4 h-4">
                                                     <polyline points="18 15 12 9 6 15"></polyline>
                                                 </svg>
@@ -231,9 +239,16 @@ export default function ({patientRequestPromise}) {
                                 <div
                                     className="absolute shadow top-14 bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
                                     <div className="flex flex-col w-full">
-                                        <Option name="Python"/>
-                                        <Option name="Javascript"/>
-                                        <Option name="Ruby"/>
+                                        <Option name="MontrealPrimaryGrade1_Group_1"/>
+                                        <Option name="MontrealPrimaryGrade1_Group_2"/>
+                                        <Option name="MontrealChurch_Group_1"/>
+                                        <Option name="MontrealChurch_Group_2"/>
+                                        <Option name="Basketball_Group_1"/>
+                                        <Option name="WeightLifting_Group_1"/>
+                                        <Option name="Soccer_Group_1"/>
+                                        <Option name="SainteCatherineRetail_Group_1"/>
+                                        <Option name="QuartierDixTrente_Group_1"/>
+                                        <Option name="Rockland_Group_1"/>
                                     </div>
                                 </div>
                             </div>
