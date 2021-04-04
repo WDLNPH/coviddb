@@ -25,7 +25,7 @@ export function readAllWorkers() {
     return axios.get('workers');
 }
 
-export function readOneWorker(health_worker_Id) {
+export function readOneWorker(healthWorkerId) {
     return axios.get('workers');
 }
 
