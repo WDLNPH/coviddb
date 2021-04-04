@@ -4,6 +4,15 @@ export function fetchSymptoms() {
     return axios.get('symptoms');
 }
 
+////////////////////// Regions
+
+export function autocompleteRegions(postalCode) {
+    return axios.get('regions/autocomplete', {params: {
+        postal_code: postalCode
+    }});
+}
+
+
 ////////////////////// Patients
 export function readAllPatients() {
     return axios.get('patients');

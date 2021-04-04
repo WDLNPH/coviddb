@@ -1,7 +1,31 @@
-import React from 'react';
-import {Field, Formik} from 'formik';
+import React, {useState, useEffect} from 'react';
+import {Field, Formik, useFormikContext} from 'formik';
+import {autocompleteRegions} from "../../../../api";
 import {Polyline} from 'react-polyline';
 import {Line} from 'react-line';
+
+const AutocompleteRegionValues = () => {
+    // Grab values and submitForm from context
+    const { values, submitForm } = useFormikContext();
+    const [search, updateSearch] = useState("");
+    const [results, updateResults] = useState(results);
+    useEffect(() => {
+        async function loadRegionValues(postalCode) {
+            try {
+                const {data} = autocompleteRegions(postalCode);
+            } catch (e) {
+                // skip
+            }
+            console.log(data);
+        }
+        // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
+        if (values.postal_code.length >= 3 && values.postal_code.slice(0,3) !== search) {
+            updateSearch(values.postal_code.slice(0,3));
+            loadRegionValues(values.postal_code.slice(0,3));
+        }
+    }, [values, submitForm]);
+    return null;
+};
 
 export default function ({patientRequestPromise}) {
     async function handleSubmit(values) {
@@ -77,23 +101,13 @@ export default function ({patientRequestPromise}) {
                     <div className="-mx-3 md:flex mb-2">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                   htmlFor="grid-city">
+                                   htmlFor="grid-address">
                                 Address
                             </label>
                             <Field
                                 name="address"
                                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                id="grid-city" type="text" placeholder="street number street name"/>
-                        </div>
-                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                   htmlFor="grid-city">
-                                City
-                            </label>
-                            <Field
-                                name="city"
-                                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                id="grid-city" type="text" placeholder="Montreal"/>
+                                id="grid-address" type="text" placeholder="street number street name"/>
                         </div>
                         <div className="md:w-1/2 px-3">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -104,18 +118,19 @@ export default function ({patientRequestPromise}) {
                                 name="postal_code"
                                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                                 id="grid-zip" type="text" placeholder="A1A 1A1"/>
+                            <AutocompleteRegionValues/>
                         </div>
                     </div>
                     <div className="-mx-3 md:flex mb-2">
-                        <div className="md:w-1/2 px-3">
+                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                   htmlFor="grid-zip">
-                                Citizenship
+                                   htmlFor="grid-city">
+                                City
                             </label>
                             <Field
-                                name="citizenship"
+                                name="city"
                                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                id="grid-zip" type="text" placeholder="Canada"/>
+                                id="grid-city" type="text" placeholder="Montreal"/>
                         </div>
                         <div className="md:w-1/2 px-3">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
@@ -145,6 +160,16 @@ export default function ({patientRequestPromise}) {
                                     </svg>
                                 </div>
                             </div>
+                        </div>
+                        <div className="md:w-1/2 px-3">
+                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   htmlFor="grid-citizenship">
+                                Citizenship
+                            </label>
+                            <Field
+                                name="citizenship"
+                                className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                                id="grid-citizenship" type="text" placeholder="Canada"/>
                         </div>
                     </div>
                     <div className="-mx-3 md:flex mb-2">
