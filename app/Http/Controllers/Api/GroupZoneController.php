@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class GroupZoneController extends Controller
 {
@@ -20,12 +21,12 @@ class GroupZoneController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function readAll(Request $request)
     {
-        //
+        return response()->json(DB::select("SELECT * FROM GroupZone"));
     }
 
     /**
