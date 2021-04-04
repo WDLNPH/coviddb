@@ -16,7 +16,7 @@ import AllAlerts from "./pages/Alert/AllAlerts";
 import AllFacilities from "./pages/Facility/AllFacilities";
 import AllGroupZones from "./pages/GroupZone/AllGroupZones";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
-import AllWorkers from "./pages/Worker/AllWorkers";
+import AllWorkers from "./pages/Worker/WorkerForm";
 import CreateForm from "./pages/Form/CreateForm";
 
 function App() {
