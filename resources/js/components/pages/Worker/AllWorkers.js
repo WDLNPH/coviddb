@@ -69,7 +69,8 @@ export default function () {
                 </div>
             </div>
 
-            <div className="-mx-3 md:flex md:flex-col mb-2">
+            <div className="-mx-3 md:flex md:flex-col mt-10 mb-2">
+                <div className="ml-10">
                 <div className="md:flex md:flex-row px-3 mb-6 md:mb-0">
                     <div className="md:w-1/3 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" >Schedule input</div>
                 </div>
@@ -124,7 +125,7 @@ export default function () {
                                className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                     </div>
                 </div>
-
+                </div>
             </div>
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <button type="submit" class="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit </button>
