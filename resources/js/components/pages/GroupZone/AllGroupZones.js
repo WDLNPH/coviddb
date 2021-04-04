@@ -1,10 +1,11 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateGroupZones from "./CreateGroupZones";
-import EditGroupZones from "./EditGroupZone";
+import CreateGroupZones from "./CreateGroupZone";
+import EditGroupZones from "./EditGroupZones";
 import {useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllGroupZones} from "../../../api";
+
 
 const GROUP_ZONES_COLUMNS = ['name','type'];
 

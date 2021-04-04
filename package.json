@@ -38,6 +38,8 @@
         "web-vitals": "^0.2.4"
     },
     "dependencies": {
-        "formik": "^2.2.6"
+        "formik": "^2.2.6",
+        "react-line": "^1.0.2",
+        "react-polyline": "^1.0.0"
     }
 }

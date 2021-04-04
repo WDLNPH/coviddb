@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Field, Formik} from 'formik';
-import GroupZonesForm from "./GroupZonesForm";
 import {updateGroupZones} from "../../../api";
 import {useParams} from "react-router";
 import GroupZonesForm from "./GroupZonesForm";
@@ -12,5 +11,5 @@ export default function () {
     useEffect(() => {
         // fetch the patient object from the db
     }, [])
-    return loading ? <>please wait</> : <GroupZonesForm groupZonesRequestPromise={values => updateGroupZonesId, values)} groupZones={groupZones}/>
+    return loading ? <>please wait</> : <GroupZonesForm groupZonesRequestPromise={values => (updateGroupZonesId, values)} groupZones={groupZones}/>
 }
