@@ -67,7 +67,11 @@ class test extends Command
         $healthWorkerIds = [];
         // Same naming convention
         $patientIds = [];
-
+        $this->line("Generating Quebec Postal Codes");
+        for ($i = 0; $i < 10; $i++) {
+            $this->info($faker->postal_code_qc);
+        }
+        dd();
         /**
          * Create Health Centers
          */
@@ -136,7 +140,7 @@ class test extends Command
             "last_name" => $faker->lastName,
             "address" => $faker->streetAddress,
             "city"   => $faker->city,
-            "postal_code" => $faker->postcode,
+            "postal_code" => $faker->postal_code_qc,
             "province" => $faker->provinceAbbr,
             "citizenship" => $faker->countryCode,
             "email"   => $faker->email,
