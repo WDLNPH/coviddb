@@ -67,6 +67,13 @@ export function updateFacilities(facilitiesId, facilities) {
 
 
 ////////////////////// Group Zone
+
+export function readAllPositions() {
+    return axios.get('positions');
+}
+
+////////////////////// Group Zone
+
 export function readAllGroupZones() {
     return axios.get('group-zones');
 }

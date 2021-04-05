@@ -1,15 +1,40 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Field, FieldArray, Form, Formik} from 'formik';
-import {readAllGroupZones} from "../../../../api";
-import {AutocompleteRegionValues, Option, Badge} from "../../Person/Form/PatientForm";
+import React, {useEffect, useState} from 'react';
+import {Field, Form, Formik} from 'formik';
+import PersonSectionForm from "../../../common/forms/PersonSectionForm";
+import {readAllFacilities, readAllGroupZones, readAllPositions} from "../../../../api";
 
 
 export default function ({workerRequestPromise}) {
-    const [groupZones, setGroupZones] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [filter, setFilter] = useState("");
-    const inputRef = useRef();
 
+    const [facilities, setFacilities] = useState([]);
+    const [positions, setPositions] = useState([]);
+    const [loadingF, setLoadingF] = useState(false);
+    const [loadingP, setLoadingP] = useState(false);
+
+    useEffect(() => {
+        async function loadFacilities() {
+            setLoadingF(false)
+            try {
+                const {data} = await readAllFacilities();
+                setFacilities(data);
+            } catch (e) {
+                // skip
+            }
+            setLoadingF(false);
+        }
+        async function loadPositions() {
+            setLoadingP(true);
+            try {
+                const {data} = await readAllPositions();
+                setPositions(data);
+            } catch (e) {
+                // skip
+            }
+            setLoadingP(false);
+        }
+        loadFacilities();
+        loadPositions()
+    }, []);
 
     async function handleSubmit(values) {
         try {
@@ -19,22 +44,6 @@ export default function ({workerRequestPromise}) {
             // skip
         }
     }
-
-    useEffect(() => {
-        async function loadGroupZones() {
-            setLoading(true);
-            try {
-                const {data} = await readAllGroupZones();
-                setGroupZones(data);
-            } catch (e) {
-                // skip
-            }
-            setLoading(false);
-        }
-
-        loadGroupZones()
-    }, []);
-
 
     return (
         <>
@@ -52,115 +61,58 @@ export default function ({workerRequestPromise}) {
                 email: '',
                 phone: '',
                 group_zones: [],
-                position: '',
+                position_id: '',
                 health_center_id: '',
-                schedule: '',
+                schedule: {
+                    monday: {
+                        open: '',
+                        close: ''
+                    },
+                    tuesday: {
+                        open: '',
+                        close: ''
+                    },
+                    wednesday: {
+                        open: '',
+                        close: ''
+                    },
+                    thursday: {
+                        open: '',
+                        close: ''
+                    },
+                    friday: {
+                        open: '',
+                        close: ''
+                    },
+                    saturday: {
+                        open: '',
+                        close: ''
+                    },
+                    sunday: {
+                        open: '',
+                        close: ''
+                    },
+                },
             }}
-                    onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}>
                 {({values}) => (
                     <Form>
                         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-                            <div className="-mx-3 md:flex mb-6">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-first-name">
-                                        First Name
-                                    </label>
-                                    <Field
-                                        name="first_name"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                        id="grid-first-name" type="text" placeholder="Jane"/>
-                                </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-last-name">
-                                        Last Name
-                                    </label>
-                                    <Field
-                                        name="last_name"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-last-name" type="text" placeholder="Doe"/>
-                                </div>
-                            </div>
+                            <PersonSectionForm/>
                             <div className="-mx-3 md:flex mb-2">
                                 <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-city">
-                                        Medicare ID
-                                    </label>
-                                    <Field
-                                        name="medicare"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-city" type="text" placeholder=""/>
-                                </div>
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-city">
-                                        Date of Birth
-                                    </label>
-                                    <Field
-                                        name="dob"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-city" type="date" placeholder=""/>
-                                </div>
-                            </div>
-                            <div className="-mx-3 md:flex mb-2">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-address">
-                                        Address
-                                    </label>
-                                    <Field
-                                        name="address"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-address" type="text" placeholder="street number street name"/>
-                                </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-zip">
-                                        Postal Code
-                                    </label>
-                                    <Field
-                                        name="postal_code"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-zip" type="text" placeholder="A1A 1A1"/>
-                                    <AutocompleteRegionValues/>
-                                </div>
-                            </div>
-                            <div className="-mx-3 md:flex mb-2">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-city">
-                                        City
-                                    </label>
-                                    <Field
-                                        disabled
-                                        name="city"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-city" type="text" placeholder="Montreal"/>
-                                </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-state">
-                                        Province
-                                    </label>
+                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
                                     <div className="relative">
                                         <Field
-                                            disabled
                                             as="select"
-                                            name="province"
+                                            name="position"
                                             className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
-                                            id="grid-state">
-                                            <option value="AB">Alberta</option>
-                                            <option value="BC">British Columbia</option>
-                                            <option value="MN">Manitoba</option>
-                                            <option value="NB">New Brunswick</option>
-                                            <option value="NF">Newfoundland and Labrador</option>
-                                            <option value="NS">Nova Scotia</option>
-                                            <option value="ON">Ontario</option>
-                                            <option value="PE">Prince Edward Island</option>
-                                            <option value="QC">Quebec</option>
-                                            <option value="SK">Saskatchewan</option>
+                                        >
+                                            {positions.map(position => (
+                                                <option value={position.id}>
+                                                    {position.position}
+                                                </option>
+                                            ))}
                                         </Field>
                                         <div className="pointer-events-none absolute right-1 top-3 pin-y pin-r flex items-center px-2 text-grey-darker">
                                             <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -170,106 +122,25 @@ export default function ({workerRequestPromise}) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-citizenship">
-                                        Citizenship
-                                    </label>
-                                    <Field
-                                        disabled
-                                        name="citizenship"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-citizenship" type="text" placeholder="Canada"/>
-                                </div>
-                            </div>
-                            <div className="-mx-3 md:flex mb-2">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-city">
-                                        Email Address
-                                    </label>
-                                    <Field
-                                        name="email"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-city" type="text" placeholder=""/>
-                                </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-zip">
-                                        Phone Number
-                                    </label>
-                                    <Field
-                                        name="phone"
-                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                                        id="grid-zip" type="text" placeholder=""/>
-                                </div>
-                            </div>
-                            <div className="-mx-3 md:flex mb-6">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
-                                           htmlFor="grid-first-name">
-                                        Group Zones
-                                    </label>
-                                    <FieldArray name="group_zones">
-                                        {({push, remove, pop}) => (
-                                            <div className="flex flex-col items-center relative">
-                                                <div className="w-full">
-                                                    <div
-                                                        className="my-2 p-1 flex border border-gray-200 bg-white rounded svelte-1l8159u">
-                                                        <div className="flex flex-auto flex-wrap">
-                                                            {values.group_zones.map((groupZoneId, idx) => <Badge
-                                                                onClick={() => remove(idx)}
-                                                                name={groupZones.find(g => parseInt(g.group_id) === parseInt(groupZoneId)).name}/>)}
-                                                            <div className="flex-1">
-                                                                <input
-                                                                    onKeyDown={e => {
-                                                                        if (e.keyCode === 8 && filter === "") {
-                                                                            pop();
-                                                                        }
-                                                                    }}
-                                                                    ref={inputRef}
-                                                                    value={filter}
-                                                                    onChange={(e) => setFilter(e.target.value)}
-                                                                    className="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className="absolute top-14 shadow bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
-                                                    <div className="flex flex-col w-full">
-                                                        {groupZones.filter(gz => filter.length > 0
-                                                            && gz.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1
-                                                            && !values.group_zones.includes(gz.group_id))
-                                                            .map(gz => <Option onClick={() => {
-                                                                push(gz.group_id);
-                                                                setFilter("");
-                                                                inputRef.current.focus();
-                                                            }} name={gz.name}/>)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </FieldArray>
-                                </div>
-                            </div>
-
-                            <div className="-mx-3 md:flex mb-2">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
-                                    <Field name="position"
-                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
-                                </div>
-
                                 <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                     <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility Name</label>
-                                    <Field name="facility_name"
-                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
-                                </div>
-                                <div className="md:w-1/2 px-3">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility ID</label>
-                                    <Field name="health_center_id"
-                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
+                                    <div className="relative">
+                                        <Field as="select"
+                                               name="health_center_id"
+                                               className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder="">
+                                            {facilities.map(facility => (
+                                                <option value={facility.health_center_id}>
+                                                    {facility.name}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                        <div className="pointer-events-none absolute right-1 top-3 pin-y pin-r flex items-center px-2 text-grey-darker">
+                                            <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -279,40 +150,45 @@ export default function ({workerRequestPromise}) {
                                         <div className="md:w-1/3 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" >Schedule input</div>
                                     </div>
                                     <div className="-mx-3 md:flex mb-2">
-                                        <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Monday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        <div className="flex flex-col">
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">&nbsp;</label>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">Open</label>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">Close</label>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Tuesday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Monday</label>
+                                            <Field name="schedule.monday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.monday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Wednesday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Tuesday</label>
+                                            <Field name="schedule.tuesday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.tuesday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Thursday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Wednesday</label>
+                                            <Field name="schedule.wednesday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.wednesday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Friday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Thursday</label>
+                                            <Field name="schedule.thursday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.thursday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Saturday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Friday</label>
+                                            <Field name="schedule.friday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.friday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                         <div className="grid-cols-2">
-                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Sunday</label>
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
-                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Saturday</label>
+                                            <Field name="schedule.saturday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.saturday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase text-grey-darker text-xs pl-10 font-bold">  Sunday</label>
+                                            <Field name="schedule.sunday.open" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                            <Field name="schedule.sunday.close" type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
                                         </div>
                                     </div>
                                 </div>

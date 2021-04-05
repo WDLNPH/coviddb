@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Person\Administrator;
 use App\Models\Person\PublicHealthWorker;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,9 +53,17 @@ class Person extends Authenticatable
     {
         return $this->hasOne(PublicHealthWorker::class, 'person_id', 'person_id');
     }
+
+    public function administrator()
+    {
+        return $this->hasOne(Administrator::class, 'person_id', 'person_id');
+    }
+
     public function getRoleAttribute()
     {
-        if ($this->worker !== null) {
+        if ($this->administrator()->exists()) {
+            return 'administrator';
+        } if ($this->worker()->exists()) {
             return 'worker';
         }
 

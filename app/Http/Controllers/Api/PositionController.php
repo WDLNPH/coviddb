@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class FacilityController extends Controller
+class PositionController extends Controller
 {
     /**
      * Create a newly created resource in storage.
@@ -26,7 +26,7 @@ class FacilityController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT `health_center_id`, `name`, `type` FROM PublicHealthCenter"));
+        return response()->json(DB::select("SELECT * FROM Position"));
     }
 
     /**

@@ -33,6 +33,17 @@ Route::group(['prefix' => 'patients'], function () {
     Route::get('/{patientId}', 'Api\\PatientController@readOne');
 });
 
+Route::group(['prefix' => 'facilities'], function () {
+    Route::get('/', 'Api\\FacilityController@readAll');
+    Route::post('/', 'Api\\FacilityController@create');
+    Route::put('/{facilityId}', 'Api\\FacilityController@update');
+    Route::get('/{facilityId}', 'Api\\FacilityController@readOne');
+});
+
+Route::group(['prefix' => 'positions'], function () {
+    Route::get('/', 'Api\\PositionController@readAll');
+});
+
 Route::group(['prefix' => 'workers'], function () {
     Route::get('/', 'Api\\WorkerController@readAll');
     Route::post('/', 'Api\\PatientController@create');
