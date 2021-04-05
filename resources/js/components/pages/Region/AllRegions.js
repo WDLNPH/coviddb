@@ -1,26 +1,23 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateFacility from "../Facility/CreateFacility";
-import EditFacility from "../Facility/EditFacility";
+import EditRegion from "../Region/EditRegion";
 import {useRouteMatch} from "react-router";
 import Table from "../../Table";
-import {readAllFacilities} from "../../../api";
+import {readAllRegions} from "../../../api";
 
-const FACILITIES_COLUMNS = ['name', 'type', 'address', 'phone'];
-
+const REGIONS_COLUMNS = ['region_id', 'region_name', 'alert_level'];
 
 export default function () {
-    // Facilities
+    // Regions
     const match = useRouteMatch();
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateFacility}/>
-                <Route path={`${match.url}/:facilityId`} component={EditFacility}/> {/* const {facilitiesId} = useParams(); */}
+                <Route path={`${match.url}/:regionId`} component={EditRegion}/> {/* const {regionsId} = useParams(); */}
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new Facility</NavLink>
-                        <ListFacilities/>
+                        <NavLink to={`${match.url}/create`}>Create a new Region</NavLink>
+                        <ListRegions/>
                     </>
                 )}/>
             </Switch>
@@ -28,29 +25,29 @@ export default function () {
     )
 }
 
-function ListFacilities() {
-    const [facilities, setFacilities] = useState([]);
+function ListRegions() {
+    const [regions, setRegions] = useState([]);
     const [loading, setLoading] = useState(false);
 
     // componentDidMount
     useEffect(() => {
-        async function loadFacilities() {
+        async function loadRegions() {
             setLoading(true);
             try {
-                const {data} = await readAllFacilities();
-                setFacilities(data);
+                const {data} = await readAllRegions();
+                setRegions(data);
             } catch (e) {
                 // skip
             }
             setLoading(false);
         }
-        loadFacilities()
+        loadRegions()
     }, []);
 
-    const memoizedColumns = useMemo(() => FACILITIES_COLUMNS.map(col => ({
+    const memoizedColumns = useMemo(() => REGIONS_COLUMNS.map(col => ({
         Header: col,
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={facilities}/>;
+    return loading ? '...' : <Table columns={memoizedColumns} data={regions}/>;
 }

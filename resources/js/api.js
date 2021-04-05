@@ -64,7 +64,9 @@ export function updateFacility(facilityId, facility) {
 }
 
 ////////////////////// Region
-
+export function readAllRegions() {
+    return axios.get('regions');
+}
 
 ////////////////////// Group Zone
 
