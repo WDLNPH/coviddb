@@ -51,16 +51,16 @@ export function readAllFacilities() {
     return axios.get('facilities');
 }
 
-export function readOneFacilities(facilitiesId) {
+export function readOneFacility(facilityId) {
     return axios.get('facilities');
 }
 
-export function createFacilities(facilities) {
-    return axios.post('facilities', facilities);
+export function createFacility(facility) {
+    return axios.post('facility', facility);
 }
 
-export function updateFacilities(facilitiesId, facilities) {
-    return axios.put(`facilities/${facilitiesId}`, facilities);
+export function updateFacility(facilityId, facility) {
+    return axios.put(`facility/${facilityId}`, facility);
 }
 
 ////////////////////// Region

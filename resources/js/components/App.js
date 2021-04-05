@@ -1,4 +1,3 @@
-import StyledNavbar from "./NavBar"
 import QueryResult from "./QueryResult"
 import StyledFooter from "./Footer";
 import {
@@ -13,7 +12,7 @@ import React from "react";
 import AllPatients from "./pages/Person/AllPatients";
 import AllRegions from "./pages/Region/AllRegions";
 import AllAlerts from "./pages/Alert/AllAlerts";
-import AllFacilities from "./pages/Facility/FacilitiesForm";
+import AllFacilities from "./pages/Facility/AllFacilities";
 import AllGroupZones from "./pages/GroupZone/GroupZonesForm";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
 import AllWorkers from "./pages/Worker/AllWorker";

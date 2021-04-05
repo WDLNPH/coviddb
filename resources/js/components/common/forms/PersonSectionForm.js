@@ -1,7 +1,9 @@
 import {Field, FieldArray, useFormikContext} from "formik";
-import {AutocompleteRegionValues, Badge, Option} from "../../pages/Person/Form/PatientForm";
+import {AutocompleteRegionValues} from "./AutocompleteRegion";
+import {Badge, Option} from "../../pages/Person/Form/PatientForm";
 import React, {useEffect, useRef, useState} from "react";
 import {readAllGroupZones} from "../../../api";
+import {Dropdown} from "./FormHelpers";
 
 export default function () {
     const [groupZones, setGroupZones] = useState([]);
@@ -91,7 +93,19 @@ export default function () {
                         name="postal_code"
                         className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                         id="grid-zip" type="text" placeholder="A1A 1A1"/>
-                    <AutocompleteRegionValues/>
+                    <AutocompleteRegionValues onUpdate={regions => {
+                        if (regions.length > 0) {
+                            setFieldValue('city', data[0].region_name);
+                            setFieldValue('province', 'QC')
+                            setFieldValue('citizenship', 'Canada')
+                            setFieldValue('region_id', 121);
+                        } else {
+                            setFieldValue('city', '');
+                            setFieldValue('province', '')
+                            setFieldValue('citizenship', '')
+                            setFieldValue('region_id', null);
+                        }
+                    }}/>
                 </div>
             </div>
             <div className="-mx-3 md:flex mb-2">
@@ -111,31 +125,18 @@ export default function () {
                            htmlFor="grid-state">
                         Province
                     </label>
-                    <div className="relative">
-                        <Field
-                            disabled
-                            as="select"
-                            name="province"
-                            className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
-                            id="grid-state">
-                            <option value="AB">Alberta</option>
-                            <option value="BC">British Columbia</option>
-                            <option value="MN">Manitoba</option>
-                            <option value="NB">New Brunswick</option>
-                            <option value="NF">Newfoundland and Labrador</option>
-                            <option value="NS">Nova Scotia</option>
-                            <option value="ON">Ontario</option>
-                            <option value="PE">Prince Edward Island</option>
-                            <option value="QC">Quebec</option>
-                            <option value="SK">Saskatchewan</option>
-                        </Field>
-                        <div className="pointer-events-none absolute right-1 top-3 pin-y pin-r flex items-center px-2 text-grey-darker">
-                            <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
+                    <Dropdown name="province" id="province" disabled>
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MN">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NF">Newfoundland and Labrador</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Quebec</option>
+                        <option value="SK">Saskatchewan</option>
+                    </Dropdown>
                 </div>
                 <div className="md:w-1/2 px-3">
                     <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"

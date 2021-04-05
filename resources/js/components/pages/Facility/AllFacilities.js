@@ -1,22 +1,22 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateFacilities from "./CreateFacilities";
-import EditFacilities from "./EditFacilities";
+import CreateFacility from "./CreateFacility";
+import EditFacility from "./EditFacility";
 import {useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllFacilities} from "../../../api";
 
-const FACILITIES_COLUMNS = ['facility_name', 'type', 'website', 'phone', 'province'];
+const FACILITIES_COLUMNS = ['name', 'type', 'address', 'phone'];
 
 
 export default function () {
-    // /Facilities
+    // Facilities
     const match = useRouteMatch();
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateFacilities}/>
-                <Route path={`${match.url}/:facilityId`} component={EditFacilities}/> {/* const {facilitiesId} = useParams(); */}
+                <Route path={`${match.url}/create`} component={CreateFacility}/>
+                <Route path={`${match.url}/:facilityId`} component={EditFacility}/> {/* const {facilitiesId} = useParams(); */}
                 <Route render={() => (
                     <>
                         <NavLink to={`${match.url}/create`}>Create a new Facility</NavLink>

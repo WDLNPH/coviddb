@@ -15,7 +15,7 @@ function MenuButton({name, to}) {
     )
 }
 
-function Dropdown({name, icon, children}) {
+function MenuDropdown({name, icon, children}) {
     return (
         <div>
             <a
@@ -49,7 +49,7 @@ export default function () {
         <aside className="flex-shrink-0 hidden w-64 bg-white border-r dark:border-blue-800 dark:bg-darker md:block">
             <div className="flex flex-col h-full">
                 <nav aria-label="Main" className="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-                    <Dropdown
+                    <MenuDropdown
                         name="Admin"
                         icon={(
                             <svg
@@ -69,13 +69,13 @@ export default function () {
                         )}>
                         <MenuButton name="Patients" to={'/patients'}/>
                         <MenuButton name="Workers" to={'/workers'}/>
-                        <MenuButton name="Facilities" to={'facilities'}/>
-                        <MenuButton name="Regions" to={'regions'}/>
-                        <MenuButton name="GroupZones" to={'groupzones'}/>
-                        <MenuButton name="Recommendations" to={'recommendations'}/>
-                        <MenuButton name="Alerts" to={'alerts'}/>
-                    </Dropdown>
-                    <Dropdown
+                        <MenuButton name="Facilities" to={'/facilities'}/>
+                        <MenuButton name="Regions" to={'/regions'}/>
+                        <MenuButton name="GroupZones" to={'/groupzones'}/>
+                        <MenuButton name="Recommendations" to={'/recommendations'}/>
+                        <MenuButton name="Alerts" to={'/alerts'}/>
+                    </MenuDropdown>
+                    <MenuDropdown
                         name="User"
                         icon={(
                             <svg
@@ -94,8 +94,8 @@ export default function () {
                             </svg>
                         )}>
                         <MenuButton name="Create Follow-Up Form" to={'follow-up-form'}/>
-                    </Dropdown>
-                    <Dropdown
+                    </MenuDropdown>
+                    <MenuDropdown
                         name="Warm-Up Project"
                         icon={(
                             <svg
@@ -114,7 +114,7 @@ export default function () {
                             </svg>
                         )}>
                         <MenuButton name="Query Result" to={'query-result'}/>
-                    </Dropdown>
+                    </MenuDropdown>
                 </nav>
             </div>
         </aside>

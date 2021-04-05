@@ -3,41 +3,6 @@ import {Field, FieldArray, Form, Formik, useFormikContext} from 'formik';
 import {autocompleteRegions, readAllGroupZones} from "../../../../api";
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 
-export function AutocompleteRegionValues() {
-    // Grab values and submitForm from context
-    const {values, setFieldValue} = useFormikContext();
-    const [search, updateSearch] = useState("");
-    const [results, updateResults] = useState(results);
-
-    useEffect(() => {
-        async function loadRegionValues(postalCode) {
-            try {
-                const {data} = await autocompleteRegions(postalCode);
-                if (data.length > 0) {
-                    setFieldValue('city', data[0].region_name);
-                    setFieldValue('province', 'QC')
-                    setFieldValue('citizenship', 'Canada')
-                    setFieldValue('region_id', 121);
-                } else {
-                    setFieldValue('city', '');
-                    setFieldValue('province', '')
-                    setFieldValue('citizenship', '')
-                    setFieldValue('region_id', null);
-                }
-            } catch (e) {
-                // skip
-            }
-        }
-
-        // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
-        if (values.postal_code.length >= 3 && values.postal_code.slice(0, 3) !== search) {
-            updateSearch(values.postal_code.slice(0, 3));
-            loadRegionValues(values.postal_code.slice(0, 3));
-        }
-    }, [values]);
-    return null;
-}
-
 export default function ({patientRequestPromise}) {
     const [groupZones, setGroupZones] = useState([]);
     const [loading, setLoading] = useState(false);

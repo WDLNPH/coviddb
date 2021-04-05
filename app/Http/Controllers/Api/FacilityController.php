@@ -26,7 +26,7 @@ class FacilityController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT `health_center_id`, `name`, `type` FROM PublicHealthCenter"));
+        return response()->json(DB::select("SELECT `health_center_id`, `name`, `phone`, `address`, `type` FROM PublicHealthCenter"));
     }
 
     /**
