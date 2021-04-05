@@ -28,6 +28,8 @@ Route::group(['prefix' => 'group-zones'], function () {
 
 Route::group(['prefix' => 'patients'], function () {
     Route::get('/', 'Api\\PatientController@readAll');
+    Route::post('/', 'Api\\PatientController@create');
+    Route::put('/{patientId}', 'Api\\PatientController@update');
     Route::get('/{patientId}', 'Api\\PatientController@readOne');
 });
 Route::group(['prefix' => 'symptoms'], function () {

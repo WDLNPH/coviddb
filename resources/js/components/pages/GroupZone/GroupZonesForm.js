@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field, Formik} from 'formik';
 
-export default function ({groupeZonesRequestPromise}) {
+export default function ({groupZonesRequestPromise}) {
     async function handleSubmit(values) {
         try {
             const {data} = await groupeZonesRequestPromise(values);
