@@ -50,7 +50,7 @@ Route::group(['prefix' => 'workers'], function () {
     Route::put('/{patientId}', 'Api\\PatientController@update');
     Route::get('/{patientId}', 'Api\\PatientController@readOne');
 });
-Route::group(['prefix' => 'symptoms'], function () {
+Route::group(['prefix' => 'Symptoms'], function () {
     Route::get('/', 'Api\\SymptomController@readAll');
 });
 

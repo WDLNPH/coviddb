@@ -12,6 +12,22 @@ export function autocompleteRegions(postalCode) {
     }});
 }
 
+export function readAllRegions() {
+    return axios.get('regions');
+}
+
+export function readOneRegions(regionId) {
+    return axios.get('regions');
+}
+
+export function createRegion(region) {
+    return axios.post('regions', region);
+}
+
+export function updateRegions(regionId, regions) {
+    return axios.put(`regions/${regionId}`, regions);
+}
+
 
 ////////////////////// Patients
 export function readAllPatients() {
@@ -63,10 +79,9 @@ export function updateFacility(facilityId, facility) {
     return axios.put(`facility/${facilityId}`, facility);
 }
 
-////////////////////// Region
 
 
-////////////////////// Group Zone
+////////////////////// Positions
 
 export function readAllPositions() {
     return axios.get('positions');
