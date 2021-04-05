@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'regions'], function () {
     Route::get('autocomplete', 'Api\\RegionController@autocomplete');
+    Route::get('/', 'Api\\RegionController@readAll');
 });
 
 Route::group(['prefix' => 'group-zones'], function () {

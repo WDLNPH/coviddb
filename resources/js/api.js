@@ -79,8 +79,6 @@ export function updateFacility(facilityId, facility) {
     return axios.put(`facility/${facilityId}`, facility);
 }
 
-
-
 ////////////////////// Positions
 
 export function readAllPositions() {

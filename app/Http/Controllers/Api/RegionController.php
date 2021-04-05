@@ -41,7 +41,10 @@ class RegionController extends Controller
      */
     public function readAll(Request $request)
     {
-        //
+        return response()->json(DB::select("
+            SELECT r.region_id, r.region_name, a.alert_level
+            FROM Region r
+            JOIN Alert a ON r.alert_level_id = a.id"));
     }
 
     /**
