@@ -1,52 +1,20 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {Field, FieldArray, Form, Formik, useFormikContext} from 'formik';
-import {autocompleteRegions, readAllGroupZones} from "../../../../api";
+import React, {useEffect, useRef, useState} from 'react';
+import {Field, FieldArray, Form, Formik} from 'formik';
+import {readAllGroupZones} from "../../../../api";
+import {AutocompleteRegionValues, Option, Badge} from "../../Person/Form/PatientForm";
 
-export function AutocompleteRegionValues() {
-    // Grab values and submitForm from context
-    const {values, setFieldValue} = useFormikContext();
-    const [search, updateSearch] = useState("");
-    const [results, updateResults] = useState(results);
 
-    useEffect(() => {
-        async function loadRegionValues(postalCode) {
-            try {
-                const {data} = await autocompleteRegions(postalCode);
-                if (data.length > 0) {
-                    setFieldValue('city', data[0].region_name);
-                    setFieldValue('province', 'QC')
-                    setFieldValue('citizenship', 'Canada')
-                    setFieldValue('region_id', 121);
-                } else {
-                    setFieldValue('city', '');
-                    setFieldValue('province', '')
-                    setFieldValue('citizenship', '')
-                    setFieldValue('region_id', null);
-                }
-            } catch (e) {
-                // skip
-            }
-        }
-
-        // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
-        if (values.postal_code.length >= 3 && values.postal_code.slice(0, 3) !== search) {
-            updateSearch(values.postal_code.slice(0, 3));
-            loadRegionValues(values.postal_code.slice(0, 3));
-        }
-    }, [values]);
-    return null;
-}
-
-export default function ({patientRequestPromise}) {
+export default function ({workerRequestPromise}) {
     const [groupZones, setGroupZones] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filter, setFilter] = useState("");
     const inputRef = useRef();
 
+
     async function handleSubmit(values) {
         try {
-            const {data} = await patientRequestPromise(values);
-            alert("done boi")
+            const {data} = await workerRequestPromise(values);
+            alert("done boi1")
         } catch (exception) {
             // skip
         }
@@ -67,6 +35,7 @@ export default function ({patientRequestPromise}) {
         loadGroupZones()
     }, []);
 
+
     return (
         <>
             <Formik initialValues={{
@@ -82,9 +51,12 @@ export default function ({patientRequestPromise}) {
                 citizenship: '',
                 email: '',
                 phone: '',
-                group_zones: []
+                group_zones: [],
+                position: '',
+                health_center_id: '',
+                schedule: '',
             }}
-            onSubmit={handleSubmit}>
+                    onSubmit={handleSubmit}>
                 {({values}) => (
                     <Form>
                         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
@@ -281,9 +253,73 @@ export default function ({patientRequestPromise}) {
                                     </FieldArray>
                                 </div>
                             </div>
+
+                            <div className="-mx-3 md:flex mb-2">
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
+                                    <Field name="position"
+                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility Name</label>
+                                    <Field name="facility_name"
+                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
+                                </div>
+                                <div className="md:w-1/2 px-3">
+                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility ID</label>
+                                    <Field name="health_center_id"
+                                           className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder=""/>
+                                </div>
+                            </div>
+
+                            <div className="-mx-3 md:flex md:flex-col mt-10 mb-2">
+                                <div className="ml-10">
+                                    <div className="md:flex md:flex-row px-3 mb-6 md:mb-0">
+                                        <div className="md:w-1/3 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" >Schedule input</div>
+                                    </div>
+                                    <div className="-mx-3 md:flex mb-2">
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Monday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Tuesday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Wednesday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Thursday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Friday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Saturday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                        <div className="grid-cols-2">
+                                            <label className="m-2 uppercase  text-grey-darker text-xs pl-10 font-bold">  Sunday</label>
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" />
+                                            <input type="time" className="m-2 appearance-none block w-50 bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="md:w-1/2 mb-6 mt-3 md:mb-0">
                                 <button type="submit" className="mp-button">
-                                    Create Patient
+                                    Create Worker
                                 </button>
                             </div>
                         </div>
@@ -292,64 +328,4 @@ export default function ({patientRequestPromise}) {
             </Formik>
         </>
     )
-}
-
-export function PersonGroupZoneForm({personGZRequestPromise}) {
-
-    async function handleSubmit(values) {
-        try {
-            const {data} = await personGZRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
-
-    return (
-        <Formik initialValues={{groupZones: []}} onSubmit={handleSubmit}>
-
-
-
-        </Formik>
-    )
-}
-
-// TODO: move to form helpers
-export function Badge({name, onClick}) {
-    return (
-        <div
-            className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 ">
-            <div
-                className="text-xs font-normal leading-none max-w-full flex-initial">{name}
-            </div>
-            <div className="flex flex-auto flex-row-reverse" onClick={onClick}>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
-                         fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                         className="feather feather-x cursor-pointer hover:text-teal-400 rounded-full w-4 h-4 ml-2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-// TODO: move to form helpers
-export function Option({name, onClick}) {
-    return (
-        <div
-            onClick={onClick}
-            className="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
-            <div
-                className="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
-                <div className="w-full items-center flex">
-                    <div className="mx-2 leading-6">{name}</div>
-                </div>
-            </div>
-        </div>
-    );
 }

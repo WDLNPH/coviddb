@@ -10,13 +10,13 @@ import {Redirect} from "react-router";
 import Sidebar from "./layout/Sidebar";
 import Navbar from "./layout/Navbar";
 import React from "react";
-import AllPatients from "./pages/Person/AllPeople";
+import AllPatients from "./pages/Person/AllPatients";
 import AllRegions from "./pages/Region/AllRegions";
 import AllAlerts from "./pages/Alert/AllAlerts";
 import AllFacilities from "./pages/Facility/FacilitiesForm";
 import AllGroupZones from "./pages/GroupZone/GroupZonesForm";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
-import AllWorkers from "./pages/Worker/WorkerForm";
+import AllWorkers from "./pages/Worker/AllWorker";
 import CreateForm from "./pages/Form/CreateForm";
 
 function App() {

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Field, Formik} from 'formik';
-import WorkerForm from "./WorkerForm";
+import WorkerForm from "./Form/WorkerForm";
 import {updateWorker} from "../../../api";
 import {useParams} from "react-router";
 

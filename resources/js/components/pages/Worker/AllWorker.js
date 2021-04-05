@@ -1,13 +1,12 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreatePatient from "./CreateWorker";
-import EditPatient from "./EditWorker";
+import CreateWorker from "./CreateWorker";
+import EditWorker from "./EditWorker";
 import {useRouteMatch} from "react-router";
 import Table from "../../Table";
-import {readAllPatients} from "../../../api";
+import {readAllWorkers} from "../../../api";
 
-const WORKER_COLUMNS = ['first_name','last_name', 'health_worker_id','person_id'];
-
+const WORKER_COLUMNS = ['first_name','last_name', 'medicare','position'];
 
 export default function () {
     // /workers
@@ -37,12 +36,14 @@ function ListWorkers() {
         async function loadWorkers() {
             setLoading(true);
             try {
-                const {data} = await readAllPatients();
+                const {data} = await readAllWorkers();
+                console.log(data);
+                debugger;
                 setWorkers(data);
             } catch (e) {
                 // skip
             }
-            setWorkers(false);
+            setLoading(false);
         }
         loadWorkers()
     }, []);
