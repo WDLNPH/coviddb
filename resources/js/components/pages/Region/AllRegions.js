@@ -1,23 +1,19 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateRegion from "./CreateRegion";
-import EditRegion from "./EditRegion";
+import EditRegion from "../Region/EditRegion";
 import {useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllRegions} from "../../../api";
 
-
-const REGIONS_COLUMNS = ['region name','alert level'];
-
+const REGIONS_COLUMNS = ['region_id', 'region_name', 'alert_level'];
 
 export default function () {
-    //regions
+    // Regions
     const match = useRouteMatch();
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateRegion}/>
-                <Route path={`${match.url}/:regionId`} component={EditRegion}/> {/* const {patientId} = useParams(); */}
+                <Route path={`${match.url}/:regionId`} component={EditRegion}/> {/* const {regionsId} = useParams(); */}
                 <Route render={() => (
                     <>
                         <NavLink to={`${match.url}/create`}>Create a new Region</NavLink>
@@ -30,7 +26,7 @@ export default function () {
 }
 
 function ListRegions() {
-    const [Regions, setRegions] = useState([]);
+    const [regions, setRegions] = useState([]);
     const [loading, setLoading] = useState(false);
 
     // componentDidMount
@@ -53,5 +49,5 @@ function ListRegions() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={Regions}/>;
+    return loading ? '...' : <Table columns={memoizedColumns} data={regions}/>;
 }
