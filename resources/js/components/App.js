@@ -13,7 +13,7 @@ import AllPatients from "./pages/Person/AllPatients";
 import AllRegions from "./pages/Region/AllRegions";
 import AllAlerts from "./pages/Alert/AllAlerts";
 import AllFacilities from "./pages/Facility/AllFacilities";
-import AllGroupZones from "./pages/GroupZone/GroupZonesForm";
+import AllGroupZones from "./pages/GroupZone/AllGroupZones";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
 import AllWorkers from "./pages/Worker/AllWorker";
 import CreateForm from "./pages/Form/CreateForm";
@@ -36,7 +36,7 @@ function App() {
                             <Route path="/recommendations" component={AllRecommendations}/>
                             <Route path="/alerts" component={AllAlerts}/>
                             <Route path="/follow-up-form" component={CreateForm}/>
-                            <Route render={() => <Redirect to={'/query-result'}/>}/>
+                            <Route render={() => <Redirect to={'/patients'}/>}/>
                         </Switch>
                     </div>
                     <StyledFooter/>
@@ -47,3 +47,4 @@ function App() {
 }
 
 export default App;
+
