@@ -52,7 +52,7 @@ export function readAllWorkers() {
 }
 
 export function readOneWorker(healthWorkerId) {
-    return axios.get('workers');
+    return axios.get(`workers/${healthWorkerId}`);
 }
 
 export function createWorker(worker) {

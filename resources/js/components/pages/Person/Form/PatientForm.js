@@ -26,7 +26,7 @@ export default function ({patient, patientRequestPromise}) {
                 citizenship: patient ? patient.citizenship : '',
                 email: patient ? patient.email : '',
                 phone: patient ? patient.phone : '',
-                group_zones: patient ? patient.group_zones.split(',') : []
+                group_zones: patient && ![null,"",undefined].includes(patient.group_zones)? patient.group_zones.split(',') : []
             }}
             onSubmit={handleSubmit}>
                 {({values}) => (
@@ -35,7 +35,7 @@ export default function ({patient, patientRequestPromise}) {
                             <PersonSectionForm/>
                             <div className="md:w-1/2 mb-6 mt-3 md:mb-0">
                                 <button type="submit" className="mp-button">
-                                    Create Patient
+                                    {patient ? 'Update' : 'Create'} Patient
                                 </button>
                             </div>
                         </div>

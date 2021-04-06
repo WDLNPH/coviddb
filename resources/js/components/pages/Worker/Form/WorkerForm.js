@@ -5,8 +5,7 @@ import {readAllFacilities, readAllPositions} from "../../../../api";
 import {Dropdown} from "../../../common/forms/FormHelpers";
 
 
-export default function ({workerRequestPromise}) {
-
+export default function ({workerRequestPromise, worker}) {
     const [facilities, setFacilities] = useState([]);
     const [positions, setPositions] = useState([]);
     const [loadingF, setLoadingF] = useState(false);
@@ -49,21 +48,21 @@ export default function ({workerRequestPromise}) {
     return (
         <>
             <Formik initialValues={{
-                first_name: '',
-                last_name: '',
-                medicare: '',
-                dob: '',
-                address: '',
-                postal_code: '',
-                city: '', // Could represent a city_id
-                region_id: '',
-                province: '',
-                citizenship: '',
-                email: '',
-                phone: '',
-                group_zones: [],
-                position_id: '',
-                health_center_id: '',
+                first_name: worker ? worker.first_name : '',
+                last_name: worker ? worker.last_name : '',
+                medicare: worker ? worker.medicare : '',
+                dob: worker ? worker.dob : '',
+                address: worker ? worker.address : '',
+                postal_code: worker ? worker.postal_code : '',
+                city: worker ? worker.city : '', // Could represent a city_id
+                region_id: worker ? worker.region_id : '',
+                province: worker ? worker.province : '',
+                citizenship: worker ? worker.citizenship : '',
+                email: worker ? worker.email : '',
+                phone: worker ? worker.phone : '',
+                group_zones: worker && ![null,"",undefined].includes(worker.group_zones) ? worker.group_zones.split(',') : [],
+                position_id: worker ? worker.position_id : '',
+                health_center_id: worker ? worker.health_center_id : '',
                 schedule: {
                     monday: {
                         open: '',
@@ -101,27 +100,31 @@ export default function ({workerRequestPromise}) {
                         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                             <PersonSectionForm/>
                             <div className="-mx-3 md:flex mb-2">
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
-                                    <Dropdown name="position">
-                                        {positions.map(position => (
-                                            <option value={position.id}>
-                                                {position.position}
-                                            </option>
-                                        ))}
-                                    </Dropdown>
-                                </div>
-                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                    <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility Name</label>
-                                    <Dropdown name="health_center_id">
-                                        <option>Select a facility</option>
-                                        {facilities.map(facility => (
-                                            <option value={facility.health_center_id}>
-                                                {facility.name}
-                                            </option>
-                                        ))}
-                                    </Dropdown>
-                                </div>
+                                {loadingP && (
+                                    <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                        <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
+                                        <Dropdown name="position">
+                                            {positions.map(position => (
+                                                <option value={position.id}>
+                                                    {position.position}
+                                                </option>
+                                            ))}
+                                        </Dropdown>
+                                    </div>
+                                )}
+                                {loadingF && (
+                                    <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                        <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility Name</label>
+                                        <Dropdown name="health_center_id">
+                                            <option>Select a facility</option>
+                                            {facilities.map(facility => (
+                                                <option value={facility.health_center_id}>
+                                                    {facility.name}
+                                                </option>
+                                            ))}
+                                        </Dropdown>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="-mx-3 md:flex md:flex-col mt-10 mb-2">
@@ -175,7 +178,7 @@ export default function ({workerRequestPromise}) {
                             </div>
                             <div className="md:w-1/2 mb-6 mt-3 md:mb-0">
                                 <button type="submit" className="mp-button">
-                                    Create Worker
+                                    {worker ? 'Update' : 'Create'} Worker
                                 </button>
                             </div>
                         </div>

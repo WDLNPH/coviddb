@@ -41,7 +41,6 @@ class PatientController extends Controller
      */
     public function readOne($id)
     {
-        //
         $result = DB::select("SELECT p.patient_id, ps.*, GROUP_CONCAT(gzp.group_id) as 'group_zones'
             FROM Patient p
             JOIN Person ps ON p.person_id = ps.person_id

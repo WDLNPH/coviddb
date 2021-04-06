@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import CreateWorker from "./CreateWorker";
 import EditWorker from "./EditWorker";
-import {useRouteMatch} from "react-router";
+import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllWorkers} from "../../../api";
 
@@ -15,7 +15,7 @@ export default function () {
         <>
             <Switch>
                 <Route path={`${match.url}/create`} component={CreateWorker}/>
-                <Route path={`${match.url}/:patientId`} component={EditWorker}/> {/* const {patientId} = useParams(); */}
+                <Route path={`${match.url}/:workerId`} component={EditWorker}/>
                 <Route render={() => (
                     <>
                         <NavLink to={`${match.url}/create`}>Create a new employee</NavLink>
@@ -30,6 +30,7 @@ export default function () {
 function ListWorkers() {
     const [workers, setWorkers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const history = useHistory()
 
     // componentDidMount
     useEffect(() => {
@@ -38,7 +39,6 @@ function ListWorkers() {
             try {
                 const {data} = await readAllWorkers();
                 console.log(data);
-                debugger;
                 setWorkers(data);
             } catch (e) {
                 // skip
@@ -53,5 +53,5 @@ function ListWorkers() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={workers}/>;
+    return loading ? '...' : <Table onClick={(worker) =>  history.push(`/workers/${worker.health_worker_id}`)} columns={memoizedColumns} data={workers}/>;
 }
