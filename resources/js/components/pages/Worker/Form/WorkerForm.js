@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Field, Form, Formik} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
-import {readAllFacilities, readAllGroupZones, readAllPositions} from "../../../../api";
+import {readAllFacilities, readAllPositions} from "../../../../api";
 import {Dropdown} from "../../../common/forms/FormHelpers";
 
 

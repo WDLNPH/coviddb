@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import CreatePatient from "./CreatePatient";
 import EditPatient from "./EditPatient";
-import {useRouteMatch} from "react-router";
+import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllPatients} from "../../../api";
 
@@ -31,7 +31,7 @@ export default function () {
 function ListPatients() {
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const history = useHistory()
     // componentDidMount
     useEffect(() => {
         async function loadPatients() {
@@ -52,5 +52,5 @@ function ListPatients() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={patients}/>;
+    return loading ? '...' : <Table onClick={(patient) =>  history.push(`/patients/${patient.patient_id}`)} columns={memoizedColumns} data={patients}/>;
 }

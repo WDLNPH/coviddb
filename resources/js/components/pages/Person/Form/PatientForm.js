@@ -1,14 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {Field, FieldArray, Form, Formik, useFormikContext} from 'formik';
-import {autocompleteRegions, readAllGroupZones} from "../../../../api";
+import {Form, Formik,} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 
-export default function ({patientRequestPromise}) {
-    const [groupZones, setGroupZones] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [filter, setFilter] = useState("");
-    const inputRef = useRef();
-
+export default function ({patient, patientRequestPromise}) {
     async function handleSubmit(values) {
         try {
             const {data} = await patientRequestPromise(values);
@@ -18,37 +11,22 @@ export default function ({patientRequestPromise}) {
         }
     }
 
-    useEffect(() => {
-        async function loadGroupZones() {
-            setLoading(true);
-            try {
-                const {data} = await readAllGroupZones();
-                setGroupZones(data);
-            } catch (e) {
-                // skip
-            }
-            setLoading(false);
-        }
-
-        loadGroupZones()
-    }, []);
-
     return (
         <>
             <Formik initialValues={{
-                first_name: '',
-                last_name: '',
-                medicare: '',
-                dob: '',
-                address: '',
-                postal_code: '',
-                city: '', // Could represent a city_id
-                region_id: '',
-                province: '',
-                citizenship: '',
-                email: '',
-                phone: '',
-                group_zones: []
+                first_name: patient ? patient.first_name : '',
+                last_name: patient ? patient.last_name : '',
+                medicare: patient ? patient.medicare : '',
+                dob: patient ? patient.dob : '',
+                address: patient ? patient.address : '',
+                postal_code: patient ? patient.postal_code : '',
+                city: patient ? patient.city : '', // Could represent a city_id
+                region_id: patient ? patient.region_id : '',
+                province: patient ? patient.province : '',
+                citizenship: patient ? patient.citizenship : '',
+                email: patient ? patient.email : '',
+                phone: patient ? patient.phone : '',
+                group_zones: patient ? patient.group_zones.split(',') : []
             }}
             onSubmit={handleSubmit}>
                 {({values}) => (

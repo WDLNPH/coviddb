@@ -35,7 +35,7 @@ export function readAllPatients() {
 }
 
 export function readOnePatient(patientId) {
-    return axios.get('patients');
+    return axios.get(`patients/${patientId}`);
 }
 
 export function createPatient(patient) {
