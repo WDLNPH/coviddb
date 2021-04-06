@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PatientForm, {PersonGroupZoneForm} from "./Form/PatientForm";
 import {readOnePatient, updatePatient} from "../../../api";
 import {useParams} from "react-router";
+import {NavLink} from "react-router-dom";
 
 export default function () {
     const [patient, setPatient] = useState(null);
@@ -24,8 +25,11 @@ export default function () {
 
     return loading ? <>please wait</> : (
         <>
+            <div className="mp-page-header">
+                <h1 className="mp-page-header-title">(#{patient.patient_id}) {patient.first_name} {patient.last_name}</h1>
+                <NavLink to={`/patients`} className="mp-button w-max">{'<'} Back to Patients</NavLink>
+            </div>
             <PatientForm patientRequestPromise={values => updatePatient(patientId, values)} patient={patient}/>
-            <PersonGroupZoneForm />
         </>
     );
 }
