@@ -1,0 +1,6 @@
+.mp-page-header {
+    @apply flex mb-3 justify-between
+}
+.mp-page-header-title {
+    @apply text-3xl font-medium
+}

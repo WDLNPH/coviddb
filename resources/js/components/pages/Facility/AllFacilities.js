@@ -19,7 +19,10 @@ export default function () {
                 <Route path={`${match.url}/:facilityId`} component={EditFacility}/> {/* const {facilitiesId} = useParams(); */}
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new Facility</NavLink>
+                        <div className="mp-page-header">
+                            <h1 className="mp-page-header-title">List of All Facilities</h1>
+                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Facility</NavLink>
+                        </div>
                         <ListFacilities/>
                     </>
                 )}/>
@@ -52,5 +55,5 @@ function ListFacilities() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={facilities}/>;
+    return loading ? '...' : <Table onClick={(facility) =>  history.push(`/facilities/${facility.health_center_id}`)} columns={memoizedColumns} data={facilities}/>;
 }

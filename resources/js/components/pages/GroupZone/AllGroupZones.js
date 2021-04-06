@@ -20,7 +20,10 @@ export default function () {
                 <Route path={`${match.url}/:GroupZoneId`} component={EditGroupZones}/> {/* const {patientId} = useParams(); */}
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new group zone</NavLink>
+                        <div className="mp-page-header">
+                            <h1 className="mp-page-header-title">List of All Group Zones</h1>
+                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new GroupZone</NavLink>
+                        </div>
                         <ListGroupZones/>
                     </>
                 )}/>

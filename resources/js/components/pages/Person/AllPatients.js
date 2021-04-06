@@ -19,7 +19,10 @@ export default function () {
                 <Route path={`${match.url}/:patientId`} component={EditPatient}/> {/* const {patientId} = useParams(); */}
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new patient</NavLink>
+                        <div className="mp-page-header">
+                            <h1 className="mp-page-header-title">List of All Patients</h1>
+                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Patient</NavLink>
+                        </div>
                         <ListPatients/>
                     </>
                 )}/>

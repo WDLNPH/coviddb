@@ -18,7 +18,10 @@ export default function () {
                 <Route path={`${match.url}/:workerId`} component={EditWorker}/>
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new employee</NavLink>
+                        <div className="mp-page-header">
+                            <h1 className="mp-page-header-title">List of All Workers</h1>
+                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Worker</NavLink>
+                        </div>
                         <ListWorkers/>
                     </>
                 )}/>

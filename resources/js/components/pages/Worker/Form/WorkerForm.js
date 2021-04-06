@@ -127,8 +127,8 @@ export default function ({workerRequestPromise, worker}) {
                                 )}
                             </div>
 
-                            <div className="-mx-3 md:flex md:flex-col mt-10 mb-2">
-                                <div className="ml-10">
+                            <div className="-mx-3 md:flex mb-2">
+                                <div className="">
                                     <div className="md:flex md:flex-row px-3 mb-6 md:mb-0">
                                         <div className="md:w-1/3 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" >Schedule input</div>
                                     </div>

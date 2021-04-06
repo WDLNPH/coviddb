@@ -16,7 +16,9 @@ export default function () {
                 <Route path={`${match.url}/:regionId`} component={EditRegion}/> {/* const {regionsId} = useParams(); */}
                 <Route render={() => (
                     <>
-                        <NavLink to={`${match.url}/create`}>Create a new Region</NavLink>
+                        <div className="mp-page-header">
+                            <h1 className="mp-page-header-title">All Regions</h1>
+                        </div>
                         <ListRegions/>
                     </>
                 )}/>
@@ -49,5 +51,5 @@ function ListRegions() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={regions}/>;
+    return loading ? '...' : <Table onClick={(region) =>  history.push(`/regions/${region.region_id}`)} columns={memoizedColumns} data={regions}/>;
 }
