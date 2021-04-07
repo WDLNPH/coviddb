@@ -146,9 +146,6 @@ export default function () {
                                 </ul>
 
                                 <div className="flex-shrink-0 pt-4">
-                                {/*    <button className="inline-flex items-center justify-center w-full max-w-xs px-4 py-2 transition-colors border rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Get Plan
-                                    </button>*/}
                                 </div>
                         </section>
                             ))}
