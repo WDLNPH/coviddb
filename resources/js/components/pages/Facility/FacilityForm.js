@@ -1,8 +1,9 @@
 import React from 'react';
 import {Field, Formik} from 'formik';
 import {Dropdown} from "../../common/forms/FormHelpers";
+import {NavLink} from "react-router-dom";
 
-export default function ({facilityRequestPromise}) {
+export default function ({facilityRequestPromise, facility}) {
     async function handleSubmit(values) {
         try {
             const {data} = await facilityRequestPromise(values);
@@ -14,15 +15,19 @@ export default function ({facilityRequestPromise}) {
     }
     return  (
         <>
+            <div className="mp-page-header">
+                <h1 className="mp-page-header-title">{facility ? `(#${facility.health_center_id}) ${facility.name}` : 'Create Facility'}</h1>
+                <NavLink to={`/facilities`} className="mp-button w-max">{'<'} Back to Facilities</NavLink>
+            </div>
             <Formik initialValues={{
-                name: '',
-                type: '',
-                phone: '',
-                website: '',
-                address: '',
-                city: '', // Could represent a city_id
-                postal_code: '',
-                province: ''
+                name: facility ? facility.name : '',
+                type: facility ? facility.type : '',
+                phone: facility ? facility.phone : '',
+                website: facility ? facility.website : '',
+                address: facility ? facility.address : '',
+                city: facility ? facility.city : '', // Could represent a city_id
+                postal_code: facility ? facility.postal_code : '',
+                province: facility ? facility.province : ''
             }}
                 onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
@@ -32,7 +37,7 @@ export default function ({facilityRequestPromise}) {
                                    htmlFor="grid-first-name">
                                 Name of Facility
                             </label>
-                            <Field name="facility_name"
+                            <Field name="name"
                                 className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                 id="grid-first-name" type="text" placeholder="Hospital St Justine"/>
                         </div>
@@ -82,7 +87,6 @@ export default function ({facilityRequestPromise}) {
                             </div>
                     </div>
                     <div className="-mx-3 md:flex mb-6">
-
                         <div className="md:w-1/3 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">City</label>
                             <Field name="city" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder="Montreal"/>
@@ -109,7 +113,7 @@ export default function ({facilityRequestPromise}) {
                         </div>
                         <div className="md:w-1/3 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Country</label>
-                            <Field name="country" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder="Montreal"/>
+                            <Field name="country" className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text"/>
                         </div>
                     </div>
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">

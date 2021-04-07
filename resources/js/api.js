@@ -68,7 +68,7 @@ export function readAllFacilities() {
 }
 
 export function readOneFacility(facilityId) {
-    return axios.get('facilities');
+    return axios.get(`facilities/${facilityId}`);
 }
 
 export function createFacility(facility) {
@@ -91,14 +91,14 @@ export function readAllGroupZones() {
     return axios.get('group-zones');
 }
 
-export function readOneGroupZones(groupZonesId) {
-    return axios.get('group-zones');
+export function readOneGroupZone(groupZoneId) {
+    return axios.get(`group-zones/${groupZoneId}`);
 }
 
-export function createGroupZones(groupZones) {
+export function createGroupZone(groupZones) {
     return axios.post('group-zones', groupZones);
 }
 
-export function updateGroupZones(groupZonesId, groupZones) {
+export function updateGroupZone(groupZonesId, groupZones) {
     return axios.put(`group-zones/${groupZonesId}`, groupZones);
 }

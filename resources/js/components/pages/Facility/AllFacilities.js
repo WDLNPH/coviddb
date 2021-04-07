@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import CreateFacility from "./CreateFacility";
 import EditFacility from "./EditFacility";
-import {useRouteMatch} from "react-router";
+import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllFacilities} from "../../../api";
 
@@ -34,7 +34,7 @@ export default function () {
 function ListFacilities() {
     const [facilities, setFacilities] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const history = useHistory();
     // componentDidMount
     useEffect(() => {
         async function loadFacilities() {
@@ -55,5 +55,5 @@ function ListFacilities() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(facility) =>  history.push(`/facilities/${facility.health_center_id}`)} columns={memoizedColumns} data={facilities}/>;
+    return loading ? '...' : <Table onClick={(facility) => history.push(`/facilities/${facility.health_center_id}`)} columns={memoizedColumns} data={facilities}/>;
 }

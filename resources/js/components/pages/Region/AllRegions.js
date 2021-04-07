@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import EditRegion from "../Region/EditRegion";
-import {useRouteMatch} from "react-router";
+import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllRegions} from "../../../api";
 
@@ -30,6 +30,7 @@ export default function () {
 function ListRegions() {
     const [regions, setRegions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
     // componentDidMount
     useEffect(() => {

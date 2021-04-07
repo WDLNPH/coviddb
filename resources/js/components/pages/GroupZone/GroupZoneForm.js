@@ -1,10 +1,12 @@
 import React from 'react';
 import {Field, Formik} from 'formik';
+import {NavLink} from "react-router-dom";
+import {Dropdown} from "../../common/forms/FormHelpers";
 
-export default function ({groupZonesRequestPromise}) {
+export default function ({groupeZoneRequestPromise, groupZone}) {
     async function handleSubmit(values) {
         try {
-            const {data} = await groupeZonesRequestPromise(values);
+            const {data} = await groupeZoneRequestPromise(values);
             console.log(data);
             alert("done boi")
         } catch (exception) {
@@ -13,9 +15,13 @@ export default function ({groupZonesRequestPromise}) {
     }
     return  (
         <>
+            <div className="mp-page-header">
+                <h1 className="mp-page-header-title">{groupZone ? `(#${groupZone.group_id}) ${groupZone.name}` : 'Create Group Zone'}</h1>
+                <NavLink to={`/groupzones`} className="mp-button w-max">{'<'} Back to Group Zones</NavLink>
+            </div>
             <Formik initialValues={{
-                name: '',
-                type: '',
+                name: groupZone ? groupZone.name : '',
+                activity: groupZone ? groupZone.activity : '',
             }}
                     onSubmit={handleSubmit}>
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
@@ -35,16 +41,13 @@ export default function ({groupZonesRequestPromise}) {
                                 <div className="md:w-1/2 px-3 w-96">
                                     <label
                                         className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Type of Activity</label>
-                                    <div className="relative">
-                                        <select name="type"
-                                                className="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded">
-                                            <option>Education</option>
-                                            <option>House of Worship</option>
-                                            <option>Shopping</option>
-                                            <option>Sports</option>
-
-                                        </select>
-                                    </div>
+                                    <Dropdown name="activity">
+                                        <option>Select a category</option>
+                                        <option value="Education">Education</option>
+                                        <option value="House of Worship">House of Worship</option>
+                                        <option value="Shopping">Shopping</option>
+                                        <option value="Sports">Sports</option>
+                                    </Dropdown>
                                 </div>
                             </div>
                         </div>

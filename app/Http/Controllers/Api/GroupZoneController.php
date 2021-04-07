@@ -37,7 +37,11 @@ class GroupZoneController extends Controller
      */
     public function readOne($id)
     {
-        //
+        $result = DB::select("SELECT *
+            FROM GroupZone WHERE group_id = '{$id}'");
+
+        return response()->json((count($result) > 0 ? $result[0] : null),
+            count($result) > 0 ? 200 : 404);
     }
 
     /**

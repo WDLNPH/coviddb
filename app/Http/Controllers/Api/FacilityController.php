@@ -37,7 +37,11 @@ class FacilityController extends Controller
      */
     public function readOne($id)
     {
-        //
+        $result = DB::select("SELECT `health_center_id`, `name`, `city`, `province`, `postal_code`,`website`, `phone`, `address`, `type`
+            FROM PublicHealthCenter WHERE health_center_id = '{$id}'");
+
+        return response()->json((count($result) > 0 ? $result[0] : null),
+            count($result) > 0 ? 200 : 404);
     }
 
     /**

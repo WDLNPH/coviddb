@@ -1,8 +1,7 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
-import GroupZonesForm from "./GroupZonesForm";
-import {createGroupZones} from "../../../api";
+import GroupZoneForm from "./GroupZoneForm";
+import {createGroupZone} from "../../../api";
 
 export default function () {
-    return <GroupZonesForm groupZonesRequestPromise={createGroupZones}/>
+    return <GroupZoneForm groupZonesRequestPromise={createGroupZone}/>
 }

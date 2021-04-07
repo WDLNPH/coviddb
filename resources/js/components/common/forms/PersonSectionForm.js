@@ -10,7 +10,7 @@ export default function () {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState("");
     const inputRef = useRef();
-    const {values} = useFormikContext();
+    const {values, setFieldValue} = useFormikContext();
 
     useEffect(() => {
         async function loadGroupZones() {
@@ -94,8 +94,9 @@ export default function () {
                         className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                         id="grid-zip" type="text" placeholder="A1A 1A1"/>
                     <AutocompleteRegionValues onUpdate={regions => {
+                        console.log(regions);
                         if (regions.length > 0) {
-                            setFieldValue('city', data[0].region_name);
+                            setFieldValue('city', regions[0].region_name);
                             setFieldValue('province', 'QC')
                             setFieldValue('citizenship', 'Canada')
                             setFieldValue('region_id', 121);

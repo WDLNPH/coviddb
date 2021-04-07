@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateGroupZones from "./CreateGroupZone";
-import EditGroupZones from "./EditGroupZones";
-import {useRouteMatch} from "react-router";
+import CreateGroupZone from "./CreateGroupZone";
+import EditGroupZone from "./EditGroupZone";
+import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllGroupZones} from "../../../api";
 
@@ -16,8 +16,8 @@ export default function () {
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateGroupZones}/>
-                <Route path={`${match.url}/:GroupZoneId`} component={EditGroupZones}/> {/* const {patientId} = useParams(); */}
+                <Route path={`${match.url}/create`} component={CreateGroupZone}/>
+                <Route path={`${match.url}/:groupZoneId`} component={EditGroupZone}/>
                 <Route render={() => (
                     <>
                         <div className="mp-page-header">
@@ -35,7 +35,7 @@ export default function () {
 function ListGroupZones() {
     const [groupZones, setGroupZones] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const history = useHistory();
     // componentDidMount
     useEffect(() => {
         async function loadGroupZones() {
@@ -56,5 +56,5 @@ function ListGroupZones() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table columns={memoizedColumns} data={groupZones}/>;
+    return loading ? '...' : <Table onClick={(groupZone) => history.push(`/groupzones/${groupZone.group_id}`)} columns={memoizedColumns} data={groupZones}/>;
 }
