@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'dashboard-stats'], function () {
+Route::group(['prefix' => 'dashboard-stats', 'middleware' => 'auth:api'], function () {
     Route::get('/', 'Api\\DashboardController@getUserStats');
 });
 
