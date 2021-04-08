@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import { Col, Row, Container} from "react-bootstrap";
 import {useParams, useRouteMatch} from "react-router";
 import {NavLink, Switch, Route} from "react-router-dom";
 import axios from 'axios';
@@ -38,7 +37,7 @@ export default function QueryResult() {
         </>
     );
 }
-
+/*
 function CaseView() {
     const {caseNumber} = useParams();
     const [loading, setLoading] = useState(false);
@@ -113,4 +112,4 @@ function CaseView() {
             </Row>
         </>
     );
-}
+}*/

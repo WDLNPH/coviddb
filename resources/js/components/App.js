@@ -1,4 +1,3 @@
-import StyledNavbar from "./NavBar"
 import QueryResult from "./QueryResult"
 import StyledFooter from "./Footer";
 import {
@@ -10,14 +9,14 @@ import {Redirect} from "react-router";
 import Sidebar from "./layout/Sidebar";
 import Navbar from "./layout/Navbar";
 import React from "react";
-import AllPeople from "./pages/Person/AllPeople";
-import AllRegions from "./pages/Region/AllRegions";
+import AllPatients from "./pages/Person/AllPatients";
 import AllAlerts from "./pages/Alert/AllAlerts";
 import AllFacilities from "./pages/Facility/AllFacilities";
 import AllGroupZones from "./pages/GroupZone/AllGroupZones";
 import AllRecommendations from "./pages/Recommendation/AllRecommendations";
-import AllWorkers from "./pages/Worker/AllWorkers";
+import AllWorkers from "./pages/Worker/AllWorker";
 import CreateForm from "./pages/Form/CreateForm";
+import AllRegions from "./pages/Region/AllRegions";
 
 function App() {
     return (
@@ -29,7 +28,7 @@ function App() {
                     <div className="flex flex-1 flex-col p-5">
                         <Switch>
                             <Route path="/query-result" component={QueryResult}/>
-                            <Route path="/people" component={AllPeople}/>  {/*      */}
+                            <Route path="/patients" component={AllPatients}/>  {/*      */}
                             <Route path="/workers" component={AllWorkers}/>
                             <Route path="/facilities" component={AllFacilities}/>
                             <Route path="/regions" component={AllRegions}/>
@@ -37,7 +36,7 @@ function App() {
                             <Route path="/recommendations" component={AllRecommendations}/>
                             <Route path="/alerts" component={AllAlerts}/>
                             <Route path="/follow-up-form" component={CreateForm}/>
-                            <Route render={() => <Redirect to={'/query-result'}/>}/>
+                            <Route render={() => <Redirect to={'/patients'}/>}/>
                         </Switch>
                     </div>
                     <StyledFooter/>
@@ -48,3 +47,4 @@ function App() {
 }
 
 export default App;
+

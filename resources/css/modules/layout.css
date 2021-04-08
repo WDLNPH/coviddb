@@ -1,0 +1,10 @@
+.mp-page-header {
+    @apply flex mb-3 justify-between
+}
+.mp-page-header-title {
+    @apply text-3xl font-medium
+}
+
+.mp-alert-section {
+    @apply flex flex-col w-full max-w-sm p-12 space-y-6 rounded-lg shadow-md;
+}

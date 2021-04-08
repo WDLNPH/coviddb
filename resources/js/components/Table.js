@@ -1,9 +1,10 @@
 import React from 'react';
 import {useTable} from "react-table";
+import {useHistory} from "react-router";
 
 
 
-export default function Table({columns, data}) {
+export default function Table({columns, data, onClick}) {
     // Use the useTable Hook to send the columns and data to build the table
     const {
         getTableProps,
@@ -17,8 +18,9 @@ export default function Table({columns, data}) {
             data
         }
     );
+    const history = useHistory();
     return (
-        <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative" style={{height: '405px'}}>
+        <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
             <table className="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -34,10 +36,11 @@ export default function Table({columns, data}) {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
+
                 {rows.map((row, i) => {
                     prepareRow(row);
                     return (
-                        <tr {...row.getRowProps()}>
+                        <tr onClick={() => onClick ? onClick(row.original) : null} {...row.getRowProps()} className="hover:bg-gray-200 hover:cursor-pointer">
                             {row.cells.map(cell => {
                                 return (
                                     <td

@@ -5,24 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Response;
 
-class RegionController extends Controller
+class PatientController extends Controller
 {
-    /**
-     * Fetch all autocomplete values based on the postal code
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function autocomplete(Request $request)
-    {
-        //
-        return response()->json(DB::select("
-            SELECT pcr.postal_code, r.region_id, r.region_name
-            FROM PostalCodeRegion pcr
-            JOIN Region r ON pcr.region_id = r.region_id
-            WHERE pcr.`postal_code` like '{$request->input('postal_code')}%'"));
-    }
     /**
      * Create a newly created resource in storage.
      *
@@ -32,6 +18,7 @@ class RegionController extends Controller
     public function create(Request $request)
     {
         //
+
     }
 
     /**
@@ -41,21 +28,28 @@ class RegionController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("
-            SELECT r.region_id, r.region_name, a.alert_level
-            FROM Region r
-            JOIN Alert a ON r.alert_level_id = a.id"));
+        //
+        return response()->json(DB::select("SELECT p.patient_id, ps.*
+            FROM Patient p
+            JOIN Person ps ON p.person_id = ps.person_id"));
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function readOne($id)
     {
-        //
+        $result = DB::select("SELECT p.patient_id, ps.*, GROUP_CONCAT(gzp.group_id) as 'group_zones'
+            FROM Patient p
+            JOIN Person ps ON p.person_id = ps.person_id
+            JOIN GroupZonePersonPivot gzp ON gzp.person_id = p.person_id
+            WHERE p.patient_id = '{$id}'
+            GROUP BY p.patient_id");
+
+        return response()->json((count($result) > 0 ? $result[0] : null),
+            count($result) > 0 ? 200 : 404);
     }
 
     /**

@@ -7,7 +7,7 @@ export default function () {
 
     useEffect(() => {
         console.log("running");
-        // On Mount, load symptoms
+        // On Mount, load Symptoms
         async function loadSymptoms() {
             const {data} = await fetchSymptoms();
             setSymptoms(data);

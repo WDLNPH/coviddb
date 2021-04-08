@@ -18,6 +18,41 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'regions'], function () {
+    Route::get('autocomplete', 'Api\\RegionController@autocomplete');
+    Route::get('/', 'Api\\RegionController@readAll');
+});
+
+Route::group(['prefix' => 'group-zones'], function () {
+    Route::get('/', 'Api\\GroupZoneController@readAll');
+    Route::get('/{groupZoneId}', 'Api\\GroupZoneController@readOne');
+});
+
+Route::group(['prefix' => 'patients'], function () {
+    Route::get('/', 'Api\\PatientController@readAll');
+    Route::post('/', 'Api\\PatientController@create');
+    Route::put('/{patientId}', 'Api\\PatientController@update');
+    Route::get('/{patientId}', 'Api\\PatientController@readOne');
+});
+
+Route::group(['prefix' => 'facilities'], function () {
+    Route::get('/', 'Api\\FacilityController@readAll');
+    Route::post('/', 'Api\\FacilityController@create');
+    Route::put('/{facilityId}', 'Api\\FacilityController@update');
+    Route::get('/{facilityId}', 'Api\\FacilityController@readOne');
+});
+
+Route::group(['prefix' => 'positions'], function () {
+    Route::get('/', 'Api\\PositionController@readAll');
+});
+
+Route::group(['prefix' => 'workers'], function () {
+    Route::get('/', 'Api\\WorkerController@readAll');
+    Route::post('/', 'Api\\WorkerController@create');
+    Route::put('/{workerId}', 'Api\\WorkerController@update');
+    Route::delete('/{workerId}', 'Api\\WorkerController@delete');
+    Route::get('/{workerId}', 'Api\\WorkerController@readOne');
+});
 Route::group(['prefix' => 'symptoms'], function () {
     Route::get('/', 'Api\\SymptomController@readAll');
 });
