@@ -55,5 +55,6 @@ function ListPatients() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(patient) =>  history.push(`/patients/${patient.patient_id}`)} columns={memoizedColumns} data={patients}/>;
+    // row.original <--- {patient_id: 1, first_name: 'Bruce', last_name: 'Wayne'}
+    return loading ? '...' : <Table onClick={(patient) => history.push(`/patients/${patient.patient_id}`)} columns={memoizedColumns} data={patients}/>;
 }

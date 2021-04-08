@@ -18,7 +18,7 @@ export default function Table({columns, data, onClick}) {
             data
         }
     );
-    const history = useHistory();
+
     return (
         <div className="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
             <table className="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative" {...getTableProps()}>
