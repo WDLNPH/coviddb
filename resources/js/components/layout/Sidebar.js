@@ -73,7 +73,6 @@ export default function () {
                         <MenuButton name="Regions" to={'/regions'}/>
                         <MenuButton name="GroupZones" to={'/groupzones'}/>
                         <MenuButton name="Recommendations" to={'/recommendations'}/>
-                        <MenuButton name="Alerts" to={'/alerts'}/>
                         <MenuButton name="Symptoms" to={'/symptoms'}/>
                     </MenuDropdown>
                     <MenuDropdown
@@ -94,7 +93,7 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Create Follow-Up Form" to={'follow-up-form'}/>
+                        <MenuButton name="Diagnosis & Follow-Up" to={'/follow-up-form'}/>
                     </MenuDropdown>
                     <MenuDropdown
                         name="Warm-Up Project"
@@ -114,7 +113,7 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Query Result" to={'query-result'}/>
+                        <MenuButton name="Query Result" to={'/query-result'}/>
                     </MenuDropdown>
                 </nav>
             </div>

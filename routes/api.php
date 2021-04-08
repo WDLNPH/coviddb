@@ -50,9 +50,10 @@ Route::group(['prefix' => 'workers'], function () {
     Route::get('/', 'Api\\WorkerController@readAll');
     Route::post('/', 'Api\\WorkerController@create');
     Route::put('/{workerId}', 'Api\\WorkerController@update');
+    Route::delete('/{workerId}', 'Api\\WorkerController@delete');
     Route::get('/{workerId}', 'Api\\WorkerController@readOne');
 });
-Route::group(['prefix' => 'Symptoms'], function () {
+Route::group(['prefix' => 'symptoms'], function () {
     Route::get('/', 'Api\\SymptomController@readAll');
 });
 
