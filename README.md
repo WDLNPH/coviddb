@@ -68,7 +68,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 Work in progress :sweat_smile:
 <br>
 
-![Entity](/imgs/ERD.png)
+![Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/ERD.PNG?token=ANXPVNPU34JMKCZ4LPG5BT3ANZXTO)
 Some notes about cardinality in the *ERD* from assignment instrucstions so far:
 
 - One `Person` may belong to more than one `Group Zone`, and one `Group Zone` can have more than one `Person`.
@@ -81,16 +81,16 @@ Representation of elements used in the notation of the *ERD* given above.
 
 | Element  |          Representation           |
 |:---:|:----------------------------------:|
-| Entity | ![Entity](/imgs/entity.png )  |
-| Weak Entity | ![Weak Entity](/imgs/weak_entity.png) |
-| Attribute  | ![Attribute](/imgs/attribute.png)  |
-| Primary Key  | ![Primary Key](/imgs/pk.png)  |
-| Foreign Key  | ![Foreign Key](/imgs/fk.png) |
-| Foreign Key  | ![Foreign Key](/imgs/relationship.png)  |
-| Weak Relationship | ![Weak Relationship](/imgs/weak_relationship.png)  |
-| One-to-One | ![One-to-One](/imgs/1_1.png) |
-| One-to-Many | ![One-to-Many](/imgs/1_N.png)  |
-| Many-to-Many | ![Many-to-Many](/imgs/M_N.png) |
+| Entity | ![Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/entity.PNG?token=ANXPVNOKXQFETVW27QVC623ANZXVQ )  |
+| Weak Entity | ![Weak Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/weak_entity.PNG?token=ANXPVNOO3DCEDLBQ4MCLL4LANZXXE) |
+| Attribute  | ![Attribute](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/attribute.PNG?token=ANXPVNIC75GPQ3ZKNK65ZDTANZXX6)  |
+| Primary Key  | ![Primary Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/pk.PNG?token=ANXPVNKJ2QBIJUROBSU2DVLANZXZE)  |
+| Foreign Key  | ![Foreign Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/fk.PNG?token=ANXPVNIHWNJFOSKEVM7I3L3ANZX3C) |
+| Relationship  | ![Foreign Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/relationship.PNG?token=ANXPVNMPVYEQZCQXWJ4QDQLANZX4C)  |
+| Weak Relationship | ![Weak Relationship](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/weak_relationship.PNG?token=ANXPVNNEZK5DI2SNUNLSUKLANZX5G)  |
+| One-to-One | ![One-to-One](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/1_1.PNG?token=ANXPVNNZMWNB7NOJSOSOBATANZX6G) |
+| One-to-Many | ![One-to-Many](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/1_N.PNG?token=ANXPVNLS2YTIDAQN3QLM7LDANZX7A)  |
+| Many-to-Many | ![Many-to-Many](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/M_N.PNG?token=ANXPVNLZLUJMQFN7HD6SQGTANZYAC) |
 
 
 The *ERD* given (will have) has lots of information and captured all constraints. We represented *weak entities*, *weak relationships*, *primary keys*, *foreign keys*, *cardinality of relationhips* and *functional dependency*.
