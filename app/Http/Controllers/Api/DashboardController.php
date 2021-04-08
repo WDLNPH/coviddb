@@ -31,9 +31,14 @@ class DashboardController extends Controller
                (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', d.diagnostic_date,
+                       'patient_name', CONCAT(ptp.first_name, ' ', ptp.last_name),
                        'result', if(d.`result`, true, false)
                    )
                 ) FROM Diagnostic d
+                    JOIN
+                        Patient pt ON d.patient_id = pt.patient_id
+                    JOIN
+                        Person ptp ON pt.person_id = ptp.person_id
                     JOIN
                         PublicHealthWorker w ON d.health_worker_id = w.health_worker_id
                     JOIN

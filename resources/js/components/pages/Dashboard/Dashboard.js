@@ -1,10 +1,12 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {fetchStats} from '../../../api';
 
 export default function () {
+    const [stats, setStats] = useState();
     useEffect(() => {
         async function loadStats() {
-            fetchStats();
+            const {data} = await fetchStats();
+            setStats(data);
         }
         loadStats();
     }, []);
@@ -30,242 +32,84 @@ export default function () {
                     </div>
                 </div>
 
-                <div className="-mx-2 py-8 flex flex-row">
-                    <div className="mx-1 flex-1 flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                <div className="my-4 flex px-4 py-4 justify-between bg-white
+                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-yellow-300">
+                    <div className="flex">
+                        <div className="mx-1 flex flex-col justify-between">
+                            <h1 className="text-2xl">Diagnosis Required</h1>
+                            <p>You haven't filled out a diagnosis</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="my-4 flex px-4 py-4 justify-between bg-white
+                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-red-400">
+                    <div className="flex flex-1 justify-between">
+                        <div className="mx-1 flex flex-1 flex-col justify-between">
+                            <h1 className="text-2xl">COVID-19 Test: Positive</h1>
+                            <p>Sick person under home isolation is asked to follow the instructions below to prevent the spread of COVID-19 to other people around him/her</p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <a className="mp-button">
+                                See Recommendations
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="-mx-2 pb-8 flex flex-row">
+                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                        <div className="mx-1 flex justify-between">
+                            <h1 className="text-2xl">Person Info</h1>
+                        </div>
                         <PersonInfoCard/>
                     </div>
-                    <div className="mx-1 flex-1 flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                        <div className="mx-1 flex justify-between">
+                            <h1 className="text-2xl">Last Diagnostic</h1>
+                        </div>
                         {user.role === 'worker' ? (
-                            <WorkerLastDiagnostics/>
+                            <WorkerLastDiagnostics diags={stats?.diagnostics_handled?.length > 0 ? stats.diagnostics_handled : []}/>
                         ) : user.role === 'patient' ? (
                             <PatientLastDiagnostics/>
                         ) : user.role === 'admin' ? (
                             <LastRegionUpdates/>
                         ) : null}
-                        <div className="flex">
-                            <div
-                                className="mr-16 flex flex-col capitalize text-gray-600
-                                dark:text-gray-400">
-                                <span>project</span>
-                                <span className="mt-2 text-black dark:text-gray-200">
-                                    Aero treck
-                                </span>
-                                <span className="text-black dark:text-gray-200">
-                                    Grass Max
-                                </span>
-                                <span className="text-black dark:text-gray-200">Mental</span>
-                            </div>
-
-                            <div
-                                className="mr-16 flex flex-col capitalize text-gray-600
-                                dark:text-gray-400">
-                                <span>role</span>
-                                <span className="mt-2 text-black dark:text-gray-200">
-                                    designer
-                                </span>
-                                <span className="text-black dark:text-gray-200">
-                                    designer
-                                </span>
-                                <span className="text-black dark:text-gray-200">
-                                    illustrator
-                                </span>
-                            </div>
-
-                            <div
-                                className="mr-16 flex flex-col capitalize text-gray-600
-                                dark:text-gray-400">
-                                <span>status</span>
-                                <span className="mt-2 text-green-400 dark:text-green-200">
-                                    on check
-                                </span>
-                                <span className="mt-2 text-yellow-600 dark:text-yellow-400">
-                                    in work
-                                </span>
-                                <span className="mt-2 text-black dark:text-gray-200">
-                                    none
-                                </span>
-                            </div>
-
-                            <div
-                                className="mr-8 flex flex-col capitalize text-gray-600
-                                dark:text-gray-400">
-                                <span>final date</span>
-                                <span className="mt-2 text-green-400 dark:text-green-200">
-                                    20.02.2020 11:00
-                                </span>
-                                <span className="mt-2 text-yellow-600 dark:text-yellow-400">
-                                    20.02.2020 13:00
-                                </span>
-                                <span className="mt-2 text-green-400 dark:text-green-200">
-                                    20.02.2020 11:00
-                                </span>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
-                <div className="mt-2 flex px-4 py-4 justify-between bg-white
-                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ">
-
-                    <div className="flex">
-                        <div
-                            className="ml-4 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>name</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                carmen beltran
-                            </span>
-                        </div>
-
-                        <div
-                            className="ml-12 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>login</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                carmen.bel
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className="flex">
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>project</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                Aero treck
-                            </span>
-                            <span className="text-red-600 dark:text-red-400">
-                                search
-                            </span>
-                            <span>2 more...</span>
-                        </div>
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>role</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                Designer
-                            </span>
-                            <span className="text-red-600 dark:text-red-400">
-                                Designer
-                            </span>
-                        </div>
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>status</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                None
-                            </span>
-                            <span className="text-red-600 dark:text-red-400">
-                                in work
-                            </span>
-                        </div>
-
-                        <div
-                            className="mr-8 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>final date</span>
-                            <span className="mt-2 text-green-400 dark:text-green-200">
-                                20.02.2020
-                            </span>
-                            <span className="text-red-600 dark:text-red-400">
-                                07.02.2020 11:00
-                            </span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div
-                    className="mt-8 mb-4 flex px-4 py-4 justify-between bg-white
-                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
-
-                    <div className="flex justify-between">
-
-                        <img
-                            className="h-12 w-12 rounded-full object-cover"
-                            src="https://media.contentapi.ea.com/content/dam/gin/images/2017/01/crysis-3-keyart.jpg.adapt.crop1x1.767p.jpg"
-                            alt=""/>
-
-                        <div
-                            className="ml-4 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>name</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                crysis
-                            </span>
-                        </div>
-
-                        <div
-                            className="ml-12 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>login</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                crysis
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className="flex">
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>project</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                Killing
-                            </span>
-                        </div>
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>role</span>
-                            <span className="mt-2 text-black dark:text-gray-200">
-                                hunter
-                            </span>
-                        </div>
-
-                        <div
-                            className="mr-16 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>status</span>
-                            <span className="mt-2 text-yellow-600 dark:text-yellow-400">
-                                in work
-                            </span>
-                        </div>
-
-                        <div
-                            className="mr-8 flex flex-col capitalize text-gray-600
-                            dark:text-gray-400">
-                            <span>final date</span>
-                            <span className="mt-2 text-green-400 dark:text-green-200">
-                                20.02.2020 11:00
-                            </span>
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </main>
     );
 }
 
-function WorkerLastDiagnostics() {
-    return null;
+function WorkerLastDiagnostics({diags}) {
+    return (
+        <div className="flex flex-1 flex-col">
+            <div className="my-2 border-b flex capitalize text-gray-600 dark:text-gray-400">
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    Date
+                </span>
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 dark:text-gray-200">
+                    Patient Name
+                </span>
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 dark:text-gray-200">
+                    Result
+                </span>
+            </div>
+            {diags.map(diag => (
+                <div className="my-2 flex capitalize text-gray-600 dark:text-gray-400">
+                    <span className="flex flex-1">{diag.date}</span>
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {diag.patient_name}
+                                    </span>
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {diag.result ? 'Positive' : 'Negative'}
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
 }
 function PatientLastDiagnostics() {
     return null;
