@@ -66,8 +66,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## 1. E/R Diagram
 
 Work in progress :sweat_smile:
+<br>
 
-![Entity](./imgs/ERD.png)
+![Entity](/imgs/ERD.png)
 Some notes about cardinality in the *ERD* from assignment instrucstions so far:
 
 - One `Person` may belong to more than one `Group Zone`, and one `Group Zone` can have more than one `Person`.
@@ -80,16 +81,16 @@ Representation of elements used in the notation of the *ERD* given above.
 
 | Element  |          Representation           |
 |:---:|:----------------------------------:|
-| Entity | ![Entity](./imgs/entity.png )  |
-| Weak Entity | ![Weak Entity](./imgs/weak_entity.png) |
-| Attribute  | ![Attribute](./imgs/attribute.png)  |
-| Primary Key  | ![Primary Key](./imgs/pk.png)  |
-| Foreign Key  | ![Foreign Key](./imgs/fk.png) |
-| Foreign Key  | ![Foreign Key](./imgs/relationship.png)  |
-| Weak Relationship | ![Weak Relationship](./imgs/weak_relationship.png)  |
-| One-to-One | ![One-to-One](./imgs/1_1.png) |
-| One-to-Many | ![One-to-Many](./imgs/1_N.png)  |
-| Many-to-Many | ![Many-to-Many](./imgs/M_N.png) |
+| Entity | ![Entity](/imgs/entity.png )  |
+| Weak Entity | ![Weak Entity](/imgs/weak_entity.png) |
+| Attribute  | ![Attribute](/imgs/attribute.png)  |
+| Primary Key  | ![Primary Key](/imgs/pk.png)  |
+| Foreign Key  | ![Foreign Key](/imgs/fk.png) |
+| Foreign Key  | ![Foreign Key](/imgs/relationship.png)  |
+| Weak Relationship | ![Weak Relationship](/imgs/weak_relationship.png)  |
+| One-to-One | ![One-to-One](/imgs/1_1.png) |
+| One-to-Many | ![One-to-Many](/imgs/1_N.png)  |
+| Many-to-Many | ![Many-to-Many](/imgs/M_N.png) |
 
 
 The *ERD* given (will have) has lots of information and captured all constraints. We represented *weak entities*, *weak relationships*, *primary keys*, *foreign keys*, *cardinality of relationhips* and *functional dependency*.
@@ -120,8 +121,8 @@ The first normal form requires tables to contain only a single value anywhere in
 | **Forms**(form_id, health_worker_id, patient_id)|
 | **Symptoms**(main_symptoms, other_symptoms, history)|
 | **GroupZone**(group_id, activity, name)|
-| **Region**(region_id, region_name, city, posta_code, province)
-| **Alert**(alert_name, alert_level, region, status, date, time, current_alert, past_alert, message, person_id, guidelines)
+| **Region**(region_id, region_name, city, posta_code, province)|
+| **Alert**(alert_name, alert_level, region, status, date, time, current_alert, past_alert, message, person_id, guidelines)|
 
 <br>
 
@@ -161,7 +162,6 @@ The first normal form requires tables to contain only a single value anywhere in
 | **Information**(alert_id, region_id, alert_name, alert_level, status, date, time)|
 
 
-
 <br>
 
 ## Second Normal Form *2NF*
@@ -183,14 +183,14 @@ The Functional dependencies are : <br>
 **patient_id**                  &#8594; `person_id`.                                                                                   <br>
 **health_worker_id**            &#8594; `person_id`, `position_id`, `schedule_id`, `health_center_id`.                                 <br>
 **admin_id**                    &#8594; `person_id`.                                                                                   <br>
-**citizenship_id**              &#8594; `person_id`, country.                                                                        <br>
+**citizenship_id**              &#8594; `person_id`, country.                                                                          <br>
 **health_center_id**            &#8594; `phone`, `name`, `region_id`, `website`, `facility_id`.                                        <br>
 **facility_id**                 &#8594; `method`, `drivethru`.                                                                         <br>
 **location_id**                 &#8594; `region_id`.                                                                                   <br>
 **region_id**                   &#8594; `city_id`, `province_id`, `postal_code_id`, `alert_id`.                                        <br> 
-**group_id**                    &#8594;  name , `type_id`
-**type_id**                     &#8594;  `group_id`, activity
-**alert_id**                    &#8594;
+**group_id**                    &#8594;  name , `type_id`                                                                              <br> 
+**type_id**                     &#8594;  `group_id`, activity                                                                          <br> 
+**alert_id**                    &#8594;                                                                                                <br> 
 
 
 
