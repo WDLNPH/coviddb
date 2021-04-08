@@ -81,16 +81,16 @@ Representation of elements used in the notation of the *ERD* given above.
 
 | Element  |          Representation           |
 |:---:|:----------------------------------:|
-| Entity | ![Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/entity.PNG?token=ANXPVNOKXQFETVW27QVC623ANZXVQ )  |
-| Weak Entity | ![Weak Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/weak_entity.PNG?token=ANXPVNOO3DCEDLBQ4MCLL4LANZXXE) |
-| Attribute  | ![Attribute](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/attribute.PNG?token=ANXPVNIC75GPQ3ZKNK65ZDTANZXX6)  |
-| Primary Key  | ![Primary Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/pk.PNG?token=ANXPVNKJ2QBIJUROBSU2DVLANZXZE)  |
-| Foreign Key  | ![Foreign Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/fk.PNG?token=ANXPVNIHWNJFOSKEVM7I3L3ANZX3C) |
-| Relationship  | ![Foreign Key](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/relationship.PNG?token=ANXPVNMPVYEQZCQXWJ4QDQLANZX4C)  |
-| Weak Relationship | ![Weak Relationship](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/weak_relationship.PNG?token=ANXPVNNEZK5DI2SNUNLSUKLANZX5G)  |
-| One-to-One | ![One-to-One](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/1_1.PNG?token=ANXPVNNZMWNB7NOJSOSOBATANZX6G) |
-| One-to-Many | ![One-to-Many](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/1_N.PNG?token=ANXPVNLS2YTIDAQN3QLM7LDANZX7A)  |
-| Many-to-Many | ![Many-to-Many](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/M_N.PNG?token=ANXPVNLZLUJMQFN7HD6SQGTANZYAC) |
+| Entity | ![Entity](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/entity.PNG?raw=true)  |
+| Weak Entity | ![Weak Entity](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/weak_entity.PNG?raw=true) |
+| Attribute  | ![Attribute](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/attribute.PNG?raw=true)  |
+| Primary Key  | ![Primary Key](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/pk.PNG?raw=true)  |
+| Foreign Key  | ![Foreign Key](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/fk.PNG?raw=true) |
+| Relationship  | ![Foreign Key](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/relationship.PNG?raw=true)  |
+| Weak Relationship | ![Weak Relationship](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/weak_relationship.PNG?raw=true)  |
+| One-to-One | ![One-to-One](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/1_1.PNG?raw=true) |
+| One-to-Many | ![One-to-Many](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/1_N.PNG?raw=true)  |
+| Many-to-Many | ![Many-to-Many](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/M_N.PNG?raw=true) |
 
 
 The *ERD* given (will have) has lots of information and captured all constraints. We represented *weak entities*, *weak relationships*, *primary keys*, *foreign keys*, *cardinality of relationhips* and *functional dependency*.
