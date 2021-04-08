@@ -1,5 +1,14 @@
+import {useEffect} from 'react';
+import {fetchStats} from '../../../api';
 
 export default function () {
+    useEffect(() => {
+        async function loadStats() {
+            fetchStats();
+        }
+        loadStats();
+    }, []);
+
     return (
         <main
             className="flex-1 flex flex-col bg-gray-100 dark:bg-gray-700 transition
@@ -32,7 +41,7 @@ export default function () {
                             <PatientLastDiagnostics/>
                         ) : user.role === 'admin' ? (
                             <LastRegionUpdates/>
-                        )}
+                        ) : null}
                         <div className="flex">
                             <div
                                 className="mr-16 flex flex-col capitalize text-gray-600
@@ -255,6 +264,15 @@ export default function () {
     );
 }
 
+function WorkerLastDiagnostics() {
+    return null;
+}
+function PatientLastDiagnostics() {
+    return null;
+}
+function LastRegionUpdates() {
+    return null;
+}
 function PersonInfoCard() {
     return (
         <div className="flex justify-between">

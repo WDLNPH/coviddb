@@ -6,6 +6,10 @@ export function fetchSymptoms() {
 
 ////////////////////// Regions
 
+export function fetchStats(postalCode) {
+    return axios.get('dashboard-stats');
+}
+
 export function autocompleteRegions(postalCode) {
     return axios.get('regions/autocomplete', {params: {
         postal_code: postalCode
