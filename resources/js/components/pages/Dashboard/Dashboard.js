@@ -125,6 +125,9 @@ export default function () {
     );
 }
 
+function RegionInfoCard() {
+    return null;
+}
 function WorkerLastDiagnostics({diags}) {
     return (
         <div className="flex flex-1 flex-col">

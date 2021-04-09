@@ -11,7 +11,7 @@ export default function () {
         async function loadSymptoms() {
             setLoading(true);
             try {
-                const {data} = await readOneSymptoms(parseInt(symptomsId))
+                const {data} = await readOneSymptoms(parseInt(symptomId))
                 setSymptoms(data)
             } catch (e) {
                 // skip
@@ -20,7 +20,7 @@ export default function () {
         }
         loadSymptoms();
         // fetch the patient object from the db
-    }, [symptomsId]);
+    }, [symptomId]);
 
-    return loading ? <>please wait</> : <SymptomsForm symptomsRequestPromise={values => updateSymptoms(symptomsId, values)} symptoms={symptoms}/>
+    return loading ? <>please wait</> : <SymptomsForm symptomsRequestPromise={values => updateSymptoms(symptomId, values)} symptoms={symptoms}/>
 }

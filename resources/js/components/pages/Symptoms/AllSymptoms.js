@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllSymptoms} from "../../../api";
 
-const SYMPTOMS_COLUMNS = ['Id','symptom'];
+const SYMPTOMS_COLUMNS = ['symptom_id','name'];
 
 export default function () {
     //Symptoms
@@ -56,5 +56,5 @@ function ListSymptoms() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(worker) =>  history.push(`/symptoms/${symptoms.symptoms_id}`)} columns={memoizedColumns} data={symptoms}/>;
+    return loading ? '...' : <Table onClick={symptom =>  history.push(`/symptoms/${symptom.symptom_id}`)} columns={memoizedColumns} data={symptoms}/>;
 }
