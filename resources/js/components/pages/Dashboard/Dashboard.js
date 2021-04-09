@@ -34,20 +34,42 @@ export default function () {
 
                 <div className="my-4 flex px-4 py-4 justify-between bg-white
                     dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-yellow-300">
-                    <div className="flex">
+                    <div className="flex flex-1 justify-between">
                         <div className="mx-1 flex flex-col justify-between">
-                            <h1 className="text-2xl">Diagnosis Required</h1>
-                            <p>You haven't filled out a diagnosis</p>
+                            <h1 className="text-2xl">Follow-Up Form Required</h1>
+                            <p>We have not been able to retrieve all follow up forms for the last days since your positive result. Please fill out the required documents</p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <a className="mp-button">
+                                Fill-out Follow Up Form
+                            </a>
                         </div>
                     </div>
                 </div>
 
+                {/* If the last test came positive */}
                 <div className="my-4 flex px-4 py-4 justify-between bg-white
                     dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-red-400">
                     <div className="flex flex-1 justify-between">
                         <div className="mx-1 flex flex-1 flex-col justify-between">
                             <h1 className="text-2xl">COVID-19 Test: Positive</h1>
                             <p>Sick person under home isolation is asked to follow the instructions below to prevent the spread of COVID-19 to other people around him/her</p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <a className="mp-button">
+                                See Recommendations
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* If the last test came negative */}
+                <div className="my-4 flex px-4 py-4 justify-between bg-white
+                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-green-300">
+                    <div className="flex flex-1 justify-between">
+                        <div className="mx-1 flex flex-1 flex-col justify-between">
+                            <h1 className="text-2xl">COVID-19 Test: Negative</h1>
+                            <p>People under home isolation are asked to follow the instructions issued by the government to prevent the spread of COVID-19 to other people around them</p>
                         </div>
                         <div className="flex flex-col justify-center">
                             <a className="mp-button">
@@ -77,8 +99,28 @@ export default function () {
                         ) : null}
                     </div>
                 </div>
-            </div>
 
+                <div className="-mx-2 pb-8 flex flex-row">
+                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                        <div className="mx-1 flex justify-between">
+                            <h1 className="text-2xl">Region Info</h1>
+                        </div>
+                        <RegionInfoCard/>
+                    </div>
+                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                        <div className="mx-1 flex justify-between">
+                            <h1 className="text-2xl">Group Zone Situation</h1>
+                        </div>
+                        {user.role === 'worker' ? (
+                            <WorkerLastDiagnostics diags={stats?.diagnostics_handled?.length > 0 ? stats.diagnostics_handled : []}/>
+                        ) : user.role === 'patient' ? (
+                            <PatientLastDiagnostics/>
+                        ) : user.role === 'admin' ? (
+                            <LastRegionUpdates/>
+                        ) : null}
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }

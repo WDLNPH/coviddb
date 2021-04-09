@@ -15,6 +15,8 @@ class DashboardController extends Controller
         $result = DB::select("
             SELECT
                 p.`person_id`,
+                p.`city`,
+                'Level 1: Green' as 'alert_level',
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', d.diagnostic_date,
