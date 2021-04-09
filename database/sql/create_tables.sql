@@ -37,7 +37,11 @@ CREATE TABLE `Person`
     `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
     `region_id`   INT(16)       NOT NULL,
-    PRIMARY KEY (`person_id`)
+    PRIMARY KEY (`person_id`),
+    KEY                `region_id` (`region_id`),
+    KEY                `postal_code_id` (`postal_code_id`),
+    CONSTRAINT `Person_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `Person_pc_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `PublicHealthCenter`
@@ -52,7 +56,9 @@ CREATE TABLE `PublicHealthCenter`
     `region_id`        INT(16) NOT NULL,
     `method`           VARCHAR(16) NOT NULL,
     `drive-thru`       BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY (`health_center_id`)
+    PRIMARY KEY (`health_center_id`),
+        KEY                `region_id` (`region_id`),
+    CONSTRAINT `PublicHealth_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `PublicHealthWorker`
