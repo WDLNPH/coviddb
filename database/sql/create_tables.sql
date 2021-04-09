@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `Information`;
+DROP TABLE IF EXISTS `Recommendation`;
 DROP TABLE IF EXISTS `Diagnostic`;
 DROP TABLE IF EXISTS `GroupZonePersonPivot`;
 DROP TABLE IF EXISTS `Carer`;
@@ -214,16 +214,16 @@ CREATE TABLE `Symptoms`
 CREATE TABLE `Alert`
 (
     `alert_id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `information_id`  INT(16) UNSIGNED NOT NULL,
+    `Recommendation_id`  INT(16) UNSIGNED NOT NULL,
     `alert_info`  VARCHAR(1024)  NOT NULL,
     PRIMARY KEY (`alert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Information`
+CREATE TABLE `Recommendation`
 (
-    `information_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `information`  VARCHAR(1024)  NOT NULL,
-    PRIMARY KEY (`information_id`)
+    `Recommendation_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `Recommendation`  VARCHAR(1024)  NOT NULL,
+    PRIMARY KEY (`Recommendation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Messages`
