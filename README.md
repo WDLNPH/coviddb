@@ -157,7 +157,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 | **Symptoms**(<ins>symptom_id</ins>, symptom)
 | **GroupZonePivot**(`person_id`,`group_id`)
 | **GroupZone**(<ins>group_id<ins>, activity, name)|
-| **Alert**(<ins>alert_id<ins>, recommendation, alert_info)|
+| **Alert**(<ins>alert_id<ins>, `recommendation_id`, alert_info)|
 | **Messages**(<ins>msg_id<ins> `region_id`, msg_date, `alert_id`, `person_id`)|
 | **Recommendation**(<ins>recommendation_id<ins>, recommendation)|
 
@@ -179,8 +179,8 @@ The non-trivial functional dependencies are : <br>
 **symptom**                     &#8594; `commonality`                                                                                  <br>
 **symptom_id**                  &#8594;  symptom                                                                                       <br>
 **group_id**                    &#8594;  activity, name                                                                                <br>
-**alert_id**                    &#8594;  recommendation_id, alert_info                                                                 <br>
-**msg_id**                      &#8594;  msg_date, `region_id`, `alert_id`, `person_id`                                      <br>
+**alert_id**                    &#8594;  `recommendation_id`, alert_info                                                               <br>
+**msg_id**                      &#8594;  msg_date, `region_id`, `alert_id`, `person_id`                                                <br>
 **recommendation_id**           &#8594;  recommendation                                                                                <br>
 
 
