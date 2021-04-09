@@ -132,6 +132,7 @@ class test extends Command
             // Person ID
             "medicare" => $faker->medicare,
             "password" => bcrypt(str_replace('-', '', $date)),
+            "api_token" => Str::random(60),
             "first_name" => $faker->firstName,
             "last_name" => $faker->lastName,
             "address" => $faker->streetAddress,

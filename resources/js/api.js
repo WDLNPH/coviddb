@@ -6,6 +6,10 @@ export function fetchSymptoms() {
 
 ////////////////////// Regions
 
+export function fetchStats(postalCode) {
+    return axios.get('dashboard-stats');
+}
+
 export function autocompleteRegions(postalCode) {
     return axios.get('regions/autocomplete', {params: {
         postal_code: postalCode
@@ -101,4 +105,38 @@ export function createGroupZone(groupZones) {
 
 export function updateGroupZone(groupZonesId, groupZones) {
     return axios.put(`group-zones/${groupZonesId}`, groupZones);
+}
+////////////////////// Symptoms
+
+export function readAllSymptoms() {
+    return axios.get('symptoms');
+}
+
+export function readOneSymptoms(symptomsId) {
+    return axios.get(`symptoms/${symptomsId}`);
+}
+
+export function createSymptoms(symptoms) {
+    return axios.post('symptoms', symptoms);
+}
+
+export function updateSymptoms(symptomsId, symptoms) {
+    return axios.put(`symptoms/${symptomsId}`, symptoms);
+}
+//////////////////////Recommendations
+
+export function readAllRecommendations() {
+    return axios.get('recommendations');
+}
+
+export function readOneRecommendations(recommendationsId) {
+    return axios.get(`recommendations/${recommendationsId}`);
+}
+
+export function createRecommendations(recommendations) {
+    return axios.post('recommendations', recommendations);
+}
+
+export function updateRecommendations(recommendationsId, recommendations) {
+    return axios.put(`recommendations/${recommendationsId}`, recommendations);
 }

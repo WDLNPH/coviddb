@@ -95,6 +95,7 @@ export default function () {
                         )}>
                         <MenuButton name="Diagnosis & Follow-Up" to={'/follow-up-form'}/>
                     </MenuDropdown>
+                    {/*
                     <MenuDropdown
                         name="Warm-Up Project"
                         icon={(
@@ -113,8 +114,9 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Query Result" to={'/query-result'}/>
-                    </MenuDropdown>
+                         <MenuButton name="Query Result" to={'/query-result'}/>
+                      </MenuDropdown>*/
+                    }
                 </nav>
             </div>
         </aside>

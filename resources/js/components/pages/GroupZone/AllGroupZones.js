@@ -7,7 +7,7 @@ import Table from "../../Table";
 import {readAllGroupZones} from "../../../api";
 
 
-const GROUP_ZONES_COLUMNS = ['name','type'];
+const GROUP_ZONES_COLUMNS = ['name','activity'];
 
 
 export default function () {

@@ -17,6 +17,9 @@ import AllRecommendations from "./pages/Recommendation/AllRecommendations";
 import AllWorkers from "./pages/Worker/AllWorker";
 import CreateForm from "./pages/Form/CreateForm";
 import AllRegions from "./pages/Region/AllRegions";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import NotFound from "./pages/NotFound/NotFound";
+import AllSymptoms from "./pages/Symptoms/AllSymptoms";
 
 function App() {
     return (
@@ -35,8 +38,10 @@ function App() {
                             <Route path="/groupzones" component={AllGroupZones}/>
                             <Route path="/recommendations" component={AllRecommendations}/>
                             <Route path="/alerts" component={AllAlerts}/>
+                            <Route path="/symptoms" component={AllSymptoms}/>
                             <Route path="/follow-up-form" component={CreateForm}/>
-                            <Route render={() => <Redirect to={'/patients'}/>}/>
+                            <Route exact path="/" component={Dashboard}/>
+                            <Route component={NotFound}/>
                         </Switch>
                     </div>
                     <StyledFooter/>
