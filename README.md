@@ -136,7 +136,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 ## Third Normal Form *3NF*
 | After Normalisation                                                                                                                      |
 |:------------------------------------------------------------------------------------------------------------------------------------------|
-| **Person** (<ins>person_id</ins>, medicare, first_name, last_name, address, citizenship, email, phone, DOB, `region_id`) 
+| **Person** (<ins>person_id</ins>, medicare, first_name, last_name, address, `postal_code_id`, citizenship, email, phone, DOB, `region_id`) 
 | **Patient**(<ins>patient_id</ins>,`person_id`)|
 | **PublicHealthWorker**(<ins>health_worker_id</ins>, `position_id`, schedule, `health_center_id`, `person_id`) |
 | **Position**(<ins>position_id</ins>, position)
@@ -163,7 +163,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 <br>
 
 The non-trivial functional dependencies are : <br>
-**person_id**                   &#8594; medicare, first_name, last_name, citizenship, `region_id`, email, phone, DOB, address.         <br>
+**person_id**                   &#8594; medicare, first_name, last_name, citizenship, `region_id`, email, phone, DOB, address, `postal_code_id`.<br>
 **patient_id**                  &#8594; `person_id`.                                                                                   <br>              
 **position_id**                 &#8594;  position                                                                                      <br>
 **admin_id**                    &#8594; `person_id`.                                                                                   <br>
