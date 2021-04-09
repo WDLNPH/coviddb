@@ -38,13 +38,13 @@ export default function ({diagnosticsRequestPromise, diagnostics}) {
                                    type="text" placeholder="00000"/>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Name</label>
+                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">First Name</label>
                             <Field name="first"
                                    className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    type="text" placeholder="john"/>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Name</label>
+                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Last Name</label>
                             <Field name="last"
                                    className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    type="text" placeholder="doe"/>
