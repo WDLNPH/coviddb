@@ -20,8 +20,6 @@ export default function ({symptomsRequestPromise, symptoms}) {
             </div>
             <Formik initialValues={{
                 name: symptoms ? symptoms.name : '',
-                id: symptoms ? symptoms.id : '',
-
             }}
                     onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">

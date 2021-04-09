@@ -93,7 +93,7 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Diagnosis & Follow-Up" to={'/follow-up-form'}/>
+                        <MenuButton name="Diagnosis & Follow-Up" to={'/diagnostics'}/>
                     </MenuDropdown>
                     {/*
                     <MenuDropdown

@@ -20,7 +20,7 @@ import AllRegions from "./pages/Region/AllRegions";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/NotFound/NotFound";
 import AllSymptoms from "./pages/Symptoms/AllSymptoms";
-
+import AllDiagnostics from "./pages/Diagnostics/AllDiagnostics";
 function App() {
     return (
         <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
@@ -40,6 +40,7 @@ function App() {
                             <Route path="/alerts" component={AllAlerts}/>
                             <Route path="/symptoms" component={AllSymptoms}/>
                             <Route path="/follow-up-form" component={CreateForm}/>
+                            <Route path="/diagnostics" component={AllDiagnostics}/>
                             <Route exact path="/" component={Dashboard}/>
                             <Route component={NotFound}/>
                         </Switch>
