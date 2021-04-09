@@ -152,8 +152,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 | **PostalCityPivot**(`postal_code_id`, `city_id`)|
 | **PostalCode**(<ins>postal_code_id<ins>, postal_code)|
 | **Forms**(<ins>form_id</ins>, `health_worker_id`, `patient_id`, form_date)
-| **FormsSymptomsPivot**(`symptom_id`, `form_id`)
-| **MainSymptoms**(<ins>symptom</ins>, `commonality`)
+| **FormsSymptomsPivot**(`symptom_id`, `form_id` symptom_date)
 | **Symptoms**(<ins>symptom_id</ins>, symptom)
 | **GroupZonePivot**(`person_id`,`group_id`)
 | **GroupZone**(<ins>group_id<ins>, activity, name)|
@@ -176,7 +175,6 @@ The non-trivial functional dependencies are : <br>
 **city_id**                     &#8594;  city                                                                                          <br>
 **postal_code_id**              &#8594;  postal_code                                                                                   <br>
 **form_id**                     &#8594; `health_worker_id`, `patient_id`                                                               <br>
-**symptom**                     &#8594; `commonality`                                                                                  <br>
 **symptom_id**                  &#8594;  symptom                                                                                       <br>
 **group_id**                    &#8594;  activity, name                                                                                <br>
 **alert_id**                    &#8594;  `recommendation_id`, alert_info                                                               <br>
