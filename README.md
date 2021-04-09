@@ -65,15 +65,28 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## 1. E/R Diagram
 
-Work in progress :sweat_smile:
-<br>
+![ERD](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/ERD.PNG?raw=true)
+<!---
+Some notes about cardinality in the *ERD*:
 
-![Entity](https://raw.githubusercontent.com/WDLNPH/coviddb/ERD/imgs/ERD.PNG?token=ANXPVNPU34JMKCZ4LPG5BT3ANZXTO)
-Some notes about cardinality in the *ERD* from assignment instrucstions so far:
 
-- One `Person` may belong to more than one `Group Zone`, and one `Group Zone` can have more than one `Person`.
-- More than one `City` may belong to one `Region`, but one particular `City` can belong to one `Region` only. (N:1)
-- More than one `Postal Code` may belong to one `City`, but one particular `Postal code` can belong to one `City` only. (N:1)
+- One `Person` may be related to more than one `Group Zone`, and one `Group Zone` may be related to more than one `Person`.
+- If a `Group Zone` exists then a `Person` **must exist**. 
+- One `Person` may be related to **at most one** `Region`, and one `Region` may be related to more than one `Person`.
+- One `PostalCode` may be related to **at most one** `Region`, and one `Region` may be related to more than one `PostalCode`.
+- One `PostalCode` may be related to more than one `Group Zone`, and one `Group Zone` may be related to more than one `Person`.
+
+- If a `Region` exists then an `Alert` **must exist**.
+- One `Alert` may be related to more than one `Region`, and one `Region` may be related to more than one `Alert`.
+- If a `Message` exists then a `Region` **must exist**.
+- One `Message` may be related to more than one `Region`, and one `Region` may be related to more than one `Message`.
+- One `Message` may be related to **at most one** `Diagnostic`, and one `Diagnostic` may be related to more than one `Message`.
+- If a `Diagnostic` exists then a `Patient` **must exist**.
+- If a `Diagnostic` exists then a `PublicHealthWorker` **must exist**.
+- If a `Diagnostic` exists then a `PublicHealthCenter` **must exist**.
+
+
+-->
 
 ## 2. Constraints & what's not captured by the *ERD*.
 
@@ -88,30 +101,25 @@ Representation of elements used in the notation of the *ERD* given above.
 | Foreign Key  | ![Foreign Key](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/fk.PNG?raw=true) |
 | Relationship  | ![Foreign Key](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/relationship.PNG?raw=true)  |
 | Weak Relationship | ![Weak Relationship](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/weak_relationship.PNG?raw=true)  |
-| One-to-One | ![One-to-One](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/1_1.PNG?raw=true) |
-| One-to-Many | ![One-to-Many](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/1_N.PNG?raw=true)  |
-| Many-to-Many | ![Many-to-Many](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/M_N.PNG?raw=true) |
+| Multiplicity of Relationships | ![MR](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/mrelationships.PNG?raw=true) |
+| Referential Integrity | ![RI](https://github.com/wdlnph/coviddb/blob/feature/ERD/imgs/integrity.PNG?raw=true)  |
 
 
-The *ERD* given (will have) has lots of information and captured all constraints. We represented *weak entities*, *weak relationships*, *primary keys*, *foreign keys*, *cardinality of relationhips* and *functional dependency*.
+The *ERD* given captured most constraints. We represented *weak entities*, *weak relationships*, *primary keys*, *foreign keys*, *cardinality of relationhips*. 
+
+However, *functional dependency* was not shown. This is shown later in this text.
+
+There are cases where *referential integrity* and *multiplicity of relationships* conflicted, we have prioritized showing the *referential integrity* constraint. Both constraints are already listed in notes about cardinality.
+
+We did not show *referential integrity* on the ERD when it comes to inherited entity sets.
 
 ## 3. Relational database schema + normalisation
 
-## First Normal Form *1NF*
-
-The first normal form requires tables to contain only a single value anywhere in the cells, and there should be no repeating groups throughout the rows.
-
-```Steps to normalise to 1NF :
-1.  Identify the repeating group(s).
-2.  Create a new table by detaching the repeating group from the old table.
-3.  Identify the primary key for all tables.
-4.  Form composite keys to retain the relationship between tables if necessary.
-```
 <br>
 
 | Before Normalisation                                                                                                                      |
 |:------------------------------------------------------------------------------------------------------------------------------------------|
-| **Person** (person_id, medicare, first_name, last_name, address, city, postal_code, province, citizenship, email, phone, DOB) 
+| **Person** (person_id, medicare, first_name, last_name, address, city, postal_code, province, citizenship, email, phone, DOB, password) 
 | **Patient**(patient_id, person_id, main_symptoms, other_symptoms, symptoms_history)|
 | **PublicHealthWorker**(health_worker_id, position, schedule, health_center_id, person_id) |
 | **Adminstrator**(person_id, admin_id)|
@@ -124,87 +132,56 @@ The first normal form requires tables to contain only a single value anywhere in
 | **Region**(region_id, region_name, city, posta_code, province)|
 | **Alert**(alert_name, alert_level, region, status, date, time, current_alert, past_alert, message, person_id, guidelines)|
 
-<br>
-
-```diff 
-# underline for primary key
-# yellow codeblock for foreignkey
-```
-
-| After Normalisation *1NF*                                                                                                               |
-|:-----------------------------------------------------------------------------------------------------------------------------------------|
-| **Person** (<ins>person_id</ins>, medicare, first_name, last_name, address, `citizenship_id`, email, phone, DOB, `location_id`) 
-| **Citizenship**(<ins>citizenship_id</ins>, person_id)
-| **Country**(<ins>citizenship_id</ins>, country)
-| **Patient**(<ins>patient_id</ins>,`person_id`)|
-| **PublicHealthWorker**(<ins>health_worker_id</ins>, `position_id`, `schedule_id`, `health_center_id`, `person_id`) |
-| **Schedule**() |
-| **Adminstrator**(<ins>admin_id</ins>, `person_id`)|
-| **Carer**(<ins>person_id</ins>, parent_id, child_id)| 
-| **PublicHealthCenter**(<ins>health_center_id</ins>, phone, name, address, website, `location_id`) |
-| **Facility**(<ins>facility_id</ins>, `health_center_id`,   )
-| **Location**(<ins>location_id</ins>, `region_id`)|
-| **Diagnostic** (<ins>diagnostic_id</ins>, diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`) |
-| **Region**(<ins>region_id</ins>,` city_id`,` postal_code_id`, `province_id`, `alert_id`)|
-| **Province**(group_id, activity, name)|
-| **City**(group_id, activity, name)|
-| **PostalCode**(group_id, activity, name)|
-| **Forms**(<ins>form_id</ins>, `health_worker_id`, `patient_id`)|
-| **MainSymptoms**
-| **OtherSymptoms**
-| **SymptomHistory**
-| **GroupZone**(group_id, activity, name)|
-| **Type**
-| **Alert**(alert_id, region_id, alert_name, alert_level, status, date, time)|
-| **AlertHistory**(alert_id, region_id, alert_name, alert_level, status, date, time)|
-| **CurrentStatus**(alert_id, region_id, alert_name, alert_level, status, date, time)|
-| **Message**(alert_id, region_id, alert_name, alert_level, status, date, time)|
-| **Information**(alert_id, region_id, alert_name, alert_level, status, date, time)|
-
-
-<br>
-
-## Second Normal Form *2NF*
-
-The second normal form requires each non-key attribute in a table to be completely dependent on whatever primary keys exist in the table. If there is only one primary key in a 1NF table, then it can be considered as a 2NF table.
-
-
-```
-Steps to normalise 1NF to 2NF:
-1.  Examine all non-key attributes and their dependencies with the primary/composite key in the table.
-2.  Form a new table by detaching all non-key attributes with incomplete dependencies.
-3.  Create or appoint a primary/composite key for the new table.
-```
-
-Given that all tables only have one primary key each, it is already in 2NF. Now we can extract the set of functional dependency before going to 3NF.
-
-The Functional dependencies are : <br>
-**person_id**                   &#8594; medicare, first_name, last_name, `citizenship_id`, `region_id`, email, phone, DOB. <br>
-**patient_id**                  &#8594; `person_id`.                                                                                   <br>
-**health_worker_id**            &#8594; `person_id`, `position_id`, `schedule_id`, `health_center_id`.                                 <br>
-**admin_id**                    &#8594; `person_id`.                                                                                   <br>
-**citizenship_id**              &#8594; `person_id`, country.                                                                          <br>
-**health_center_id**            &#8594; `phone`, `name`, `region_id`, `website`, `facility_id`.                                        <br>
-**facility_id**                 &#8594; `method`, `drivethru`.                                                                         <br>
-**location_id**                 &#8594; `region_id`.                                                                                   <br>
-**region_id**                   &#8594; `city_id`, `province_id`, `postal_code_id`, `alert_id`.                                        <br> 
-**group_id**                    &#8594;  name , `type_id`                                                                              <br> 
-**type_id**                     &#8594;  `group_id`, activity                                                                          <br> 
-**alert_id**                    &#8594;                                                                                                <br> 
-
-
 
 ## Third Normal Form *3NF*
+| After Normalisation                                                                                                                      |
+|:------------------------------------------------------------------------------------------------------------------------------------------|
+| **Person** (<ins>person_id</ins>, medicare, first_name, last_name, address, citizenship, email, phone, DOB, `region_id`) 
+| **Patient**(<ins>patient_id</ins>,`person_id`)|
+| **PublicHealthWorker**(<ins>health_worker_id</ins>, `position_id`, schedule, `health_center_id`, `person_id`) |
+| **Position**(<ins>position_id</ins>, position)
+| **Adminstrator**(<ins>admin_id</ins>, `person_id`)|
+| **Carer**(<ins>parental_id<ins>`person_id`, parent_id, child_id)| 
+| **PublicHealthCenter**(<ins>health_center_id</ins>, phone, name, address, website, `region_id`, type, method, drive-thru) |
+| **Diagnostic** (<ins>diagnostic_id</ins>, diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`) |
+| **Region**(<ins>region_id</ins>, `alert_id`)|
+| **RegionPostalPivot** (`region_id`, `postal_code_id`)|
+| **ProvinceCityPivot**(`city_id`, `province_id`)|
+| **Province**(<ins>province_id</ins>, province)|
+| **City**(<ins>city_id</ins>, city)|
+| **PostalCityPivot**(`postal_code_id`, `city_id`)|
+| **PostalCode**(<ins>postal_code_id<ins>, postal_code)|
+| **Forms**(<ins>form_id</ins>, `health_worker_id`, `patient_id`)
+| **FormsSymptomsPivot**(`symptom_id`, `form_id`)
+| **MainSymptoms**(<ins>symptom</ins>, `commonality`)
+| **Symptoms**(<ins>symptom_id</ins>, symptom)
+| **GroupZonePivot**(`person_id`,`group_id`)
+| **GroupZone**(<ins>group_id<ins>, activity, name)|
+| **Alert**(<ins>alert_id<ins>, information, alert_info)|
+| **Messages**(<ins>msg_id<ins>msg_time, `region_id`, msg_date, `alert_id`, `person_id`)|
 
-The third normal form requires no transitive dependencies in a 2NF table. In another words, there should not be any functional dependencies among the non-key attributes in the table.
-We cannot have `A`&#8594;`B`, `B` &#8594; `C`, `C` &#8594; `A`
+<br>
 
-```
-Steps to normalise 2NF to 3NF:
-1.  Examine all non-key attributes and their dependencies with each other in the table.
-2.  Create a new table by detaching all dependent attributes from the table.
-3.  Repeat Step 1 and Step 2 until no more inappropriate dependencies in the table(s).
-```
+The non-trivial functional dependencies are : <br>
+**person_id**                   &#8594; medicare, first_name, last_name, citizenship, `region_id`, email, phone, DOB, address.         <br>
+**patient_id**                  &#8594; `person_id`.                                                                                   <br>              
+**position_id**                 &#8594;  position                                                                                      <br>
+**admin_id**                    &#8594; `person_id`.                                                                                   <br>
+**parental_id**                 &#8594; `person_id`, parent_id, child_id                                                               <br>
+**health_center_id**            &#8594;  phone, name, address, website, `region_id`, type, method, drive-thru.                         <br>
+**diagnostic_id**               &#8594;  diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`                  <br>                                     
+**region_id**                   &#8594; `postal_code_id`, `alert_id`.                                                                  <br>
+**province_id**                 &#8594;  province                                                                                      <br>
+**city_id**                     &#8594;  city                                                                                          <br>
+**postal_code_id**              &#8594;  postal_code                                                                                   <br>
+**form_id**                     &#8594; `health_worker_id`, `patient_id`                                                               <br>
+**symptom**                     &#8594; `commonality`                                                                                  <br>
+**symptom_id**                  &#8594;  symptom                                                                                       <br>
+**group_id**                    &#8594;  activity, name                                                                                <br>
+**alert_id**                    &#8594;  information, alert_info                                                                       <br>
+**msg_id**                      &#8594;  msg_time, msg_date, `region_id`, `alert_id`, `person_id`                                      <br>
+
+
 There is no attributes that depend on non-key attributes in our tables. All dependent non-key attributes, do depend on the table's primary key.
 There is functional dependency of the form `A`&#8594;`B`, `B` &#8594; `C`, `C` &#8594; `A`, so no violations here either.
 
