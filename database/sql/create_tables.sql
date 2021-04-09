@@ -1,8 +1,7 @@
-DROP TABLE IF EXISTS `Recommendation`;
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `Diagnostic`;
 DROP TABLE IF EXISTS `GroupZonePersonPivot`;
 DROP TABLE IF EXISTS `Carer`;
-DROP TABLE IF EXISTS `Patient`;
 DROP TABLE IF EXISTS `GroupZone`;
 DROP TABLE IF EXISTS `PublicHealthWorker`;
 DROP TABLE IF EXISTS `PublicHealthCenter`;
@@ -15,13 +14,16 @@ DROP TABLE IF EXISTS `Province`;
 DROP TABLE IF EXISTS `City`;
 DROP TABLE IF EXISTS `PostalCityPivot`;
 DROP TABLE IF EXISTS `PostalCode`;
-DROP TABLE IF EXISTS `Forms`;
-DROP TABLE IF EXISTS `FormsSymptomsPivot`;
-DROP TABLE IF EXISTS `MainSymptoms`;
+DROP TABLE IF EXISTS `FollowUpForm`;
+DROP TABLE IF EXISTS `FollowUpFormSymptomPivot`;
 DROP TABLE IF EXISTS `Symptoms`;
 DROP TABLE IF EXISTS `Alert`;
 DROP TABLE IF EXISTS `Messages`;
 DROP TABLE IF EXISTS `Person`;
+DROP TABLE IF EXISTS `Recommendation`;
+DROP TABLE IF EXISTS `Patient`;
+
+
 
 CREATE TABLE `Person`
 (
@@ -31,16 +33,16 @@ CREATE TABLE `Person`
     `first_name`  VARCHAR(32) NOT NULL,
     `last_name`   VARCHAR(32) NOT NULL,
     `address`     VARCHAR(128) NOT NULL,
-    `postal_code_id` INT(16)  NOT NULL,
+    `postal_code_id`  VARCHAR(255) NOT NULL,
     `citizenship` VARCHAR(32) NOT NULL,
     `email`       VARCHAR(64) DEFAULT NULL,
     `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
-    `region_id`   INT(16)       NOT NULL,
+    `region_id`   INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`person_id`),
     KEY                `region_id` (`region_id`),
     KEY                `postal_code_id` (`postal_code_id`),
-    CONSTRAINT `Person_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `Person_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `Person_pc_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -50,29 +52,33 @@ CREATE TABLE `PublicHealthCenter`
     `name`             VARCHAR(128) NOT NULL DEFAULT '',
     `phone`            VARCHAR(32)  NOT NULL,
     `address`          VARCHAR(128)  NOT NULL, 
-    `postal_code_id`   VARCHAR(8)   NOT NULL,
+    `postal_code_id`   VARCHAR(255) NOT NULL,
     `type`             VARCHAR(32)  NOT NULL,
     `website`          VARCHAR(256) NOT NULL,
-    `region_id`        INT(16) NOT NULL,
+    `region_id`        INT(16) UNSIGNED NOT NULL,
     `method`           VARCHAR(16) NOT NULL,
     `drive-thru`       BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (`health_center_id`),
-        KEY                `region_id` (`region_id`),
-    CONSTRAINT `PublicHealth_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY                `region_id` (`region_id`),
+    KEY                `postal_code_id` (`postal_code_id`),
+    CONSTRAINT `publichealth_postal_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `publichealth_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `PublicHealthWorker`
 (
     `health_worker_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `person_id`        INT(16) UNSIGNED NOT NULL,
-    `position_id`      INT(16) NOT NULL,
+    `position_id`      INT(16) UNSIGNED NOT NULL,
     `schedule`         VARCHAR(256) DEFAULT NULL,
     `health_center_id` INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`health_worker_id`),
     KEY                `person_id` (`person_id`),
     KEY                `health_center_id` (`health_center_id`),
+    KEY                `position_id` (`position_id`),
     CONSTRAINT `publichealthworker_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `publichealthworker_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `publichealthworker_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `publichealthworker_pos_id_fk_idx` FOREIGN KEY (`position_id`) REFERENCES `Position` (`position_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Position`
@@ -86,33 +92,45 @@ CREATE TABLE `Administrator`
 (
     `admin_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `person_id`INT(16) UNSIGNED NOT NULL,
-    PRIMARY KEY (`admin_id`)
+    PRIMARY KEY (`admin_id`),
+    KEY                `person_id` (`person_id`),
+    CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Region`
 (
     `region_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `alert_id`INT(16) UNSIGNED NOT NULL,
-    PRIMARY KEY (`region_id`)
+    PRIMARY KEY (`region_id`),
+    KEY `alert_id` (`alert_id`),
+    CONSTRAINT `region_al_fk_1` FOREIGN KEY (`alert_id`) REFERENCES `Alert` (`alert_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `RegionPostalPivot`
 (
     `region_id` INT(16) UNSIGNED NOT NULL ,
-    `postal_code_id` INT(16) UNSIGNED NOT NULL
+    `postal_code_id` VARCHAR(255) NOT NULL,
+    KEY `region_id` (`region_id`),
+    KEY `postal_code_id` (`postal_code_id`),
+    CONSTRAINT `postalr_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `postalr_postal_code_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `PostalCode`
 (
-    `postal_code_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `postal_code_id` VARCHAR(255) NOT NULL,
     `postal_code` VARCHAR(8) NOT NULL,
     PRIMARY KEY (`postal_code_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `PostalCityPivot`
 (
-    `postal_code_id` INT(16) UNSIGNED NOT NULL ,
-    `city_id` INT(16) UNSIGNED NOT NULL
+    `postal_code_id` VARCHAR(255) NOT NULL,
+    `city_id` INT(16) UNSIGNED NOT NULL,
+    KEY `postal_code_id` (`postal_code_id`),
+    KEY `city_id` (`city_id`),
+    CONSTRAINT `pcpiv1_postal_code_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `pcpiv1_city_id_fk_idx` FOREIGN KEY (`city_id`) REFERENCES `City` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `City`
@@ -125,7 +143,11 @@ CREATE TABLE `City`
 CREATE TABLE `ProvinceCityPivot`
 (
     `city_id` INT(16) UNSIGNED NOT NULL ,
-    `province_id` INT(16) UNSIGNED NOT NULL
+    `province_id` INT(16) UNSIGNED NOT NULL,
+    KEY `province_id` (`province_id`),
+    KEY `city_id` (`city_id`),
+    CONSTRAINT `pcpiv_province_id_fk_idx` FOREIGN KEY (`province_id`) REFERENCES `Province` (`province_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `pcpiv_city_id_fk_idx` FOREIGN KEY (`city_id`) REFERENCES `City` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Province`
@@ -143,23 +165,22 @@ CREATE TABLE `GroupZone`
     PRIMARY KEY (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Patient`
-(
-    `patient_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `person_id`  INT(16) UNSIGNED NOT NULL,
-    PRIMARY KEY (`patient_id`),
-    KEY          `person_id` (`person_id`),
-    CONSTRAINT `patient_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `Patient` (
+  `patient_id` int(16) unsigned NOT NULL AUTO_INCREMENT,
+  `person_id` int(16) unsigned NOT NULL,
+  PRIMARY KEY (`patient_id`),
+  KEY `person_id` (`person_id`),
+  CONSTRAINT `patient_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `GroupZonePersonPivot`
-(
-    `group_id`  INT(16) UNSIGNED NOT NULL,
-    `person_id` INT(16) UNSIGNED NOT NULL,
-    KEY         `group_id` (`group_id`),
-    KEY         `person_id` (`person_id`),
-    CONSTRAINT `groupzonepersonpivot_group_id_fk_idx` FOREIGN KEY (`group_id`) REFERENCES `GroupZone` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `groupzonepersonpivot_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
+
+CREATE TABLE `GroupZonePersonPivot` (
+  `group_id` int(16) unsigned NOT NULL,
+  `person_id` int(16) unsigned NOT NULL,
+  KEY `group_id` (`group_id`),
+  KEY `person_id` (`person_id`),
+  CONSTRAINT `groupzonepersonpivot_group_id_fk_idx` FOREIGN KEY (`group_id`) REFERENCES `GroupZone` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `groupzonepersonpivot_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Carer`
@@ -168,46 +189,49 @@ CREATE TABLE `Carer`
     `person_id`   INT(16) UNSIGNED NOT NULL,
     `parent_id` INT(16) UNSIGNED NOT NULL,
     `child_id`    INT(16) UNSIGNED DEFAULT NULL,
-    PRIMARY KEY (`parental_id`)
+    PRIMARY KEY (`parental_id`),
+    KEY `person_id` (`person_id`),
+    CONSTRAINT `carer_person_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Diagnostic`
-(
-    `diagnostic_id`    INT(32) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `patient_id`       INT(16) UNSIGNED NOT NULL,
-    `diagnostic_date`  datetime NOT NULL,
-    `health_worker_id` INT(32) UNSIGNED NOT NULL,
-    `health_center_id` INT(16) UNSIGNED NOT NULL,
-    `result`           BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY (`diagnostic_id`),
-    KEY                `patient_id` (`patient_id`),
-    KEY                `health_worker_id` (`health_worker_id`),
-    KEY                `health_center_id` (`health_center_id`),
-    CONSTRAINT `diagnostic_patient_id_fk_idx` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `diagnostic_hw_id_fk_idx` FOREIGN KEY (`health_worker_id`) REFERENCES `PublicHealthWorker` (`health_worker_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `diagnostic_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE `Diagnostic` (
+  `diagnostic_id` int(32) unsigned NOT NULL AUTO_INCREMENT,
+  `patient_id` int(16) unsigned NOT NULL,
+  `diagnostic_date` datetime NOT NULL,
+  `health_worker_id` int(32) unsigned NOT NULL,
+  `health_center_id` int(16) unsigned NOT NULL,
+  `result` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`diagnostic_id`),
+  KEY `patient_id` (`patient_id`),
+  KEY `health_worker_id` (`health_worker_id`),
+  KEY `health_center_id` (`health_center_id`),
+  CONSTRAINT `diagnostic_hc_id_fk_idx` FOREIGN KEY (`health_center_id`) REFERENCES `PublicHealthCenter` (`health_center_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `diagnostic_hw_id_fk_idx` FOREIGN KEY (`health_worker_id`) REFERENCES `PublicHealthWorker` (`health_worker_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `diagnostic_patient_id_fk_idx` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Forms`
+CREATE TABLE `FollowUpForm`
 (
     `form_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `health_worker_id`   INT(16) UNSIGNED NOT NULL,
+    `health_worker_id` INT(16) UNSIGNED NOT NULL,
     `patient_id` INT(16) UNSIGNED NOT NULL,
-    `form_date`    DATE NOT NULL,
-    PRIMARY KEY (`form_id`)
+    `created_at` datetime NOT NULL,
+    PRIMARY KEY (`form_id`),
+    KEY `health_worker_id` (`health_worker_id`),
+    KEY `patient_id` (`patient_id`),
+    CONSTRAINT `followupform_health_worker_id_fk_idx` FOREIGN KEY (`health_worker_id`) REFERENCES `PublicHealthWorker` (`health_worker_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `followupform_patient_id_fk_idx` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `FormsSymptomsPivot`
+CREATE TABLE `FollowUpFormSymptomPivot`
 (
     `symptom_id` INT(16) UNSIGNED NOT NULL ,
-    `form_id`   INT(16) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `MainSymptoms`
-(
-    `symptom` VARCHAR(32)  NOT NULL,
-    `commonality`  VARCHAR(32)  NOT NULL,
-    PRIMARY KEY (`symptom`)
+    `form_id`   INT(16) UNSIGNED NOT NULL,
+    `symptom_date` DATE NOT NULL,
+    KEY `symptom_id` (`symptom_id`),
+    KEY `form_id` (`form_id`),
+    CONSTRAINT `followupformpiv_symptom_id_id_fk_idx` FOREIGN KEY (`symptom_id`) REFERENCES `Symptoms` (`symptom_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `followupformpiv_form_id_id_fk_idx` FOREIGN KEY (`form_id`) REFERENCES `FollowUpForm` (`form_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Symptoms`
@@ -219,17 +243,19 @@ CREATE TABLE `Symptoms`
 
 CREATE TABLE `Alert`
 (
-    `alert_id` INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `Recommendation_id`  INT(16) UNSIGNED NOT NULL,
-    `alert_info`  VARCHAR(1024)  NOT NULL,
-    PRIMARY KEY (`alert_id`)
+    `alert_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `recommendation_id`  INT(16) UNSIGNED NOT NULL,
+    `alert_info`  VARCHAR(1024) NOT NULL,
+    PRIMARY KEY (`alert_id`),
+    KEY `recommendation_id` (`recommendation_id`),
+    CONSTRAINT `alert_rec_id_fk_idx` FOREIGN KEY (`recommendation_id`) REFERENCES `Recommendation` (`recommendation_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Recommendation`
 (
-    `Recommendation_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `Recommendation`  VARCHAR(1024)  NOT NULL,
-    PRIMARY KEY (`Recommendation_id`)
+    `recommendation_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `recommendation`  VARCHAR(1024)  NOT NULL,
+    PRIMARY KEY (`recommendation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Messages`
@@ -239,5 +265,13 @@ CREATE TABLE `Messages`
     `msg_date`  DATETIME NOT NULL,
     `alert_id`  INT(16) UNSIGNED NOT NULL,
     `person_id`  INT(16) UNSIGNED NOT NULL,
-    PRIMARY KEY (`msg_id`)
+    PRIMARY KEY (`msg_id`),
+    KEY `region_id` (`region_id`),
+    KEY `alert_id` (`alert_id`),
+    KEY `person_id` (`person_id`),
+    CONSTRAINT `message_region_id_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `message_alert_id_id_fk_idx` FOREIGN KEY (`alert_id`) REFERENCES `Alert` (`alert_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `message_person_id_id_fk_idx` FOREIGN KEY (`person_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SET FOREIGN_KEY_CHECKS=1;
