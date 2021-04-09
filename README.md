@@ -141,7 +141,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 | **PublicHealthWorker**(<ins>health_worker_id</ins>, `position_id`, schedule, `health_center_id`, `person_id`) |
 | **Position**(<ins>position_id</ins>, position)
 | **Adminstrator**(<ins>admin_id</ins>, `person_id`)|
-| **Carer**(<ins>parental_id<ins>`person_id`, parent_id, child_id)| 
+| **Carer**(<ins>parental_id<ins>, `person_id`, parent_id, child_id)| 
 | **PublicHealthCenter**(<ins>health_center_id</ins>, phone, name, address, website, `region_id`, type, method, drive-thru) |
 | **Diagnostic** (<ins>diagnostic_id</ins>, diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`) |
 | **Region**(<ins>region_id</ins>, `alert_id`)|
@@ -157,8 +157,9 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 | **Symptoms**(<ins>symptom_id</ins>, symptom)
 | **GroupZonePivot**(`person_id`,`group_id`)
 | **GroupZone**(<ins>group_id<ins>, activity, name)|
-| **Alert**(<ins>alert_id<ins>, information, alert_info)|
-| **Messages**(<ins>msg_id<ins>msg_time, `region_id`, msg_date, `alert_id`, `person_id`)|
+| **Alert**(<ins>alert_id<ins>, recommendation, alert_info)|
+| **Messages**(<ins>msg_id<ins> `region_id`, msg_date, `alert_id`, `person_id`)|
+| **Recommendation**(<ins>recommendation_id<ins>, recommendation)|
 
 <br>
 
@@ -169,7 +170,7 @@ The non-trivial functional dependencies are : <br>
 **admin_id**                    &#8594; `person_id`.                                                                                   <br>
 **parental_id**                 &#8594; `person_id`, parent_id, child_id                                                               <br>
 **health_center_id**            &#8594;  phone, name, address, website, `region_id`, type, method, drive-thru.                         <br>
-**diagnostic_id**               &#8594;  diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`                  <br>                                     
+**diagnostic_id**               &#8594;  diagnostic_date, result, `health_worker_id`, `health_center_id`, `patient_id`                 <br>                                     
 **region_id**                   &#8594; `postal_code_id`, `alert_id`.                                                                  <br>
 **province_id**                 &#8594;  province                                                                                      <br>
 **city_id**                     &#8594;  city                                                                                          <br>
@@ -178,8 +179,9 @@ The non-trivial functional dependencies are : <br>
 **symptom**                     &#8594; `commonality`                                                                                  <br>
 **symptom_id**                  &#8594;  symptom                                                                                       <br>
 **group_id**                    &#8594;  activity, name                                                                                <br>
-**alert_id**                    &#8594;  information, alert_info                                                                       <br>
-**msg_id**                      &#8594;  msg_time, msg_date, `region_id`, `alert_id`, `person_id`                                      <br>
+**alert_id**                    &#8594;  recommendation_id, alert_info                                                                 <br>
+**msg_id**                      &#8594;  msg_date, `region_id`, `alert_id`, `person_id`                                      <br>
+**recommendation_id**           &#8594;  recommendation                                                                                <br>
 
 
 There is no attributes that depend on non-key attributes in our tables. All dependent non-key attributes, do depend on the table's primary key.
