@@ -151,7 +151,7 @@ We did not show *referential integrity* on the ERD when it comes to inherited en
 | **City**(<ins>city_id</ins>, city)|
 | **PostalCityPivot**(`postal_code_id`, `city_id`)|
 | **PostalCode**(<ins>postal_code_id<ins>, postal_code)|
-| **Forms**(<ins>form_id</ins>, `health_worker_id`, `patient_id`)
+| **Forms**(<ins>form_id</ins>, `health_worker_id`, `patient_id`, form_date)
 | **FormsSymptomsPivot**(`symptom_id`, `form_id`)
 | **MainSymptoms**(<ins>symptom</ins>, `commonality`)
 | **Symptoms**(<ins>symptom_id</ins>, symptom)
