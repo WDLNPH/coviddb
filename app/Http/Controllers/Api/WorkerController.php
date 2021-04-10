@@ -30,14 +30,18 @@ class WorkerController extends Controller
             'region_id'
         ]));
         $pid = $this->doInsertAndGetId('Person', $parameters);
+        
+       $schedule = $request->input('schedule');
+       $position_id = $request->input('position_id');
+       $PHCID = $request->input('health_center_id');     
 
-        $parameters_worker = collect($request->only([
-            'position',
-            'schedule',
-        ]));
-        $wid = $this->doInsertAndGetId('PublicHealthWorker', $parameters_worker);
+        
+        DB::insert("INSERT INTO PublicHealthWorker (person_id, position_id, schedule, health_center_id) VALUES (?,?,?,?)",[$pid, $position_id, $schedule, $PHCID]);
+      
 
-        return response()->json(['person_id' => $pid], ['patient_id' => $wid], $pid, $wid ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+        
+
+        //return response()->json(['person_id' => $pid], ['patient_id' => $wid], $pid, $wid ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
         // Don't know how to test it without postal_code_id and region_id.
     }
@@ -127,7 +131,7 @@ class WorkerController extends Controller
         $this->doUpdate('PublicHealthWorker', $id, $personFieldsToUpdate);
         $this->doUpdate('Person', $id, $workerFieldsToUpdate);
 
-        return response()->json(['message' => $fieldsToUpdate->count() . " field(s) updated successfully!"], 200)
+        return response()->json(['message' => $workerFieldsToUpdate->count() . " field(s) updated successfully!"], 200);
         
     }
 

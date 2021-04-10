@@ -15,12 +15,18 @@ class PositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        DB::insert("INSERT INTO Position (`position`) VALUES (?)", [$request->input('position')]);
-        
-        return response()->json("Position Added!");
-    }
+
+ 
+
+public function create(Request $request)
+{
+    $parameters = collect($request->only([
+        'position'
+    ]));
+    $pid = $this->doInsertAndGetId('Position', $parameters);
+    
+    return response()->json($pid);
+}
 
     /**
      * Display a listing of the resource.
