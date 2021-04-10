@@ -79,7 +79,7 @@ class PatientController extends Controller
         // Should be pushed right at the end
         $values->push($id);
 
-        DB::update("UPDATE Position SET {$fieldsToUpdate->join(',')} WHERE id = ?", $values->toArray());
+        DB::update("UPDATE Position SET {$fieldsToUpdate->join(', ')} WHERE id = ?", $values->toArray());
     }
 
     /**
