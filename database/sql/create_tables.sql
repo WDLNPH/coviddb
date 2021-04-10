@@ -36,31 +36,28 @@ CREATE TABLE `Recommendation`
 CREATE TABLE `Alert`
 (
     `alert_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `recommendation_id`  INT(16) UNSIGNED NOT NULL,
-    `alert_info`  VARCHAR(1024) NOT NULL,
+    `alert_info`  VARCHAR(255) NOT NULL,
     PRIMARY KEY (`alert_id`),
-    KEY `recommendation_id` (`recommendation_id`),
-    CONSTRAINT `alert_rec_id_fk_idx` FOREIGN KEY (`recommendation_id`) REFERENCES `Recommendation` (`recommendation_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `Province`
 (
-    `province_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `province_code` VARCHAR(2) NOT NULL,
     `province` VARCHAR(64) NOT NULL,
-    PRIMARY KEY (`province_id`)
+    PRIMARY KEY (`province_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Region`
 (
     `region_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `region_name` VARCHAR(255) NOT NULL,
     `alert_id`  INT(16) UNSIGNED NOT NULL,
-    `province_id` INT(16) UNSIGNED NOT NULL,
+    `province_code` VARCHAR(2) NOT NULL,
     PRIMARY KEY (`region_id`),
     KEY `alert_id` (`alert_id`),
-    KEY `province_id` (`province_id`),
+    KEY `province_code` (`province_code`),
     CONSTRAINT `region_al_fk_1` FOREIGN KEY (`alert_id`) REFERENCES `Alert` (`alert_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `pcpiv_province_id_fk_idx` FOREIGN KEY (`province_id`) REFERENCES `Province` (`province_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `pcpiv_province_code_fk_idx` FOREIGN KEY (`province_code`) REFERENCES `Province` (`province_code`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `City`
@@ -92,9 +89,9 @@ CREATE TABLE `Person`
     `last_name`   VARCHAR(32) NOT NULL,
     `address`     VARCHAR(128) NOT NULL,
     `postal_code` VARCHAR(8) NOT NULL,
-    `postal_code_id`  VARCHAR(255) NOT NULL,
+    `postal_code_id`  VARCHAR(3) NOT NULL,
     `citizenship` VARCHAR(32) NOT NULL,
-    `email`       VARCHAR(64) DEFAULT NULL,
+    `email`       VARCHAR(64) NOT NULL,
     `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
     PRIMARY KEY (`person_id`),
