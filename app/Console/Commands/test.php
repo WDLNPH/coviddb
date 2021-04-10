@@ -128,6 +128,7 @@ class test extends Command
     public function createPerson(Faker\Generator $faker)
     {
         $date = $faker->date();
+        $postalCode = $faker->postal_code_qc,
         return DB::table("person")->insertGetId([
             // Person ID
             "medicare" => $faker->medicare,
@@ -136,9 +137,8 @@ class test extends Command
             "first_name" => $faker->firstName,
             "last_name" => $faker->lastName,
             "address" => $faker->streetAddress,
-            "city"   => $faker->city,
-            "postal_code" => $faker->postal_code_qc,
-            "province" => $faker->provinceAbbr,
+            "postal_code" => $postalCode,
+            "postal_code_id" => Str::substr($postalCode, 0, 3),
             "citizenship" => $faker->countryCode,
             "email"   => $faker->email,
             "phone" => $faker->phoneNumber,

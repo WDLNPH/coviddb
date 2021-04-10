@@ -61,10 +61,22 @@ class WorkerController extends Controller
      */
     public function readOne($id)
     {
-        $result = DB::select("SELECT w.health_worker_id, w.position, w.schedule, ps.*, GROUP_CONCAT(gzp.group_id) as 'group_zones'
+        $result = DB::select("SELECT
+                w.health_worker_id,
+                w.position,
+                w.schedule,
+                ps.*,
+                c.city,
+                p.province,
+                r.region,
+                GROUP_CONCAT(gzp.group_id) as 'group_zones'
             FROM PublicHealthWorker w
             JOIN Person ps ON w.person_id = ps.person_id
             LEFT JOIN GroupZonePersonPivot gzp ON gzp.person_id = ps.person_id
+            JOIN PostalCode pc ON ps.postal_code_id = pc.postal_code_id
+            JOIN City c ON pc.city_id = c.city_id
+            JOIN Region r ON c.region_id = r.region_id
+            JOIN Province p ON p.province_code = r.province_code
             WHERE w.health_worker_id = '{$id}'
             GROUP BY w.health_worker_id");
 

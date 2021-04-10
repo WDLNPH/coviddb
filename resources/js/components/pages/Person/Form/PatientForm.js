@@ -19,10 +19,10 @@ export default function ({patient, patientRequestPromise}) {
                 medicare: patient ? patient.medicare : '',
                 dob: patient ? patient.dob : '',
                 address: patient ? patient.address : '',
-                postal_code: patient ? patient.postal_code : '',
+                postal_code_id: patient ? patient.postal_code_id : '',
                 city: patient ? patient.city : '', // Could represent a city_id
-                region_id: patient ? patient.region_id : '',
-                province: patient ? patient.province : '',
+                region: patient ? patient.region : '',
+                province_code: patient ? patient.province_code : '',
                 citizenship: patient ? patient.citizenship : '',
                 email: patient ? patient.email : '',
                 phone: patient ? patient.phone : '',
