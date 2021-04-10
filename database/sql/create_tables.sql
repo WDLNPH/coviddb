@@ -10,9 +10,11 @@ DROP TABLE IF EXISTS `RegionPostalPivot`;
 DROP TABLE IF EXISTS `ProvinceCityPivot`;
 DROP TABLE IF EXISTS `PostalCityPivot`;
 
-DROP TABLE IF EXISTS `FollowUpForm`;
+
 DROP TABLE IF EXISTS `FollowUpFormSymptomPivot`;
-DROP TABLE IF EXISTS `Symptoms`;
+DROP TABLE IF EXISTS `FollowUpForm`;
+DROP TABLE IF EXISTS `Symptom`;
+
 DROP TABLE IF EXISTS `Messages`;
 DROP TABLE IF EXISTS `Patient`;
 DROP TABLE IF EXISTS `Person`;
