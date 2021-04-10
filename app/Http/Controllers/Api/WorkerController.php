@@ -16,7 +16,11 @@ class WorkerController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        $result = DB::select("INSERT INTO Person (`first_name`) VALUES (?)", [$request->input('first_name')]);
+        
+        $person_id = $result->person_id;
+
+    
     }
 
     /**
@@ -59,7 +63,7 @@ class WorkerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**

@@ -9,17 +9,6 @@ use Illuminate\Http\Response;
 
 class PatientController extends Controller
 {
-    /**
-     * Create a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
-
-    }
 
     /**
      * Display a listing of the resource.
@@ -52,6 +41,26 @@ class PatientController extends Controller
             count($result) > 0 ? 200 : 404);
     }
 
+      /**
+     * Create a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        //if ($request->filled('first_name')) {
+        //$result = DB::insert("INSERT INTO Person (`first_name`) VALUES (?)", [$request->input('first_name')]);
+       //}
+        $result = DB::select("SELECT FROM Person ('first_name') VALUES {{$request->input("first_name")}}");
+       // $result = DB::insert("INSERT INTO Person (`first_name`) VALUES (?)", [$request->input('first_name')]);
+
+        $personId = $result->person_id;
+        $medicare = $result->medicare;
+
+        DB::select("INSERT INTO Patient ('person_id') VALUES ({$personId})");
+
+    }
     /**
      * Update the specified resource in storage.
      *
