@@ -16,11 +16,30 @@ class WorkerController extends Controller
      */
     public function create(Request $request)
     {
-        $result = DB::select("INSERT INTO Person (`first_name`) VALUES (?)", [$request->input('first_name')]);
-        
-        $person_id = $result->person_id;
+        $parameters = collect($request->only([
+            'medicare',
+            'password',
+            'first_name',
+            'last_name',
+            'address',
+            'postal_code_id',
+            'citizenship',
+            'email',
+            'phone',
+            'dob',
+            'region_id'
+        ]));
+        $pid = $this->doInsertAndGetId('Person', $parameters);
 
-    
+        $parameters_worker = collect($request->only([
+            'position',
+            'schedule',
+        ]));
+        $wid = $this->doInsertAndGetId('PublicHealthWorker', $parameters_worker);
+
+        return response()->json(['person_id' => $pid], ['patient_id' => $wid], $pid, $wid ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+
+        // Don't know how to test it without postal_code_id and region_id.
     }
 
     /**
@@ -63,6 +82,52 @@ class WorkerController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $workerFieldsToUpdate = collect();
+        $personFieldsToUpdate = collect();
+
+        if ($request->filled('password')) {
+            $personFieldsToUpdate->put('password = ?', $request->password);
+        }
+        if ($request->filled('first_name')) {
+            $personFieldsToUpdate->put('name = ?', $request->name);
+        }
+        if ($request->filled('last_name')) {
+            $personFieldsToUpdate->put('last_name = ?', $request->name);
+        }
+        if ($request->filled('address')) {
+            $personFieldsToUpdate->put('address = ?', $request->address);
+        }
+        if ($request->filled('postal_code_id')) {
+            $personFieldsToUpdate->put('postal_code_id = ?', $request->postal_code_id);
+        }
+        if ($request->filled('citizenship')) {
+            $personFieldsToUpdate->put('email = ?', $request->email);
+        }
+        if ($request->filled('email')) {
+            $personFieldsToUpdate->put('phone = ?', $request->phone);
+        }
+        if ($request->filled('phone')) {
+            $personFieldsToUpdate->put('phone = ?', $request->phone);
+        }
+        if ($request->filled('dob')) {
+            $personFieldsToUpdate->put('dob = ?', $request->dob);
+        }
+        if ($request->filled('region_id')) {
+            $personFieldsToUpdate->put('region_id = ?', $request->region_id);
+        }
+        if ($request->filled('position')) {
+            $workerFieldsToUpdate->put('position = ?', $request->position);
+        }
+        if ($request->filled('schedule')) {
+            $workerFieldsToUpdate->put('schedule = ?', $request->dob);
+        }
+
+        
+        $this->doUpdate('PublicHealthWorker', $id, $personFieldsToUpdate);
+        $this->doUpdate('Person', $id, $workerFieldsToUpdate);
+
+        return response()->json(['message' => $fieldsToUpdate->count() . " field(s) updated successfully!"], 200)
         
     }
 
