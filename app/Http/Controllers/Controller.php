@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
@@ -30,5 +31,34 @@ class Controller extends BaseController
             'columns' => $columns,
             'result' => $result
         ]);
+    }
+
+    public function doInsertAndGetId($tableName, Collection $parameters)
+    {
+        $keys = $parameters->keys()->join(',');
+        $placeholders = $parameters->map(function () { return '?';})->join(',');
+        $result = DB::insert("INSERT INTO $tableName (
+                $keys
+            ) VALUES ($placeholders)",
+            [
+                ...$parameters->values(),
+            ]
+        );
+
+        if ($result) {
+            // Get the ID of the function you want to run back
+            $id = DB::getPdo()->lastInsertId();
+            return $id;
+        }
+        return null;
+    }
+
+    public function doUpdate($tableName, $id, Collection $fieldsToUpdate)
+    {
+        $values = $fieldsToUpdate->values();
+        // Always do this at the very end
+        $values->push($id);
+
+        return DB::update("UPDATE $tableName SET {$fieldsToUpdate->keys()->join(',')} WHERE health_center_id = ?", $values->toArray());
     }
 }
