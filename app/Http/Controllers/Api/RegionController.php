@@ -18,10 +18,12 @@ class RegionController extends Controller
     {
         //
         return response()->json(DB::select("
-            SELECT pcr.postal_code, r.region_id, r.region_name
-            FROM PostalCodeRegion pcr
-            JOIN Region r ON pcr.region_id = r.region_id
-            WHERE pcr.`postal_code` like '{$request->input('postal_code')}%'"));
+            SELECT pc.postal_code_id, c.city_id, c.city, r.region_id, r.region_name, p.province_code, p.province
+            FROM PostalCode pc
+            JOIN City c ON pc.city_id = c.city_id
+            JOIN Region r ON c.region_id = r.region_id
+            JOIN Province p ON p.province_code = r.province_code
+            WHERE pc.`postal_code_id` like '{$request->input('postal_code')}%'"));
     }
 
     /**
