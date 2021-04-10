@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
-use Exception;
 
 class PersonController extends Controller
 {
@@ -18,18 +17,18 @@ class PersonController extends Controller
     public function create(Request $request)
     {
         $parameters = [
-        $request->input('medicare'),
-        $request->input('password'),
-        $request->input('first_name'),
-        $request->input('last_name'),
-        $request->input('address'),
-        $request->input('city'),
-        $request->input('postal_code'),
-        $request->input('province'),
-        $request->input('citizenship'),
-        $request->input('email'),
-        $request->input('phone'),
-        $request->input('dob'),
+            $request->input('medicare'),
+            $request->input('password'),
+            $request->input('first_name'),
+            $request->input('last_name'),
+            $request->input('address'),
+            $request->input('city'),
+            $request->input('postal_code'),
+            $request->input('province'),
+            $request->input('citizenship'),
+            $request->input('email'),
+            $request->input('phone'),
+            $request->input('dob'),
         ];
 
         if (
@@ -54,10 +53,12 @@ class PersonController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select(
-            "SELECT ps.*
-            FROM Person ps ")
-            );
+        return response()->json(
+            DB::select(
+                "SELECT ps.*
+            FROM Person ps "
+            )
+        );
     }
 
     /**
@@ -86,57 +87,59 @@ class PersonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*   $personForm = array(
-            $medicare = $request->input('medicare'),
-            $password = $request->input('password'),
-            $first_name = $request->input('first_name'),
-            $last_name = $request->input('last_name'),
-            $address = $request->input('address'),
-            $city = $request->input('city'),
-            $postal_code = $request->input('postal_code'),
-            $province = $request->input('province'),
-            $citizenship = $request->input('citizenship'),
-            $email = $request->input('email'),
-            $phone = $request->input('phone'),
-            $dob = $request->input('dob')
-        );
-        $npersonForm = array(
-            $nmedicare = $request->get('medicare'),
-            $npassword = $request->get('password'),
-            $nfirst_name = $request->get('first_name'),
-            $nlast_name = $request->get('last_name'),
-            $naddress = $request->get('address'),
-            $ncity = $request->get('city'),
-            $npostal_code = $request->get('postal_code'),
-            $nprovince = $request->get('province'),
-            $ncitizenship = $request->get('citizenship'),
-            $nemail = $request->get('email'),
-            $nphone = $request->get('phone'),
-            $ndob = $request->get('dob')
-        ); */
+        $fieldsToUpdate = collect();
+        $values = collect();
 
-        // Turns out get and input are the same. How do I compare the fields and overrwrite if changed?
+        if ($request->filled('password')) {
+            $fieldsToUpdate->push('password = ?');
+            $values->push($request->password);
+        }
+        if ($request->filled('first_name')) {
+            $fieldsToUpdate->push('phone = ?');
+            $values->push($request->phone);
+        }
+        if ($request->filled('last_name')) {
+            $fieldsToUpdate->push('last_name = ?');
+            $values->push($request->last_name);
+        }
+        if ($request->filled('address')) {
+            $fieldsToUpdate->push('address = ?');
+            $values->push($request->address);
+        }
+        if ($request->filled('city')) {
+            $fieldsToUpdate->push('city = ?');
+            $values->push($request->city);
+        }
+        if ($request->filled('postal_code')) {
+            $fieldsToUpdate->push('postal_code = ?');
+            $values->push($request->postal_code);
+        }
+        if ($request->filled('province')) {
+            $fieldsToUpdate->push('province = ?');
+            $values->push($request->province);
+        }
+        if ($request->filled('citizenship')) {
+            $fieldsToUpdate->push('citizenship = ?');
+            $values->push($request->citizenship);
+        }
+        if ($request->filled('email')) {
+            $fieldsToUpdate->push('email = ?');
+            $values->push($request->email);
+        }
+        if ($request->filled('phone')) {
+            $fieldsToUpdate->push('phone = ?');
+            $values->push($request->phone);
+        }
+        if ($request->filled('dob')) {
+            $fieldsToUpdate->push('dob = ?');
+            $values->push($request->dob);
+        }
 
-        $status = DB::update(
-            "UPDATE Person SET medicare=?, password=?, first_name = ?, last_name = ?, address = ?, city=?, postal_code=?, province=?, citizenship=?, email=?, phone=?, dob=? WHERE person_id = ?",
-            [
-                $request->input('medicare'),
-                $request->input('password'),
-                $request->input('first_name'),
-                $request->input('last_name'),
-                $request->input('address'),
-                $request->input('city'),
-                $request->input('postal_code'),
-                $request->input('province'),
-                $request->input('citizenship'),
-                $request->input('email'),
-                $request->input('phone'),
-                $request->input('dob'), $id
-            ]
-        );
+        $values->push($id);
 
-        // what do we return?
+        DB::update("UPDATE Person SET {$fieldsToUpdate->join(',')} WHERE person_id = ?", $values->toArray());
     }
+
 
     /**
      * Remove the specified resource from storage.
