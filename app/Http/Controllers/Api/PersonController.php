@@ -42,8 +42,7 @@ class PersonController extends Controller
 
         DB::insert("INSERT INTO Person ( medicare, password, first_name, last_name,address,city,postal_code,province,citizenship,email,phone,dob) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", $parameters);
 
-
-        //return something?
+            
     }
 
     /**
@@ -138,6 +137,9 @@ class PersonController extends Controller
         $values->push($id);
 
         DB::update("UPDATE Person SET {$fieldsToUpdate->join(',')} WHERE person_id = ?", $values->toArray());
+
+        return response()->json([$fieldsToUpdate->count() => "Field(s) updated successfully!"], 200);    
+
     }
 
 
@@ -149,7 +151,7 @@ class PersonController extends Controller
      */
     public function delete($id)
     {
-        $status = DB::delete("DELETE FROM Person WHERE id = ?", [$id]);
+        $status = DB::delete("DELETE FROM Person WHERE person_id = ?", [$id]);
         return response()->json(['status' => "Deleted successfully!"], 200);
     }
 }
