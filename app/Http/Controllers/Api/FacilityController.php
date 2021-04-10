@@ -65,6 +65,7 @@ class FacilityController extends Controller
 //            ], Response::HTTP_BAD_REQUEST);
 //        }
         // This takes all of the required, non-nullable values to fill, with their keys
+
         $parameters = collect($request->only([
             'name',
             'phone',
@@ -75,7 +76,7 @@ class FacilityController extends Controller
             'type',
             'website',
         ]));
-
+        dd($parameters->all());
         $id = $this->doInsertAndGetId('PublicHealthCenter', $parameters);
 
         return response()->json(['health_center_id' => $id], $id ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);

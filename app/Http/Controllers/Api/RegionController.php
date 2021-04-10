@@ -23,16 +23,6 @@ class RegionController extends Controller
             JOIN Region r ON pcr.region_id = r.region_id
             WHERE pcr.`postal_code` like '{$request->input('postal_code')}%'"));
     }
-    /**
-     * Create a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
-    }
 
     /**
      * Display a listing of the resource.
@@ -70,14 +60,4 @@ class RegionController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

@@ -29,6 +29,7 @@ Route::group(['prefix' => 'regions'], function () {
 
 Route::group(['prefix' => 'group-zones'], function () {
     Route::get('/', 'Api\\GroupZoneController@readAll');
+    Route::post('/', 'Api\\GroupZoneController@create');
     Route::get('/{groupZoneId}', 'Api\\GroupZoneController@readOne');
 });
 
