@@ -6,21 +6,40 @@ DROP TABLE IF EXISTS `PublicHealthWorker`;
 DROP TABLE IF EXISTS `PublicHealthCenter`;
 DROP TABLE IF EXISTS `Position`;
 DROP TABLE IF EXISTS `Administrator`;
-DROP TABLE IF EXISTS `Region`;
 DROP TABLE IF EXISTS `RegionPostalPivot`;
 DROP TABLE IF EXISTS `ProvinceCityPivot`;
-DROP TABLE IF EXISTS `Province`;
-DROP TABLE IF EXISTS `City`;
 DROP TABLE IF EXISTS `PostalCityPivot`;
-DROP TABLE IF EXISTS `PostalCode`;
+
 DROP TABLE IF EXISTS `FollowUpForm`;
 DROP TABLE IF EXISTS `FollowUpFormSymptomPivot`;
 DROP TABLE IF EXISTS `Symptoms`;
-DROP TABLE IF EXISTS `Alert`;
 DROP TABLE IF EXISTS `Messages`;
-DROP TABLE IF EXISTS `Person`;
-DROP TABLE IF EXISTS `Recommendation`;
 DROP TABLE IF EXISTS `Patient`;
+DROP TABLE IF EXISTS `Person`;
+DROP TABLE IF EXISTS `PostalCode`;
+DROP TABLE IF EXISTS `City`;
+DROP TABLE IF EXISTS `Region`;
+DROP TABLE IF EXISTS `Province`;
+DROP TABLE IF EXISTS `Alert`;
+DROP TABLE IF EXISTS `Recommendation`;
+
+
+CREATE TABLE `Recommendation`
+(
+    `recommendation_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `recommendation` TEXT NOT NULL,
+    PRIMARY KEY (`recommendation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `Alert`
+(
+    `alert_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `recommendation_id`  INT(16) UNSIGNED NOT NULL,
+    `alert_info`  VARCHAR(1024) NOT NULL,
+    PRIMARY KEY (`alert_id`),
+    KEY `recommendation_id` (`recommendation_id`),
+    CONSTRAINT `alert_rec_id_fk_idx` FOREIGN KEY (`recommendation_id`) REFERENCES `Recommendation` (`recommendation_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `Province`
@@ -38,7 +57,7 @@ CREATE TABLE `Region`
     PRIMARY KEY (`region_id`),
     KEY `alert_id` (`alert_id`),
     KEY `province_id` (`province_id`),
-    CONSTRAINT `region_al_fk_1` FOREIGN KEY (`alert_id`) REFERENCES `Alert` (`alert_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `region_al_fk_1` FOREIGN KEY (`alert_id`) REFERENCES `Alert` (`alert_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `pcpiv_province_id_fk_idx` FOREIGN KEY (`province_id`) REFERENCES `Province` (`province_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,7 +66,7 @@ CREATE TABLE `City`
     `city_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `city` VARCHAR(64) NOT NULL,
     `region_id` INT(16) UNSIGNED NOT NULL,
-    PRIMARY KEY (`city_id`)
+    PRIMARY KEY (`city_id`),
     CONSTRAINT `pcpiv1_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -57,7 +76,7 @@ CREATE TABLE `PostalCode`
     `city_id` INT(16) UNSIGNED NOT NULL,
     KEY `postal_code_id` (`postal_code_id`),
     KEY `city_id` (`city_id`),
-    PRIMARY KEY (`postal_code_id`)
+    PRIMARY KEY (`postal_code_id`),
     CONSTRAINT `pcpiv1_city_id_fk_idx` FOREIGN KEY (`city_id`) REFERENCES `City` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -75,7 +94,7 @@ CREATE TABLE `Person`
     `citizenship` VARCHAR(32) NOT NULL,
     `email`       VARCHAR(64) DEFAULT NULL,
     `phone`       VARCHAR(32) NOT NULL,
-    `dob`         DATE        NOT NULL
+    `dob`         DATE        NOT NULL,
     PRIMARY KEY (`person_id`),
     KEY         `postal_code_id` (`postal_code_id`),
     CONSTRAINT `person_pc_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -161,9 +180,9 @@ CREATE TABLE `Carer`
     `child_id`   INT(16) UNSIGNED NOT NULL,
     `parent_id` INT(16) UNSIGNED NOT NULL,
     KEY `child_id` (`child_id`),
-    KEY `parent_id` (`person_id`),
-    CONSTRAINT `carer_child_id_fk_idx` FOREIGN KEY (`child_id`) REFERENCES `Person` (`child_id`) ON DELETE CASCADE ON UPDATE CASCADE
-    CONSTRAINT `carer_parent_id_fk_idx` FOREIGN KEY (`parent_id`) REFERENCES `Person` (`parent_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY `parent_id` (`parent_id`),
+    CONSTRAINT `carer_child_id_fk_idx` FOREIGN KEY (`child_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `carer_parent_id_fk_idx` FOREIGN KEY (`parent_id`) REFERENCES `Person` (`person_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Diagnostic` (
@@ -195,38 +214,21 @@ CREATE TABLE `FollowUpForm`
     CONSTRAINT `followupform_patient_id_fk_idx` FOREIGN KEY (`patient_id`) REFERENCES `Patient` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `Symptom`
+(
+    `symptom_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `symptom`  VARCHAR(32)  NOT NULL,
+    PRIMARY KEY (`symptom_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `FollowUpFormSymptomPivot`
 (
-    `symptom_id` INT(16) UNSIGNED NOT NULL ,
+    `symptom_id` INT(16) UNSIGNED NOT NULL,
     `form_id`   INT(16) UNSIGNED NOT NULL,
     KEY `symptom_id` (`symptom_id`),
     KEY `form_id` (`form_id`),
     CONSTRAINT `followupformpiv_symptom_id_id_fk_idx` FOREIGN KEY (`symptom_id`) REFERENCES `Symptom` (`symptom_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `followupformpiv_form_id_id_fk_idx` FOREIGN KEY (`form_id`) REFERENCES `FollowUpForm` (`form_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `Symptom`
-(
-    `symptom_id` INT(16) UNSIGNED NOT NULL,
-    `symptom`  VARCHAR(32)  NOT NULL,
-    PRIMARY KEY (`symptom_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `Alert`
-(
-    `alert_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `recommendation_id`  INT(16) UNSIGNED NOT NULL,
-    `alert_info`  VARCHAR(1024) NOT NULL,
-    PRIMARY KEY (`alert_id`),
-    KEY `recommendation_id` (`recommendation_id`),
-    CONSTRAINT `alert_rec_id_fk_idx` FOREIGN KEY (`recommendation_id`) REFERENCES `Recommendation` (`recommendation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `Recommendation`
-(
-    `recommendation_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `recommendation` TEXT NOT NULL,
-    PRIMARY KEY (`recommendation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Messages`
