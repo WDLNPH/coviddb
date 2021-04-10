@@ -30,18 +30,13 @@ class WorkerController extends Controller
             'region_id'
         ]));
         $pid = $this->doInsertAndGetId('Person', $parameters);
-        
-       $schedule = $request->input('schedule');
-       $position_id = $request->input('position_id');
-       $PHCID = $request->input('health_center_id');     
 
-        
-        DB::insert("INSERT INTO PublicHealthWorker (person_id, position_id, schedule, health_center_id) VALUES (?,?,?,?)",[$pid, $position_id, $schedule, $PHCID]);
-      
+        $schedule = $request->input('schedule');
+        $position_id = $request->input('position_id');
+        $center_id = $request->input('health_center_id');
 
-        
+        DB::insert("INSERT INTO PublicHealthWorker (person_id, position_id, schedule, health_center_id) VALUES (?,?,?,?)", [$pid, $position_id, $schedule, $center_id]);
 
-        //return response()->json(['person_id' => $pid], ['patient_id' => $wid], $pid, $wid ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
         // Don't know how to test it without postal_code_id and region_id.
     }
@@ -74,7 +69,8 @@ class WorkerController extends Controller
             GROUP BY w.health_worker_id");
 
         return response()->json((count($result) > 0 ? $result[0] : null),
-            count($result) > 0 ? 200 : 404);
+            count($result) > 0 ? 200 : 404
+        );
     }
 
     /**
@@ -87,8 +83,8 @@ class WorkerController extends Controller
     public function update(Request $request, $id)
     {
 
-        $workerFieldsToUpdate = collect();
         $personFieldsToUpdate = collect();
+        $workerFieldsToUpdate = collect();
 
         if ($request->filled('password')) {
             $personFieldsToUpdate->put('password = ?', $request->password);
@@ -127,12 +123,10 @@ class WorkerController extends Controller
             $workerFieldsToUpdate->put('schedule = ?', $request->dob);
         }
 
-        
-        $this->doUpdate('PublicHealthWorker', $id, $personFieldsToUpdate);
-        $this->doUpdate('Person', $id, $workerFieldsToUpdate);
-
-        return response()->json(['message' => $workerFieldsToUpdate->count() . " field(s) updated successfully!"], 200);
-        
+        $this->doUpdate('Person', $id, $personFieldsToUpdate);
+        $this->doUpdate('PublicHealthWorker', $id, $workerFieldsToUpdate);
+        $fieldsUpdated = $personFieldsToUpdate->count() + $workerFieldsToUpdate->count();
+        return response()->json(['message' => $fieldsUpdated . " field(s) updated successfully!"], 200);
     }
 
     /**
@@ -143,6 +137,7 @@ class WorkerController extends Controller
      */
     public function delete($id)
     {
-        //
+        $status = DB::delete("DELETE FROM PublicHealthWorker WHERE health_worker_id = ?", [$id]);
+        return response()->json(['status' => "Deleted successfully!"], 200);
     }
 }

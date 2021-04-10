@@ -16,33 +16,7 @@ class PersonController extends Controller
      */
     public function create(Request $request)
     {
-        $parameters = [
-            $request->input('medicare'),
-            $request->input('password'),
-            $request->input('first_name'),
-            $request->input('last_name'),
-            $request->input('address'),
-            $request->input('city'),
-            $request->input('postal_code'),
-            $request->input('province'),
-            $request->input('citizenship'),
-            $request->input('email'),
-            $request->input('phone'),
-            $request->input('dob'),
-        ];
-
-        if (
-            !$request->filled('medicare') or !$request->filled('password') or !$request->filled('first_name') or !$request->filled('last_name')
-            or !$request->filled('address') or !$request->filled('city') or !$request->filled('postal_code') or !$request->filled('province')
-            or !$request->filled('citizenship') or !$request->filled('email') or !$request->filled('phone') or !$request->filled('dob')
-        ) {
-
-            return response()->json("Missing required information! Refill the form properly");
-        }
-
-        DB::insert("INSERT INTO Person ( medicare, password, first_name, last_name,address,city,postal_code,province,citizenship,email,phone,dob) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", $parameters);
-
-            
+           
     }
 
     /**

@@ -16,7 +16,9 @@ class SymptomController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        $id = $this->doInsertAndGetId('Symptom', $request->only('symptom'));
+        return response()->json(['symptom_id' => $id], $id ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+
     }
 
     /**
@@ -36,7 +38,7 @@ class SymptomController extends Controller
      */
     public function readOne($id)
     {
-        //
+        return response()->json(DB::select("SELECT symptom FROM Symptom WHERE $id = symptom_id"));
     }
 
     /**
@@ -48,7 +50,15 @@ class SymptomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $fieldsToUpdate = collect();
+
+        if ($request->filled('symptom')) {
+            $fieldsToUpdate->put('symptom = ?', $request->symptom);
+        }
+
+        $result = $this->doUpdate('Symptom', $id, $fieldsToUpdate);
+        return response()->json(['message' => "Symptom updated successfully!"], 200);
+        
     }
 
     /**
@@ -59,6 +69,8 @@ class SymptomController extends Controller
      */
     public function delete($id)
     {
-        //
-    }
+        $status = DB::delete("DELETE FROM Symptom WHERE symptom_id = ?", [$id]);
+        return response()->json(['status' => "Deleted successfully!"], 200);   
+     }
+    
 }

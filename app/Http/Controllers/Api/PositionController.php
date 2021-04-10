@@ -16,17 +16,17 @@ class PositionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
- 
 
-public function create(Request $request)
-{
-    $parameters = collect($request->only([
-        'position'
-    ]));
-    $pid = $this->doInsertAndGetId('Position', $parameters);
-    
-    return response()->json($pid);
-}
+
+    public function create(Request $request)
+    {
+        $parameters = collect($request->only([
+            'position'
+        ]));
+        $pid = $this->doInsertAndGetId('Position', $parameters);
+
+        return response()->json($pid);
+    }
 
     /**
      * Display a listing of the resource.
@@ -48,7 +48,7 @@ public function create(Request $request)
      */
     public function readOne($id)
     {
-        return response()->json(DB::select("SELECT position FROM Position WHERE $id = id"));
+        return response()->json(DB::select("SELECT position FROM Position WHERE $id = position_id"));
     }
 
     /**
@@ -60,8 +60,8 @@ public function create(Request $request)
      */
     public function update(Request $request, $id)
     {
-       
-       
+
+
         $field  = $request->input('field');
 
         DB::update("UPDATE Position  SET position = (?) WHERE id = $id", [$field]);
@@ -75,6 +75,7 @@ public function create(Request $request)
      */
     public function delete($id)
     {
-        DB::delete("DELETE FROM Position WHERE id = $id");
+        $status = DB::delete("DELETE FROM Position WHERE position_id = ?", [$id]);
+        return response()->json(['status' => "Deleted successfully!"], 200);
     }
 }

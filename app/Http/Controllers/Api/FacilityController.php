@@ -49,22 +49,6 @@ class FacilityController extends Controller
      */
     public function create(CreateFacilityRequest $request)
     {
-//        Replaced it for the Request object from Laravel
-//        if ($request->isNotFilled([
-//            'name',
-//            'phone',
-//            'address',
-//            'city',
-//            'province',
-//            'postal_code',
-//            'type',
-//            'website',
-//        ])) {
-//            return response()->json([
-//                "message" => "Missing required information! Refill the form properly"
-//            ], Response::HTTP_BAD_REQUEST);
-//        }
-        // This takes all of the required, non-nullable values to fill, with their keys
 
         $parameters = collect($request->only([
             'name',
@@ -76,7 +60,6 @@ class FacilityController extends Controller
             'type',
             'website',
         ]));
-        dd($parameters->all());
         $id = $this->doInsertAndGetId('PublicHealthCenter', $parameters);
 
         return response()->json(['health_center_id' => $id], $id ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
