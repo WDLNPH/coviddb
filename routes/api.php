@@ -32,6 +32,13 @@ Route::group(['prefix' => 'group-zones'], function () {
     Route::get('/{groupZoneId}', 'Api\\GroupZoneController@readOne');
 });
 
+Route::group(['prefix' => 'persons'], function () {
+    Route::get('/', 'Api\\PersonController@readAll');
+    Route::post('/', 'Api\\PersonController@create');
+    Route::put('/{personID}', 'Api\\PersonController@update');
+    Route::get('/{personID}', 'Api\\PersonController@readOne');
+});
+
 Route::group(['prefix' => 'patients'], function () {
     Route::get('/', 'Api\\PatientController@readAll');
     Route::post('/', 'Api\\PatientController@create');
