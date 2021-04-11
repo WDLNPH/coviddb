@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::redirect('/', '/app');
-Route::view('/app/{path?}', 'app')->where('path', '.*')->middleware('auth');
+Route::redirect('/', '/portal');
+Route::view('/portal/{path?}', 'app')->where('path', '.*')->middleware('auth');
 
 Auth::routes();
