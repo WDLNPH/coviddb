@@ -32,6 +32,18 @@ class DashboardController extends Controller
                 ) as recently_tested_positive,
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
+                       'date', f.created_at
+                   )
+                ) FROM FollowUpForm f
+                    JOIN
+                        Patient pt ON f.patient_id = pt.patient_id
+                    JOIN
+                        Person ps ON ps.person_id = pt.person_id
+                    WHERE
+                        ps.person_id = '{$id}'
+                ) as 'follow_up_forms',
+                (SELECT JSON_ARRAYAGG(
+                   JSON_OBJECT(
                        'date', d.diagnostic_date,
                        'result', if(d.`result`, true, false)
                    )
@@ -86,6 +98,7 @@ class DashboardController extends Controller
         if (count($result) > 0) {
             $result[0]->diagnostics_taken = json_decode($result[0]->diagnostics_taken, true) ?? [];
             $result[0]->diagnostics_handled = json_decode($result[0]->diagnostics_handled, true) ?? [];
+            $result[0]->follow_up_forms = json_decode($result[0]->follow_up_forms, true) ?? [];
             return response()->json($result[0]);
         }
     }
