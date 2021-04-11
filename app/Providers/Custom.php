@@ -32,7 +32,7 @@ class Custom extends \Faker\Provider\DateTime
         'H8Z','H9A','H9B','H9C','H9E','H9G','H9H','H9K','H9S','H9X','J0E','J0G','J0H','J0M','J0N','J0P','J0R','J0V','J0W','J0Y',
         'J1A','J1C','J1E','J1G','J1H','J1J','J1K','J1L','J1M','J1N','J1R','J1Z','J2B','J2W','J3H','J3N','J3P','J3R','J3V','J3Y',
         'J3Z','J4G','J4H','J4J','J4K','J4L','J4M','J4N','J4T','J4V','J5J','J5W','J6E','J6Z','J7A','J7B','J7C','J7G','J7H','J7J',
-        'J7M','J7N','J7T','J7W','J7X','J8C','J8G','J8L','J8M','J8P','J8R','J8T','J8V','J8X','J8Y','J8Z','J9A','J9H','J9J','J9X',
+        'J7M','J7N','J7T','J7W','J7X','J8C','J8G','J8L','J8M','J8P','J8R','J8T','J8V','J8X','J8Y','J8Z','J9A','J9H','J9X',
         'J9Y'
     ];
 
