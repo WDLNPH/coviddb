@@ -37,7 +37,7 @@ CREATE TABLE `Alert`
 (
     `alert_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
     `alert_info`  VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`alert_id`),
+    PRIMARY KEY (`alert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Province`
@@ -63,7 +63,7 @@ CREATE TABLE `Region`
 CREATE TABLE `City`
 (
     `city_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `city` VARCHAR(64) NOT NULL,
+    `city` VARCHAR(255) NOT NULL,
     `region_id` INT(16) UNSIGNED NOT NULL,
     PRIMARY KEY (`city_id`),
     CONSTRAINT `pcpiv1_region_id_fk_idx` FOREIGN KEY (`region_id`) REFERENCES `Region` (`region_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -110,7 +110,7 @@ CREATE TABLE `PublicHealthCenter`
     `type`             VARCHAR(32)  NOT NULL,
     `website`          VARCHAR(256) NOT NULL,
     `method`           VARCHAR(16) NOT NULL,
-    `drive-thru`       TINYINT(1) DEFAULT 0,
+    `drive_thru`       TINYINT(1) DEFAULT 0,
     PRIMARY KEY (`health_center_id`),
     KEY                `postal_code_id` (`postal_code_id`),
     CONSTRAINT `publichealth_postal_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE
