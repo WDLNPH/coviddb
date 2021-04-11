@@ -27,6 +27,14 @@ Route::group(['prefix' => 'regions'], function () {
     Route::get('/', 'Api\\RegionController@readAll');
 });
 
+Route::group(['prefix' => 'recommendation'], function () {
+    Route::get('/', 'Api\\RecommendationController@readAll');
+    Route::post('/', 'Api\\RecommendationController@create');
+    Route::get('/{recommendation_id}', 'Api\\RecommendationController@readOne');
+    Route::put('/{recommendation_id}', 'Api\\RecommendationController@update');
+    Route::delete('/{recommendation_id}', 'Api\\RecommendationController@delete');
+});
+
 Route::group(['prefix' => 'group-zones'], function () {
     Route::get('/', 'Api\\GroupZoneController@readAll');
     Route::post('/', 'Api\\GroupZoneController@create');

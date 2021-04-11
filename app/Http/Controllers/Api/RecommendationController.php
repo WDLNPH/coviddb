@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class RecommendationController extends Controller
 {
@@ -15,7 +16,13 @@ class RecommendationController extends Controller
      */
     public function create(Request $request)
     {
-        //
+
+        $recommendation = $request->input('recommendation');
+
+
+        DB::insert("INSERT INTO Recommendation (recommendation) VALUES (?)", [$recommendation]);
+
+
     }
 
     /**
@@ -25,7 +32,7 @@ class RecommendationController extends Controller
      */
     public function readAll(Request $request)
     {
-        //
+        return response()->json(DB::select("SELECT * FROM recommendation"));
     }
 
     /**
@@ -36,7 +43,7 @@ class RecommendationController extends Controller
      */
     public function readOne($id)
     {
-        //
+        return response()->json(DB::select("SELECT recommendation FROM recommendation WHERE recommendation_id = $id"));
     }
 
     /**
@@ -48,7 +55,9 @@ class RecommendationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $field  = $request->input('recommendation');
+
+        DB::update("UPDATE recommendation  SET recommendation = (?) WHERE recommendation_id = $id", [$field]); 
     }
 
     /**
@@ -59,6 +68,7 @@ class RecommendationController extends Controller
      */
     public function delete($id)
     {
-        //
+        DB::delete("DELETE FROM recommendation WHERE recommendation_id = ?", [$id]);
+        return response()->json(['status' => "Deleted successfully!"], 200);
     }
 }
