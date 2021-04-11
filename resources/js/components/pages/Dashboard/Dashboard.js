@@ -169,9 +169,6 @@ function PatientLastDiagnostics({diags}) {
                 <div className="my-2 flex capitalize text-gray-600 dark:text-gray-400">
                     <span className="flex flex-1">{diag.date}</span>
                     <span className="flex flex-1 text-black dark:text-gray-200">
-                        {diag.date}
-                                    </span>
-                    <span className="flex flex-1 text-black dark:text-gray-200">
                         {diag.result ? 'Positive' : 'Negative'}
                     </span>
                 </div>

@@ -19,6 +19,17 @@ class DashboardController extends Controller
                 r.region_name,
                 al.alert_info,
                 al.alert_color,
+                (SELECT count(diagnostic_id)
+                    FROM Diagnostic d
+                    JOIN
+                        Patient pt ON d.patient_id = pt.patient_id
+                    JOIN
+                        Person ps ON ps.person_id = pt.person_id
+                    WHERE
+                        ps.person_id = '{$id}'
+                    AND d.`result` = 1
+                    AND d.`diagnostic_date` >= NOW() - INTERVAL 2 WEEK
+                ) as recently_tested_positive,
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', d.diagnostic_date,
