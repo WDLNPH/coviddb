@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {fetchStats} from '../../../api';
 
 export default function () {
@@ -101,11 +101,21 @@ export default function () {
                 </div>
 
                 <div className="-mx-2 pb-8 flex flex-row">
-                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                    <div className={`mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white  dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ${stats?.alert_color}`}>
                         <div className="mx-1 flex justify-between">
-                            <h1 className="text-2xl">Region Info</h1>
+                            <h1 className="text-2xl">Current Alert Level</h1>
                         </div>
-                        <RegionInfoCard/>
+                        <div className="mx-1 mt-2 flex-shrink-0">
+                            {/*:className="plan.name == 'Basic' ? 'text-green-500' : ''"*/}
+                            <span className="text-4xl font-medium tracking-tight">
+                                {stats?.alert_info}
+                            </span>
+                            <span className="text-gray-400"></span>
+                        </div>
+                        <div className="mx-1 flex-shrink-0 pb-6 space-y-2">
+                            <h2 className="text-2xl font-normal">{stats?.region_name}</h2>
+                            <p className="text-sm text-gray-400">{stats?.city}</p>
+                        </div>
                     </div>
                     <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
                         <div className="mx-1 flex justify-between">
@@ -126,7 +136,11 @@ export default function () {
 }
 
 function RegionInfoCard() {
-    return null;
+    return  (
+        <>
+
+        </>
+    );
 }
 function WorkerLastDiagnostics({diags}) {
     return (

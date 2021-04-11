@@ -15,8 +15,10 @@ class DashboardController extends Controller
         $result = DB::select("
             SELECT
                 p.`person_id`,
-                p.`city`,
-                'Level 1: Green' as 'alert_level',
+                c.`city`,
+                r.region_name,
+                al.alert_info,
+                al.alert_color,
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', d.diagnostic_date,
@@ -59,6 +61,14 @@ class DashboardController extends Controller
                     PublicHealthWorker w ON w.person_id = p.person_id
                 LEFT JOIN
                     Diagnostic d ON d.patient_id = pt.patient_id
+                JOIN
+                    PostalCode pc ON p.postal_code_id = pc.postal_code_id
+                JOIN
+                    City c ON pc.city_id = c.city_id
+                JOIN
+                    Region r ON c.region_id = r.region_id
+                JOIN
+                    Alert al ON r.alert_id = al.alert_id
                 WHERE p.person_id = '{$id}'
                 GROUP BY
                     p.person_id");
