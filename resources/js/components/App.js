@@ -24,7 +24,7 @@ import AllSymptoms from "./pages/Symptoms/AllSymptoms";
 function App() {
     return (
         <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
-            <BrowserRouter basename="/app">
+            <BrowserRouter basename={process.env.MIX_APP_ENV === 'production' ? '/coviddb/portal' : '/portal'}>
                 <Sidebar/>
                 <div className="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
                     <Navbar/>

@@ -15,5 +15,5 @@ if (token) {
     window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ token.content;
 }
 
-window.axios.defaults.baseURL = '/api';
+window.axios.defaults.baseURL = process.env.MIX_APP_ENV === 'production' ? '/coviddb/api' : '/api';
 
