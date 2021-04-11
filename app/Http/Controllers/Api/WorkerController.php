@@ -48,8 +48,9 @@ class WorkerController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT w.health_worker_id, w.position, w.schedule, ps.*
+        return response()->json(DB::select("SELECT w.health_worker_id, pst.position, w.schedule, ps.*
             FROM PublicHealthWorker w
+            JOIN Position pst ON w.position_id = pst.position_id
             JOIN Person ps ON w.person_id = ps.person_id"));
     }
 
@@ -63,7 +64,7 @@ class WorkerController extends Controller
     {
         $result = DB::select("SELECT
                 w.health_worker_id,
-                w.position,
+                pst.position,
                 w.schedule,
                 ps.*,
                 c.city,
@@ -71,6 +72,7 @@ class WorkerController extends Controller
                 r.region,
                 GROUP_CONCAT(gzp.group_id) as 'group_zones'
             FROM PublicHealthWorker w
+            JOIN Position pst ON w.position_id = pst.position_id
             JOIN Person ps ON w.person_id = ps.person_id
             LEFT JOIN GroupZonePersonPivot gzp ON gzp.person_id = ps.person_id
             JOIN PostalCode pc ON ps.postal_code_id = pc.postal_code_id

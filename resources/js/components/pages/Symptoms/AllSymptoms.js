@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllSymptoms} from "../../../api";
 
-const SYMPTOMS_COLUMNS = ['symptom_id','name'];
+const SYMPTOMS_COLUMNS = ['symptom_id','symptom'];
 
 export default function () {
     //Symptoms

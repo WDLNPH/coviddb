@@ -5,7 +5,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllRegions} from "../../../api";
 
-const REGIONS_COLUMNS = ['region_id', 'region_name', 'alert_level'];
+const REGIONS_COLUMNS = ['region_id', 'region_name', 'alert_info'];
 
 export default function () {
     // Regions
