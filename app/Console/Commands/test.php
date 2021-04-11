@@ -93,7 +93,7 @@ class test extends Command
          */
         for ($i = 1; $i < 10; $i++) {
             $postalCode =  $faker->postal_code_qc;
-            $centerId = DB::table("publichealthcenter")->insertGetId([
+            $centerId = DB::table("PublicHealthCenter")->insertGetId([
                 //Health center ID
                 "name" => $faker->company,
                 "phone" => $faker->phoneNumber,
@@ -116,7 +116,7 @@ class test extends Command
          */
         $groupZones = [];
         foreach (self::GROUP_ZONES as $groupZone) {
-            $zoneId = DB::table("groupzone")->insertGetId([
+            $zoneId = DB::table("GroupZone")->insertGetId([
                 "name" => $groupZone[0],
                 "activity" => $groupZone[1]
             ]);
@@ -129,7 +129,7 @@ class test extends Command
          */
         $positions = [];
         foreach (self::POSITIONS as $position) {
-            $positionId = DB::table("position")->insertGetId([
+            $positionId = DB::table("Position")->insertGetId([
                 "position" => $position
             ]);
             // Push available group zone ids here
@@ -141,7 +141,7 @@ class test extends Command
          */
         $symptoms = [];
         foreach (self::SYMPTOMS as $symptom) {
-            $symptomId = DB::table("symptom")->insertGetId([
+            $symptomId = DB::table("Symptom")->insertGetId([
                 "symptom" => $symptom
             ]);
             // Push available group zone ids here
@@ -178,7 +178,7 @@ class test extends Command
     {
         $date = $faker->date();
         $postalCode = $faker->postal_code_qc;
-        return DB::table("person")->insertGetId([
+        return DB::table("Person")->insertGetId([
             // Person ID
             "medicare" => $faker->medicare,
             "password" => bcrypt(str_replace('-', '', $date)),
@@ -197,7 +197,7 @@ class test extends Command
 
     public function createWorker($faker, $personId, $healthCenterId, $positionId)
     {
-        return DB::table("publichealthworker")->insertGetId([
+        return DB::table("PublicHealthWorker")->insertGetId([
             "health_center_id" => $healthCenterId,
             "person_id" => $personId,
             "schedule" => $faker->schedule_builder,
@@ -207,7 +207,7 @@ class test extends Command
 
     public function createPatient($faker, $personId)
     {
-        return DB::table("patient")->insertGetId([
+        return DB::table("Patient")->insertGetId([
             "person_id" => $personId,
         ]);
     }
@@ -215,7 +215,7 @@ class test extends Command
     public function createDiagnostics(Faker\Generator $faker, $patientId, $workers, $healthCenterIds, $amount)
     {
         for ($i = 0; $i < $amount; $i++) {
-            DB::table("diagnostic")->insertGetId([
+            DB::table("Diagnostic")->insertGetId([
                 "health_worker_id" => $workers[array_rand($workers)],
                 "health_center_id" => $healthCenterIds[array_rand($healthCenterIds)],
                 "patient_id" => $patientId,
@@ -227,7 +227,7 @@ class test extends Command
 
     public function giveGroupZones($personId, $amount, $groupZones) {
         for ($i = 0; $i < $amount; $i++) {
-            DB::table("groupzonepersonpivot")->insert([
+            DB::table("GroupZonePersonPivot")->insert([
                 'person_id' => $personId,
                 'group_id' => $groupZones[array_rand($groupZones)]
             ]);
