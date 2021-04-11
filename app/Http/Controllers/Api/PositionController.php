@@ -62,9 +62,9 @@ class PositionController extends Controller
     {
 
 
-        $field  = $request->input('field');
+        $field  = $request->input('position_id');
 
-        DB::update("UPDATE Position  SET position = (?) WHERE id = $id", [$field]);
+        DB::update("UPDATE Position  SET position = (?) WHERE position_id = $id", [$field]);
     }
 
     /**
