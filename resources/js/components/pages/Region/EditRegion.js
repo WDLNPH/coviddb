@@ -76,7 +76,7 @@ export default function () {
     return loading ? <>please wait</> : (
         <Formik
             initialValues={{
-                alert_level_id: ALERT_LEVEL_ONE,
+                alert_id: ALERT_LEVEL_ONE,
             }}>
             {({values}) => (
                 <>

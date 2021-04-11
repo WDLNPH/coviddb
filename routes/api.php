@@ -29,6 +29,7 @@ Route::group(['prefix' => 'regions'], function () {
 
 Route::group(['prefix' => 'group-zones'], function () {
     Route::get('/', 'Api\\GroupZoneController@readAll');
+    Route::post('/', 'Api\\GroupZoneController@create');
     Route::get('/{groupZoneId}', 'Api\\GroupZoneController@readOne');
 });
 
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'patients'], function () {
     Route::post('/', 'Api\\PatientController@create');
     Route::put('/{patientId}', 'Api\\PatientController@update');
     Route::get('/{patientId}', 'Api\\PatientController@readOne');
+    Route::delete('/{patientId}', 'Api\\PatientController@delete');
+
 });
 
 Route::group(['prefix' => 'facilities'], function () {
@@ -44,10 +47,16 @@ Route::group(['prefix' => 'facilities'], function () {
     Route::post('/', 'Api\\FacilityController@create');
     Route::put('/{facilityId}', 'Api\\FacilityController@update');
     Route::get('/{facilityId}', 'Api\\FacilityController@readOne');
+    Route::delete('/{facilityId}', 'Api\\FacilityController@delete');
+
 });
 
 Route::group(['prefix' => 'positions'], function () {
     Route::get('/', 'Api\\PositionController@readAll');
+    Route::post('/', 'Api\\PositionController@create');
+    Route::get('/{id}', 'Api\\PositionController@readOne');
+    Route::put('/{id}', 'Api\\PositionController@update');
+    Route::delete('/{id}', 'Api\\PositionController@delete');
 });
 
 Route::group(['prefix' => 'workers'], function () {
@@ -59,6 +68,10 @@ Route::group(['prefix' => 'workers'], function () {
 });
 Route::group(['prefix' => 'symptoms'], function () {
     Route::get('/', 'Api\\SymptomController@readAll');
+    Route::post('/', 'Api\\SymptomController@create');
+    Route::put('/{symptomId}', 'Api\\SymptomController@update');
+    Route::delete('/{symptomId}', 'Api\\SymptomController@delete');
+    Route::get('/{symptomId}', 'Api\\SymptomController@readOne');
 });
 
 Route::group(['prefix' => 'queries'], function () {

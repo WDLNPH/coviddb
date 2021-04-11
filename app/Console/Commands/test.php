@@ -38,6 +38,26 @@ class test extends Command
         ['Rockland_Group_1', 'Shopping'],
     ];
 
+    const POSITIONS = [
+        'Intern',
+        'Nurse',
+        'Director'
+    ];
+
+    const SYMPTOMS = [
+        'Fever',
+        'Cough',
+        'Shortness of Breath',
+        'loss of taste or smell',
+        'nausea',
+        'stomach ache',
+        'vomiting',
+        'headache',
+        'muscle pain',
+        'diarrhea',
+        'sore throat',
+    ];
+
     /**
      * Create a new command instance.
      *
@@ -72,14 +92,16 @@ class test extends Command
          * Create Health Centers
          */
         for ($i = 1; $i < 10; $i++) {
+            $postalCode =  $faker->postal_code_qc;
             $centerId = DB::table("publichealthcenter")->insertGetId([
                 //Health center ID
                 "name" => $faker->company,
                 "phone" => $faker->phoneNumber,
                 "address" => $faker->streetAddress,
-                "city" => $faker->city,
-                "province" => $faker->provinceAbbr,
-                "postal_code" => $faker->postal_code_qc,
+                "postal_code" => $postalCode,
+                "postal_code_id" => Str::substr($postalCode, 0, 3),
+                "method" => $faker->word,
+                "drive_thru" => $faker->boolean,
                 "type" => $faker->type,
                 "website" => $faker->url,
             ]);
@@ -103,12 +125,39 @@ class test extends Command
         }
 
         /**
+         * Create Positions
+         */
+        $positions = [];
+        foreach (self::POSITIONS as $position) {
+            $positionId = DB::table("position")->insertGetId([
+                "position" => $position
+            ]);
+            // Push available group zone ids here
+            array_push($positions, $positionId);
+        }
+
+        /**
+         * Create Symptoms
+         */
+        $symptoms = [];
+        foreach (self::SYMPTOMS as $symptom) {
+            $symptomId = DB::table("symptom")->insertGetId([
+                "symptom" => $symptom
+            ]);
+            // Push available group zone ids here
+            array_push($symptoms, $symptomId);
+        }
+        /**
          * Create Health Workers
          */
         $workers = [];
         for ($i = 0; $i < 10; $i++) {
             $personId = $this->createPerson($faker);
-            $workerId = $this->createWorker($faker, $personId, $healthCenterIds[array_rand($healthCenterIds)]);
+            $workerId = $this->createWorker($faker,
+                $personId,
+                $healthCenterIds[array_rand($healthCenterIds)],
+                $positions[array_rand($positions)]
+            );
             array_push($workers, $workerId);
         }
 
@@ -128,6 +177,7 @@ class test extends Command
     public function createPerson(Faker\Generator $faker)
     {
         $date = $faker->date();
+        $postalCode = $faker->postal_code_qc;
         return DB::table("person")->insertGetId([
             // Person ID
             "medicare" => $faker->medicare,
@@ -136,9 +186,8 @@ class test extends Command
             "first_name" => $faker->firstName,
             "last_name" => $faker->lastName,
             "address" => $faker->streetAddress,
-            "city"   => $faker->city,
-            "postal_code" => $faker->postal_code_qc,
-            "province" => $faker->provinceAbbr,
+            "postal_code" => $postalCode,
+            "postal_code_id" => Str::substr($postalCode, 0, 3),
             "citizenship" => $faker->countryCode,
             "email"   => $faker->email,
             "phone" => $faker->phoneNumber,
@@ -146,13 +195,13 @@ class test extends Command
         ]);
     }
 
-    public function createWorker($faker, $personId, $healthCenterId)
+    public function createWorker($faker, $personId, $healthCenterId, $positionId)
     {
         return DB::table("publichealthworker")->insertGetId([
             "health_center_id" => $healthCenterId,
             "person_id" => $personId,
             "schedule" => $faker->schedule_builder,
-            "position" => $faker->position,
+            "position_id" => $positionId,
         ]);
     }
 

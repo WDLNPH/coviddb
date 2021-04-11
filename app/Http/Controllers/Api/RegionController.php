@@ -18,20 +18,12 @@ class RegionController extends Controller
     {
         //
         return response()->json(DB::select("
-            SELECT pcr.postal_code, r.region_id, r.region_name
-            FROM PostalCodeRegion pcr
-            JOIN Region r ON pcr.region_id = r.region_id
-            WHERE pcr.`postal_code` like '{$request->input('postal_code')}%'"));
-    }
-    /**
-     * Create a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
+            SELECT pc.postal_code_id, c.city_id, c.city, r.region_id, r.region_name, p.province_code, p.province
+            FROM PostalCode pc
+            JOIN City c ON pc.city_id = c.city_id
+            JOIN Region r ON c.region_id = r.region_id
+            JOIN Province p ON p.province_code = r.province_code
+            WHERE pc.`postal_code_id` like '{$request->input('postal_code')}%'"));
     }
 
     /**
@@ -42,9 +34,9 @@ class RegionController extends Controller
     public function readAll(Request $request)
     {
         return response()->json(DB::select("
-            SELECT r.region_id, r.region_name, a.alert_level
+            SELECT r.region_id, r.region_name, a.alert_id, a.alert_info
             FROM Region r
-            JOIN Alert a ON r.alert_level_id = a.id"));
+            JOIN Alert a ON r.alert_id = a.alert_id"));
     }
 
     /**
@@ -70,14 +62,4 @@ class RegionController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }

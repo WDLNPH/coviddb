@@ -15,8 +15,33 @@ class DashboardController extends Controller
         $result = DB::select("
             SELECT
                 p.`person_id`,
-                p.`city`,
-                'Level 1: Green' as 'alert_level',
+                c.`city`,
+                r.region_name,
+                al.alert_info,
+                al.alert_color,
+                (SELECT count(diagnostic_id)
+                    FROM Diagnostic d
+                    JOIN
+                        Patient pt ON d.patient_id = pt.patient_id
+                    JOIN
+                        Person ps ON ps.person_id = pt.person_id
+                    WHERE
+                        ps.person_id = '{$id}'
+                    AND d.`result` = 1
+                    AND d.`diagnostic_date` >= NOW() - INTERVAL 2 WEEK
+                ) as recently_tested_positive,
+                (SELECT JSON_ARRAYAGG(
+                   JSON_OBJECT(
+                       'date', f.created_at
+                   )
+                ) FROM FollowUpForm f
+                    JOIN
+                        Patient pt ON f.patient_id = pt.patient_id
+                    JOIN
+                        Person ps ON ps.person_id = pt.person_id
+                    WHERE
+                        ps.person_id = '{$id}'
+                ) as 'follow_up_forms',
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', d.diagnostic_date,
@@ -59,12 +84,21 @@ class DashboardController extends Controller
                     PublicHealthWorker w ON w.person_id = p.person_id
                 LEFT JOIN
                     Diagnostic d ON d.patient_id = pt.patient_id
+                JOIN
+                    PostalCode pc ON p.postal_code_id = pc.postal_code_id
+                JOIN
+                    City c ON pc.city_id = c.city_id
+                JOIN
+                    Region r ON c.region_id = r.region_id
+                JOIN
+                    Alert al ON r.alert_id = al.alert_id
                 WHERE p.person_id = '{$id}'
                 GROUP BY
                     p.person_id");
         if (count($result) > 0) {
             $result[0]->diagnostics_taken = json_decode($result[0]->diagnostics_taken, true) ?? [];
             $result[0]->diagnostics_handled = json_decode($result[0]->diagnostics_handled, true) ?? [];
+            $result[0]->follow_up_forms = json_decode($result[0]->follow_up_forms, true) ?? [];
             return response()->json($result[0]);
         }
     }

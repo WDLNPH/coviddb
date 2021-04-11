@@ -54,9 +54,10 @@ export default function ({workerRequestPromise, worker}) {
                 dob: worker ? worker.dob : '',
                 address: worker ? worker.address : '',
                 postal_code: worker ? worker.postal_code : '',
+                postal_code_id: worker ? worker.postal_code_id : '',
                 city: worker ? worker.city : '', // Could represent a city_id
-                region_id: worker ? worker.region_id : '',
                 province: worker ? worker.province : '',
+                region: worker ? worker.region : '',
                 citizenship: worker ? worker.citizenship : '',
                 email: worker ? worker.email : '',
                 phone: worker ? worker.phone : '',

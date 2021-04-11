@@ -94,17 +94,18 @@ export default function () {
                         className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
                         id="grid-zip" type="text" placeholder="A1A 1A1"/>
                     <AutocompleteRegionValues onUpdate={regions => {
-                        console.log(regions);
                         if (regions.length > 0) {
-                            setFieldValue('city', regions[0].region_name);
-                            setFieldValue('province', 'QC')
+                            setFieldValue('postal_code_id', regions[0].postal_code_id)
+                            setFieldValue('city', regions[0].city);
+                            setFieldValue('region', regions[0].region);
+                            setFieldValue('province', regions[0].province)
                             setFieldValue('citizenship', 'Canada')
-                            setFieldValue('region_id', 121);
                         } else {
+                            setFieldValue('postal_code_id', null)
                             setFieldValue('city', '');
+                            setFieldValue('region', '');
                             setFieldValue('province', '')
                             setFieldValue('citizenship', '')
-                            setFieldValue('region_id', null);
                         }
                     }}/>
                 </div>

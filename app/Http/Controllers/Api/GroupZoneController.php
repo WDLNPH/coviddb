@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Response;
 
 class GroupZoneController extends Controller
 {
@@ -16,7 +17,14 @@ class GroupZoneController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        $parameters = collect($request->only([
+            'name',
+            'activity',
+        ]));
+        $id = $this->doInsertAndGetId('GroupZone', $parameters);
+
+        return response()->json(['group_zone_id' => $id], $id ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
+
     }
 
     /**
