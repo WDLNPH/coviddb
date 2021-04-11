@@ -53,12 +53,51 @@ class Controller extends BaseController
         return null;
     }
 
-    public function doUpdate($tableName, $id, Collection $fieldsToUpdate)
+    public function doUpdate($tableName, $key, $id, Collection $fieldsToUpdate)
     {
         $values = $fieldsToUpdate->values();
         // Always do this at the very end
         $values->push($id);
 
-        return DB::update("UPDATE $tableName SET {$fieldsToUpdate->keys()->join(',')} WHERE health_center_id = ?", $values->toArray());
+        return DB::update("UPDATE $tableName SET {$fieldsToUpdate->keys()->join(',')} WHERE $key = ?", $values->toArray());
+    }
+
+    public function syncGroupIds($personId, $groupZones)
+    {
+        $toDelete = collect();
+        $toAdd = collect();
+
+        if (!$personId) {
+            abort(500);
+        }
+
+        // delete anything that isn't in the group_zones
+        $dbGroupIds = collect(DB::select("SELECT gzp.group_id FROM GroupZonePersonPivot gzp
+	            WHERE person_id = '{$personId}'"))->pluck('group_id')->toArray();
+
+        // Remove every Group Zone that no longer apply
+        foreach ($dbGroupIds as $dbGroupId) {
+            if (!in_array($dbGroupId, $groupZones)) {
+                $toDelete->push($dbGroupId);
+            }
+        }
+        // Add groupzones that need to be added to db
+        foreach ($groupZones as $groupZone) {
+            if (!in_array($groupZone, $dbGroupIds)) {
+                $toAdd->push($groupZone);
+            }
+        }
+
+        $stringAdd = $toAdd->map(function ($groupId) use (&$personId) {
+            return "($personId,$groupId)";
+        })->join(',');
+
+        // run it boi
+        DB::insert("INSERT INTO GroupZonePersonPivot (`person_id`, `group_id`)
+            VALUES $stringAdd");
+
+        $toDelete->map(function ($id) use (&$personId) {
+            DB::insert("DELETE FROM GroupZonePersonPivot WHERE person_id=$personId and group_id=$id");
+        });
     }
 }

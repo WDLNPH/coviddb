@@ -3,6 +3,7 @@ import {Field, Form, Formik} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 import {readAllFacilities, readAllPositions} from "../../../../api";
 import {Dropdown} from "../../../common/forms/FormHelpers";
+import {useHistory} from "react-router";
 
 
 export default function ({workerRequestPromise, worker}) {
@@ -10,6 +11,7 @@ export default function ({workerRequestPromise, worker}) {
     const [positions, setPositions] = useState([]);
     const [loadingF, setLoadingF] = useState(false);
     const [loadingP, setLoadingP] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         async function loadFacilities() {
@@ -40,8 +42,10 @@ export default function ({workerRequestPromise, worker}) {
         try {
             const {data} = await workerRequestPromise(values);
             alert("done boi1")
+            history.push('/workers');
         } catch (exception) {
             // skip
+            alert(exception)
         }
     }
 

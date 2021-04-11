@@ -101,7 +101,7 @@ class FacilityController extends Controller
             $fieldsToUpdate->put('website = ?', $request->website);
         }
 
-        $result = $this->doUpdate('PublicHealthCenter', $id, $fieldsToUpdate);
+        $result = $this->doUpdate('PublicHealthCenter', 'health_center_id', $id, $fieldsToUpdate);
         return response()->json(['message' => $fieldsToUpdate->count() . " field(s) updated successfully!"], 200);
     }
 

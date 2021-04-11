@@ -31,6 +31,7 @@ class WorkerController extends Controller
         ]));
         $pid = $this->doInsertAndGetId('Person', $parameters);
 
+        $this->syncGroupIds($pid, $request->group_zones);
         $schedule = $request->input('schedule');
         $position_id = $request->input('position_id');
         $center_id = $request->input('health_center_id');
@@ -137,8 +138,11 @@ class WorkerController extends Controller
             $workerFieldsToUpdate->put('schedule = ?', $request->dob);
         }
 
-        $this->doUpdate('Person', $id, $personFieldsToUpdate);
-        $this->doUpdate('PublicHealthWorker', $id, $workerFieldsToUpdate);
+        $personId = DB::select("SELECT person_id FROM PublicHealthWorker WHERE health_worker_id = '{$id}'")[0]->person_id ?? null;
+
+        $this->syncGroupIds($personId, $request->group_zones);
+        $this->doUpdate('Person', 'person_id', $id, $personFieldsToUpdate);
+        $this->doUpdate('PublicHealthWorker', 'health_worker_id', $id, $workerFieldsToUpdate);
         $fieldsUpdated = $personFieldsToUpdate->count() + $workerFieldsToUpdate->count();
         return response()->json(['message' => $fieldsUpdated . " field(s) updated successfully!"], 200);
     }

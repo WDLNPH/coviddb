@@ -56,9 +56,9 @@ class SymptomController extends Controller
             $fieldsToUpdate->put('symptom = ?', $request->symptom);
         }
 
-        $result = $this->doUpdate('Symptom', $id, $fieldsToUpdate);
+        $result = $this->doUpdate('Symptom', 'symptom_id', $id, $fieldsToUpdate);
         return response()->json(['message' => "Symptom updated successfully!"], 200);
-        
+
     }
 
     /**
@@ -70,7 +70,7 @@ class SymptomController extends Controller
     public function delete($id)
     {
         $status = DB::delete("DELETE FROM Symptom WHERE symptom_id = ?", [$id]);
-        return response()->json(['status' => "Deleted successfully!"], 200);   
+        return response()->json(['status' => "Deleted successfully!"], 200);
      }
-    
+
 }
