@@ -32,52 +32,42 @@ export default function () {
                     </div>
                 </div>
 
-                <div className="my-4 flex px-4 py-4 justify-between bg-white
-                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-yellow-300">
-                    <div className="flex flex-1 justify-between">
-                        <div className="mx-1 flex flex-col justify-between">
-                            <h1 className="text-2xl">Follow-Up Form Required</h1>
-                            <p>We have not been able to retrieve all follow up forms for the last days since your positive result. Please fill out the required documents</p>
-                        </div>
-                        <div className="flex flex-col justify-center">
-                            <a className="mp-button">
-                                Fill-out Follow Up Form
-                            </a>
+                {(user.role === 'patient' && stats?.recently_tested_positive && stats?.missing_forms?.length > 0) && (
+                    <div className="my-4 flex px-4 py-4 justify-between bg-white
+                        dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-yellow-300">
+                        <div className="flex flex-1 justify-between">
+                            <div className="mx-1 flex flex-col justify-between">
+                                <h1 className="text-2xl">Follow-Up Form Required</h1>
+                                <p>
+                                    We have not been able to retrieve all follow up forms for the last days since your positive result.
+                                    Please fill out the required documents
+                                </p>
+                            </div>
+                            <div className="flex flex-col justify-center">
+                                <a className="mp-button">
+                                    Fill-out Follow Up Form
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
 
                 {/* If the last test came positive */}
-                <div className="my-4 flex px-4 py-4 justify-between bg-white
-                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-red-400">
-                    <div className="flex flex-1 justify-between">
-                        <div className="mx-1 flex flex-1 flex-col justify-between">
-                            <h1 className="text-2xl">COVID-19 Test: Positive</h1>
-                            <p>Sick person under home isolation is asked to follow the instructions below to prevent the spread of COVID-19 to other people around him/her</p>
+                {user.role === 'patient' && (
+                        <div className={`my-4 flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ${stats?.recently_tested_positive ? 'bg-red-400' : 'bg-green-300'}`}>
+                            <div className="flex flex-1 justify-between">
+                                <div className="mx-1 flex flex-1 flex-col justify-between">
+                                    <h1 className="text-2xl">COVID-19 Test: {stats?.recently_tested_positive ? 'Positive' : 'Negative'}</h1>
+                                    <p>Sick person under home isolation is asked to follow the instructions below to prevent the spread of COVID-19 to other people around him/her</p>
+                                </div>
+                                <div className="flex flex-col justify-center">
+                                    <a className="mp-button">
+                                        See Recommendations
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex flex-col justify-center">
-                            <a className="mp-button">
-                                See Recommendations
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                {/* If the last test came negative */}
-                <div className="my-4 flex px-4 py-4 justify-between bg-white
-                    dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-green-300">
-                    <div className="flex flex-1 justify-between">
-                        <div className="mx-1 flex flex-1 flex-col justify-between">
-                            <h1 className="text-2xl">COVID-19 Test: Negative</h1>
-                            <p>People under home isolation are asked to follow the instructions issued by the government to prevent the spread of COVID-19 to other people around them</p>
-                        </div>
-                        <div className="flex flex-col justify-center">
-                            <a className="mp-button">
-                                See Recommendations
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                )}
 
                 <div className="-mx-2 pb-8 flex flex-row">
                     <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
@@ -93,7 +83,7 @@ export default function () {
                         {user.role === 'worker' ? (
                             <WorkerLastDiagnostics diags={stats?.diagnostics_handled?.length > 0 ? stats.diagnostics_handled : []}/>
                         ) : user.role === 'patient' ? (
-                            <PatientLastDiagnostics/>
+                            <PatientLastDiagnostics diags={stats?.diagnostics_taken?.length > 0 ? stats.diagnostics_taken : []}/>
                         ) : user.role === 'admin' ? (
                             <LastRegionUpdates/>
                         ) : null}
@@ -121,13 +111,7 @@ export default function () {
                         <div className="mx-1 flex justify-between">
                             <h1 className="text-2xl">Group Zone Situation</h1>
                         </div>
-                        {user.role === 'worker' ? (
-                            <WorkerLastDiagnostics diags={stats?.diagnostics_handled?.length > 0 ? stats.diagnostics_handled : []}/>
-                        ) : user.role === 'patient' ? (
-                            <PatientLastDiagnostics/>
-                        ) : user.role === 'admin' ? (
-                            <LastRegionUpdates/>
-                        ) : null}
+                        <GroupZoneBox/>
                     </div>
                 </div>
             </div>
@@ -135,7 +119,7 @@ export default function () {
     );
 }
 
-function RegionInfoCard() {
+function GroupZoneBox() {
     return  (
         <>
 
@@ -170,8 +154,30 @@ function WorkerLastDiagnostics({diags}) {
         </div>
     );
 }
-function PatientLastDiagnostics() {
-    return null;
+function PatientLastDiagnostics({diags}) {
+    return (
+        <div className="flex flex-1 flex-col">
+            <div className="my-2 border-b flex capitalize text-gray-600 dark:text-gray-400">
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    Date
+                </span>
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 dark:text-gray-200">
+                    Result
+                </span>
+            </div>
+            {diags.map(diag => (
+                <div className="my-2 flex capitalize text-gray-600 dark:text-gray-400">
+                    <span className="flex flex-1">{diag.date}</span>
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {diag.date}
+                                    </span>
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {diag.result ? 'Positive' : 'Negative'}
+                    </span>
+                </div>
+            ))}
+        </div>
+    );
 }
 function LastRegionUpdates() {
     return null;

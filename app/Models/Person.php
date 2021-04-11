@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Person\Administrator;
+use App\Models\Person\Patient;
 use App\Models\Person\PublicHealthWorker;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,6 +55,11 @@ class Person extends Authenticatable
         return $this->hasOne(PublicHealthWorker::class, 'person_id', 'person_id');
     }
 
+    public function patient()
+    {
+        return $this->hasOne(Patient::class, 'person_id', 'person_id');
+    }
+
     public function administrator()
     {
         return $this->hasOne(Administrator::class, 'person_id', 'person_id');
@@ -63,10 +69,11 @@ class Person extends Authenticatable
     {
         if ($this->administrator()->exists()) {
             return 'administrator';
-        } if ($this->worker()->exists()) {
+        } else if ($this->worker()->exists()) {
             return 'worker';
+        } else if ($this->patient()->exists()) {
+            return 'patient';
         }
-
         return 'person';
     }
 }
