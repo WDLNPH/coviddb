@@ -72,14 +72,14 @@ class test extends Command
          * Create Health Centers
          */
         for ($i = 1; $i < 10; $i++) {
+            $postalCode =  $faker->postal_code_qc;
             $centerId = DB::table("publichealthcenter")->insertGetId([
                 //Health center ID
                 "name" => $faker->company,
                 "phone" => $faker->phoneNumber,
                 "address" => $faker->streetAddress,
-                "city" => $faker->city,
-                "province" => $faker->provinceAbbr,
-                "postal_code" => $faker->postal_code_qc,
+                "postal_code" => $postalCode,
+                "postal_code_id" => Str::substr($postalCode, 0, 3),
                 "type" => $faker->type,
                 "website" => $faker->url,
             ]);
@@ -128,7 +128,7 @@ class test extends Command
     public function createPerson(Faker\Generator $faker)
     {
         $date = $faker->date();
-        $postalCode = $faker->postal_code_qc,
+        $postalCode = $faker->postal_code_qc;
         return DB::table("person")->insertGetId([
             // Person ID
             "medicare" => $faker->medicare,
