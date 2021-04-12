@@ -233,10 +233,11 @@ CREATE TABLE `FollowUpFormSymptomPivot`
 CREATE TABLE `Messages`
 (
     `msg_id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `region_id`  INT(16) UNSIGNED NOT NULL,
+    `region_id`  INT(16) UNSIGNED DEFAULT NULL,
     `msg_date`  DATETIME NOT NULL,
-    `alert_id`  INT(16) UNSIGNED NOT NULL,
+    `alert_id`  INT(16) UNSIGNED DEFAULT NULL,
     `person_id`  INT(16) UNSIGNED NOT NULL,
+    `message`   TEXT(1024) NOT NULL,
     PRIMARY KEY (`msg_id`),
     KEY `region_id` (`region_id`),
     KEY `alert_id` (`alert_id`),
