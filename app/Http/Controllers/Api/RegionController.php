@@ -47,7 +47,8 @@ class RegionController extends Controller
      */
     public function readOne($id)
     {
-        //
+        return response()->json(DB::select("
+        SELECT * FROM Region WHERE $id = region_id"));
     }
 
     /**
@@ -59,7 +60,25 @@ class RegionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
 
+        $newAlertId = collect($request->only([
+            'alert_id'
+        ]));
+       
+
+            $currentAlertId = DB::select("SELECT alert_id FROM Region WHERE region_id = $id");
+            
+
+            if (abs($newAlertId-$currentAlertId) > 1 && $newAlertId != 0) {
+            return response()->json(['message' => " wowow cant jump from more than 1 alert my guy!"], 200);
+            }
+
+
+            else {
+            $this->doUpdate('Region', $id, $newAlertId);
+            $fieldsUpdated = 1;
+            return response()->json(['message' => $fieldsUpdated . " field(s) updated successfully!"], 200);
+        }
+           
+    }
 }

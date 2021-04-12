@@ -25,6 +25,9 @@ Route::group(['prefix' => 'dashboard-stats', 'middleware' => 'auth:api'], functi
 Route::group(['prefix' => 'regions'], function () {
     Route::get('autocomplete', 'Api\\RegionController@autocomplete');
     Route::get('/', 'Api\\RegionController@readAll');
+    Route::put('/{region_id}', 'Api\\RegionController@update');
+    Route::delete('/{region_id}', 'Api\\RegionController@delete');
+    Route::get('/{region_id}', 'Api\\RegionController@readOne');
 });
 
 Route::group(['prefix' => 'recommendation'], function () {
