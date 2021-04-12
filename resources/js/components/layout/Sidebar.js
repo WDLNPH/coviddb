@@ -49,6 +49,7 @@ export default function () {
         <aside className="flex-shrink-0 hidden w-64 bg-white border-r dark:border-blue-800 dark:bg-darker md:block">
             <div className="flex flex-col h-full">
                 <nav aria-label="Main" className="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
+                    <MenuButton name="Home" to={'/'}/>
                     <MenuDropdown
                         name="Admin"
                         icon={(
@@ -93,7 +94,8 @@ export default function () {
                                 />
                             </svg>
                         )}>
-                        <MenuButton name="Diagnosis & Follow-Up" to={'/diagnostics'}/>
+                        <MenuButton name="Diagnostics" to={'/diagnostics'}/>
+                        <MenuButton name="Create Follow-Up Form" to={'/follow-up-form'}/>
                     </MenuDropdown>
                     {/*
                     <MenuDropdown

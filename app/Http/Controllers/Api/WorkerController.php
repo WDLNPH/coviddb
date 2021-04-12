@@ -70,7 +70,7 @@ class WorkerController extends Controller
                 ps.*,
                 c.city,
                 p.province,
-                r.region,
+                r.region_name,
                 GROUP_CONCAT(gzp.group_id) as 'group_zones'
             FROM PublicHealthWorker w
             JOIN Position pst ON w.position_id = pst.position_id

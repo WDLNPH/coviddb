@@ -5,10 +5,10 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllDiagnostics} from "../../../api";
 
-const DIAGNOSTICS_COLUMNS = ['Diagnostics ID','Patient ID','Diagnostic Date', 'Health Worker ID', 'Health Center ID', 'Result'];
+const DIAGNOSTICS_COLUMNS = ['diagnostic_date','patient_name','health_worker_name', 'health_center_name', 'result'];
 
 export default function () {
-    //Diagnostics
+    // Diagnostics
     const match = useRouteMatch();
     return  (
         <>
@@ -54,5 +54,5 @@ function ListDiagnostics() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(diagnostics) =>  history.push(`/diagnostics/${diagnostics.diagnostics_id}`)} columns={memoizedColumns} data={diagnostics}/>;
+    return loading ? '...' : <Table onClick={(diagnostics) =>  history.push(`/diagnostics/${diagnostics.diagnostic_id}`)} columns={memoizedColumns} data={diagnostics}/>;
 }
