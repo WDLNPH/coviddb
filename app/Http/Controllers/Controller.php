@@ -88,16 +88,19 @@ class Controller extends BaseController
             }
         }
 
-        $stringAdd = $toAdd->map(function ($groupId) use (&$personId) {
-            return "($personId,$groupId)";
-        })->join(',');
+        if ($toAdd->isNotEmpty()) {
+            $stringAdd = $toAdd->map(function ($groupId) use (&$personId) {
+                return "($personId,$groupId)";
+            })->join(',');
 
-        // run it boi
-        DB::insert("INSERT INTO GroupZonePersonPivot (`person_id`, `group_id`)
-            VALUES $stringAdd");
-
-        $toDelete->map(function ($id) use (&$personId) {
-            DB::insert("DELETE FROM GroupZonePersonPivot WHERE person_id=$personId and group_id=$id");
-        });
+            // run it boi
+            DB::insert("INSERT INTO GroupZonePersonPivot (`person_id`, `group_id`)
+                VALUES $stringAdd");
+        }
+        if ($toDelete->isNotEmpty()) {
+            $toDelete->map(function ($id) use (&$personId) {
+                DB::insert("DELETE FROM GroupZonePersonPivot WHERE person_id=$personId and group_id=$id");
+            });
+        }
     }
 }

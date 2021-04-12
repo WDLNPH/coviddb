@@ -1,4 +1,4 @@
-import {Field} from "formik";
+import {Field, useFormikContext} from "formik";
 
 export function Dropdown ({children, disabled, name, id}) {
     return (
@@ -18,5 +18,17 @@ export function Dropdown ({children, disabled, name, id}) {
                 </svg>
             </div>
         </div>
+    );
+}
+
+export function SmartField(props) {
+    const {touched, errors} = useFormikContext();
+    return (
+        <>
+            <Field {...props} className={`${props.className} ${errors[props.name] && touched[props.name] ? 'bg-red-50 border-red-400' : ''}`}/>
+            {errors[props.name] && touched[props.name] ? (
+                <div className="text-red-700 mt-1 text-xs font-bold">{errors[props.name]}</div>
+            ) : null}
+        </>
     );
 }

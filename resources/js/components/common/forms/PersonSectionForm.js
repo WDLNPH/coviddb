@@ -1,4 +1,5 @@
-import {Field, FieldArray, useFormikContext} from "formik";
+import {FieldArray, useFormikContext} from "formik";
+import {SmartField as Field} from "./FormHelpers";
 import {AutocompleteRegionValues} from "./AutocompleteRegion";
 import {Badge, Option} from "../../pages/Person/Form/PatientForm";
 import React, {useEffect, useRef, useState} from "react";
@@ -11,7 +12,6 @@ export default function () {
     const [filter, setFilter] = useState("");
     const inputRef = useRef();
     const {values, setFieldValue} = useFormikContext();
-
     useEffect(() => {
         async function loadGroupZones() {
             setLoading(true);
@@ -23,6 +23,7 @@ export default function () {
             }
             setLoading(false);
         }
+
         loadGroupZones()
     }, []);
 
@@ -37,7 +38,7 @@ export default function () {
                     </label>
                     <Field
                         name="first_name"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                        className="mp-form-field"
                         id="grid-first-name" type="text" placeholder="Jane"/>
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -47,7 +48,7 @@ export default function () {
                     </label>
                     <Field
                         name="last_name"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-last-name" type="text" placeholder="Doe"/>
                 </div>
             </div>
@@ -59,7 +60,7 @@ export default function () {
                     </label>
                     <Field
                         name="medicare"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-city" type="text" placeholder=""/>
                 </div>
                 <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -69,7 +70,7 @@ export default function () {
                     </label>
                     <Field
                         name="dob"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-city" type="date" placeholder=""/>
                 </div>
             </div>
@@ -81,7 +82,7 @@ export default function () {
                     </label>
                     <Field
                         name="address"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-address" type="text" placeholder="street number street name"/>
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -91,7 +92,7 @@ export default function () {
                     </label>
                     <Field
                         name="postal_code"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-zip" type="text" placeholder="A1A 1A1"/>
                     <AutocompleteRegionValues onUpdate={regions => {
                         if (regions.length > 0) {
@@ -119,7 +120,7 @@ export default function () {
                     <Field
                         disabled
                         name="city"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-city" type="text" placeholder="Montreal"/>
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -148,7 +149,7 @@ export default function () {
                     <Field
                         disabled
                         name="citizenship"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-citizenship" type="text" placeholder="Canada"/>
                 </div>
             </div>
@@ -160,7 +161,7 @@ export default function () {
                     </label>
                     <Field
                         name="email"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-city" type="text" placeholder=""/>
                 </div>
                 <div className="md:w-1/2 px-3">
@@ -170,12 +171,12 @@ export default function () {
                     </label>
                     <Field
                         name="phone"
-                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                        className="mp-form-field"
                         id="grid-zip" type="text" placeholder=""/>
                 </div>
             </div>
-            {!loading && (
-                <div className="-mx-3 md:flex mb-6">
+            <div className="-mx-3 md:flex mb-6">
+                {!loading && (
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                                htmlFor="grid-first-name">
@@ -186,7 +187,7 @@ export default function () {
                                 <div className="flex flex-col items-center relative">
                                     <div className="w-full">
                                         <div
-                                            className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+                                            className="mp-form-field">
                                             <div className="flex flex-auto flex-wrap">
                                                 {values.group_zones.map((groupZoneId, idx) => <Badge
                                                     onClick={() => remove(idx)}
@@ -223,8 +224,8 @@ export default function () {
                             )}
                         </FieldArray>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </>
     );
 }

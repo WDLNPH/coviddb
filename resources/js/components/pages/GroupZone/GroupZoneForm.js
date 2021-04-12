@@ -1,7 +1,25 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
+import {Formik} from 'formik';
+import {SmartField as Field} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
 import {Dropdown} from "../../common/forms/FormHelpers";
+import * as Yup from "yup";
+
+
+
+
+const GZSchema = Yup.object().shape({
+    name:  Yup.string()
+        .min(2, 'Group Zone Name Too Short!')
+        .max(50, 'Group Zone Name Too Long!')
+        .required('Group Zone Name Required'),
+    activity:  Yup.string()
+        .required('Activity Required')
+});
+
+
+
+
 
 export default function ({groupeZoneRequestPromise, groupZone}) {
     async function handleSubmit(values) {
@@ -23,6 +41,7 @@ export default function ({groupeZoneRequestPromise, groupZone}) {
                 name: groupZone ? groupZone.name : '',
                 activity: groupZone ? groupZone.activity : '',
             }}
+                    validationSchema={GZSchema}
                     onSubmit={handleSubmit}>
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                         <div className="-mx-3 md:flex mb-6">

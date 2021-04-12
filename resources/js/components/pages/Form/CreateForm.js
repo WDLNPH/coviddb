@@ -44,7 +44,7 @@ export default function () {
                             {symptoms.map(symptom => (
                                 <label className="inline-flex items-center mt-3">
                                     <Field key={symptom.symptom_id} type="checkbox" name="symptoms" value={"" + symptom.symptom_id} className="form-checkbox h-5 w-5 text-gray-600"/>
-                                    <span className="ml-2 text-gray-700">{symptom.name}</span>
+                                    <span className="ml-2 text-gray-700">{symptom.symptom}</span>
                                 </label>
                             ))}
                         </div>
