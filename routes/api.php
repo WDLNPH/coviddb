@@ -56,7 +56,15 @@ Route::group(['prefix' => 'facilities'], function () {
     Route::put('/{facilityId}', 'Api\\FacilityController@update');
     Route::get('/{facilityId}', 'Api\\FacilityController@readOne');
     Route::delete('/{facilityId}', 'Api\\FacilityController@delete');
+});
 
+
+Route::group(['prefix' => 'diagnostics'], function () {
+    Route::get('/', 'Api\\DiagnosticController@readAll');
+    Route::post('/', 'Api\\DiagnosticController@create');
+    Route::put('/{diagnosticId}', 'Api\\DiagnosticController@update');
+    Route::get('/{diagnosticId}', 'Api\\DiagnosticController@readOne');
+    Route::delete('/{diagnosticId}', 'Api\\DiagnosticController@delete');
 });
 
 Route::group(['prefix' => 'positions'], function () {

@@ -140,3 +140,17 @@ export function createRecommendations(recommendations) {
 export function updateRecommendations(recommendationsId, recommendations) {
     return axios.put(`recommendations/${recommendationsId}`, recommendations);
 }
+//////////////////////Diagnostics
+
+export function readAllDiagnostics() {
+    return axios.get('diagnostics');
+}
+
+export function readOneDiagnostics(diagnosticsId) {
+    return axios.get(`diagnostics/${diagnosticsId}`);
+}
+
+export function createDiagnostics(diagnostics) {
+    return axios.post('diagnostics', diagnostics);
+}
+

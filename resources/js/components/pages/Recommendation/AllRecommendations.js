@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllRecommendations} from "../../../api";
 
-const RECOMMENDATIONS_COLUMNS = ['Id','recommendation'];
+const RECOMMENDATIONS_COLUMNS = ['Recommendation'];
 
 export default function () {
     //Recommendations

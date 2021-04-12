@@ -20,31 +20,20 @@ export default function ({symptomsRequestPromise, symptoms}) {
             </div>
             <Formik initialValues={{
                 name: symptoms ? symptoms.name : '',
-                id: symptoms ? symptoms.id : '',
-
             }}
                     onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                     <div className="-mx-3 md:flex mb-6">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                                Name of Facility
+                                Description of Symptom
                             </label>
                             <Field name="name"
                                    className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                    id="name" type="text" placeholder="Runny nose"/>
                         </div>
                     </div>
-                    <div className="-mx-3 md:flex mb-6">
-                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                                Id
-                            </label>
-                            <Field name="name"
-                                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                                   id="id" type="text" placeholder="0"/>
-                        </div>
-                    </div>
+
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                         <button type="submit"
                                 className="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit
