@@ -69,7 +69,7 @@ class FollowUpSurveyController extends Controller
         }
         if ($request->filled('created_at')) {
             $FollowUpFormFieldsToUpdate->put('created_at = ?', $request->created_at);
-
+        }    
 
             $this->doUpdate('Person', $id, $FollowUpFormFieldsToUpdate);
             $fieldsUpdated = $FollowUpFormFieldsToUpdate->count();
