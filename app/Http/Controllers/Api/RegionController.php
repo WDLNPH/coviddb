@@ -64,11 +64,9 @@ class RegionController extends Controller
         $newAlertId = $request->input('alert_id');
         $currentAlertId = DB::select("SELECT alert_id FROM Region WHERE region_id = $id")[0]->alert_id ?? null;
 
-        if (!$currentAlertId) {
-            return response()->json(['message' => " wowow cant give us a wrong id my guy!"], 400);
-        }
+ 
         try {
-            if (abs($newAlertId - $currentAlertId) > 1 && $newAlertId != 0) {
+            if (abs($newAlertId - $currentAlertId) > 1 && $newAlertId != 0 || !$currentAlertId) {
                 return response()->json(['message' => " wowow cant jump from more than 1 alert my guy!"], 400);
             } else {
 
