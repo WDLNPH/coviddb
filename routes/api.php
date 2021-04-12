@@ -50,6 +50,16 @@ Route::group(['prefix' => 'patients'], function () {
 
 });
 
+Route::group(['prefix' => 'messages'], function () {
+    Route::get('/', 'Api\\MessagesController@readAll');
+    Route::post('/', 'Api\\MessagesController@create');
+    Route::put('/{msg_id}', 'Api\\MessagesController@update');
+    Route::get('/{msg_id}', 'Api\\MessagesController@readOne');
+    Route::delete('/{msg_id}', 'Api\\MessagesController@delete');
+
+});
+
+
 Route::group(['prefix' => 'facilities'], function () {
     Route::get('/', 'Api\\FacilityController@readAll');
     Route::post('/', 'Api\\FacilityController@create');
