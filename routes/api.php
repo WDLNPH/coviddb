@@ -100,3 +100,11 @@ Route::group(['prefix' => 'queries'], function () {
     Route::get('case-five', 'Api\\QueryController@caseFive');
     Route::get('case-six', 'Api\\QueryController@caseSix');
 });
+
+Route::group(['prefix' => 'FollowUpForm'], function () {
+    Route::get('/', 'Api\\FollowUpFormController@readAll');
+    Route::post('/', 'Api\\FollowUpFormController@create');
+    Route::put('/{form_id}', 'Api\\FollowUpFormController@update');
+    Route::delete('/{form_id}', 'Api\\FollowUpFormController@delete');
+    Route::get('/{form_id}', 'Api\\FollowUpFormController@readOne');
+});
