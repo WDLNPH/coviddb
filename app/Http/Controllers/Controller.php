@@ -53,12 +53,12 @@ class Controller extends BaseController
         return null;
     }
 
-    public function doUpdate($tableName, $id, Collection $fieldsToUpdate)
+    public function doUpdate($tableName, $key, $id, Collection $fieldsToUpdate)
     {
         $values = $fieldsToUpdate->values();
         // Always do this at the very end
         $values->push($id);
 
-        return DB::update("UPDATE $tableName SET {$fieldsToUpdate->keys()->join(',')} WHERE health_center_id = ?", $values->toArray());
+        return DB::update("UPDATE $tableName SET {$fieldsToUpdate->keys()->join(',')} WHERE $key = ?", $values->toArray());
     }
 }
