@@ -237,7 +237,7 @@ CREATE TABLE `Messages`
     `msg_date`  DATETIME NOT NULL,
     `alert_id`  INT(16) UNSIGNED NOT NULL,
     `person_id`  INT(16) UNSIGNED NOT NULL,
-    `message`   VARCHAR(1024) NOT NULL,
+    `message`   TEXT(1024) NOT NULL,
     PRIMARY KEY (`msg_id`),
     KEY `region_id` (`region_id`),
     KEY `alert_id` (`alert_id`),
