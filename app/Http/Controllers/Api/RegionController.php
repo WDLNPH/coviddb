@@ -48,8 +48,10 @@ class RegionController extends Controller
      */
     public function readOne($id)
     {
-        return response()->json(DB::select("
-        SELECT * FROM Region WHERE $id = region_id"));
+        $result = DB::select("SELECT * FROM Region WHERE $id = region_id");
+
+        return response()->json((count($result) > 0 ? $result[0] : null),
+            count($result) > 0 ? 200 : 404);
     }
 
     /**
@@ -64,7 +66,6 @@ class RegionController extends Controller
         $newAlertId = $request->input('alert_id');
         $currentAlertId = DB::select("SELECT alert_id FROM Region WHERE region_id = $id")[0]->alert_id ?? null;
 
- 
         try {
             if (abs($newAlertId - $currentAlertId) > 1 && $newAlertId != 0 || !$currentAlertId) {
                 return response()->json(['message' => " wowow cant jump from more than 1 alert my guy!"], 400);
@@ -79,6 +80,5 @@ class RegionController extends Controller
                 return  response()->json(['message' => "alert does not exist!"], 400);
             }
         }
-
     }
 }

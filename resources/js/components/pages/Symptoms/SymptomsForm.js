@@ -44,9 +44,7 @@ export default function ({symptomsRequestPromise, symptoms}) {
                     </div>
 
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                        <button type="submit"
-                                className="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit
-                        </button>
+                        <button type="submit" className="mp-button"> Submit</button>
                     </div>
                 </div>
             </Formik>

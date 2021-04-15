@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllRecommendations} from "../../../api";
 
-const RECOMMENDATIONS_COLUMNS = ['Recommendation'];
+const RECOMMENDATIONS_COLUMNS = ['recommendation'];
 
 export default function () {
     //Recommendations
@@ -15,7 +15,7 @@ export default function () {
         <>
             <Switch>
                 <Route path={`${match.url}/create`} component={CreateRecommendations}/>
-                <Route path={`${match.url}/:recommendationsId`} component={EditRecommendations}/>
+                <Route path={`${match.url}/:recommendationId`} component={EditRecommendations}/>
                 <Route render={() => (
                     <>
                         <div className="mp-page-header">
@@ -56,5 +56,5 @@ function ListRecommendations() {
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(worker) =>  history.push(`/recommendations/${recommendations.recommendations_id}`)} columns={memoizedColumns} data={recommendations}/>;
+    return loading ? '...' : <Table onClick={(recommendation) =>  history.push(`/recommendations/${recommendation.recommendation_id}`)} columns={memoizedColumns} data={recommendations}/>;
 }

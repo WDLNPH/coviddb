@@ -49,10 +49,16 @@ class WorkerController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT w.health_worker_id, pst.position, w.schedule, ps.*
+        $stringSearch = "SELECT w.health_worker_id, pst.position, w.schedule, ps.*
             FROM PublicHealthWorker w
             JOIN Position pst ON w.position_id = pst.position_id
-            JOIN Person ps ON w.person_id = ps.person_id"));
+            JOIN Person ps ON w.person_id = ps.person_id
+            JOIN PublicHealthCenter phc ON w.health_center_id = phc.health_center_id";
+
+        if ($request->filled("health_center_id")) {
+            $stringSearch .= " WHERE w.health_center_id = " . $request->health_center_id;
+        }
+        return response()->json(DB::select($stringSearch));
     }
 
     /**

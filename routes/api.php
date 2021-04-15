@@ -30,7 +30,7 @@ Route::group(['prefix' => 'regions'], function () {
     Route::get('/{region_id}', 'Api\\RegionController@readOne');
 });
 
-Route::group(['prefix' => 'recommendation'], function () {
+Route::group(['prefix' => 'recommendations'], function () {
     Route::get('/', 'Api\\RecommendationController@readAll');
     Route::post('/', 'Api\\RecommendationController@create');
     Route::get('/{recommendation_id}', 'Api\\RecommendationController@readOne');

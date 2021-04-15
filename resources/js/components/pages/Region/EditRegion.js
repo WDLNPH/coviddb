@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {updateFacility} from "../../../api";
-import {Formik, Field} from "formik";
+    import {readOneRegion, updateRegion} from "../../../api";
+import {Formik, Field, Form} from "formik";
 import {useParams} from "react-router";
 
 const ALERT_LEVEL_ONE = 1;
@@ -66,26 +66,47 @@ const ALERT_LEVEL_STRINGS = {
 }
 export default function () {
     const [region, setRegion] = useState(null);
-    const [alertLevel, setAlertLevel] = useState(ALERT_LEVEL_ONE);
     const [loading, setLoading] = useState(false);
     const {regionId} = useParams();
+    async function handleSubmit(values) {
+        try {
+            const {data} = await updateRegion(regionId, values);
+            console.log(data);
+            alert("done boi")
+        } catch (exception) {
+            // skip
+        }
+    }
     useEffect(() => {
+            async function loadRegion() {
+            setLoading(true);
+            try {
+                    const {data} = await readOneRegion(parseInt(regionId))
+                    setRegion(data)
+            } catch (e) {
+                // skip
+            }
+            setLoading(false);
+        }
+        loadRegion();
         // fetch the patient object from the db
-    }, [])
+    }, [regionId]);
 
     return loading ? <>please wait</> : (
         <Formik
             initialValues={{
-                alert_id: ALERT_LEVEL_ONE,
-            }}>
+                alert_id: region ? region.alert_id : ALERT_LEVEL_ONE,
+            }}
+            onSubmit={handleSubmit}
+        >
             {({values}) => (
-                <>
+                <Form>
                     <div className="custom-number-input h-10 w-96">
                         <label htmlFor="custom-input-number" className="w-full text-gray-700 text-sm font-semibold">Counter
                             Input
                         </label>
                         <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <Field name="alert_level_id">
+                            <Field name="alert_id">
                                 {({field, form: {setFieldValue}}) => {
                                     function increment() {
                                         if ((field.value + 1) <= ALERT_LEVEL_FOUR) {
@@ -105,6 +126,7 @@ export default function () {
                                                 <span className="m-auto text-2xl font-thin">−</span>
                                             </button>
                                             <input
+                                                disabled
                                                 onChange={() => {}}
                                                type="text"
                                                className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
@@ -124,7 +146,7 @@ export default function () {
                         className="flex flex-col  items-center justify-center mt-16 space-y-8 lg:flex-row lg:items-stretch lg:space-x-8 lg:space-y-0"
                     >
                         {[ALERT_LEVEL_ONE,ALERT_LEVEL_TWO,ALERT_LEVEL_THREE,ALERT_LEVEL_FOUR].map(alertCode => (
-                            <section className={`mp-alert-section ${ALERTS[alertCode].background} ${values.alert_level_id === alertCode ? 'border-2 border-gray-400' : ''}`}>
+                            <section className={`mp-alert-section ${ALERTS[alertCode].background} ${values.alert_id === alertCode ? 'border-2 border-gray-400' : ''}`}>
                                 <div className="flex-shrink-0">
                                     {/*:className="plan.name == 'Basic' ? 'text-green-500' : ''"*/}
                                     <span className="text-4xl font-medium tracking-tight">
@@ -150,7 +172,10 @@ export default function () {
                         </section>
                             ))}
                     </div>
-                </>
+                    <div className="mt-3 md:w-1/2 px-3 mb-6 md:mb-0">
+                        <button type="submit" className="mp-button">Submit</button>
+                    </div>
+                </Form>
             )}
         </Formik>
     );

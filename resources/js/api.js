@@ -20,15 +20,15 @@ export function readAllRegions() {
     return axios.get('regions');
 }
 
-export function readOneRegions(regionId) {
-    return axios.get('regions');
+export function readOneRegion(regionId) {
+    return axios.get(`regions/${regionId}`);
 }
 
 export function createRegion(region) {
     return axios.post('regions', region);
 }
 
-export function updateRegions(regionId, regions) {
+export function updateRegion(regionId, regions) {
     return axios.put(`regions/${regionId}`, regions);
 }
 
@@ -51,8 +51,8 @@ export function updatePatient(patientId, patient) {
 }
 
 ////////////////////// Workers
-export function readAllWorkers() {
-    return axios.get('workers');
+export function readAllWorkers(params) {
+    return axios.get('workers',{params});
 }
 
 export function readOneWorker(healthWorkerId) {
@@ -129,16 +129,16 @@ export function readAllRecommendations() {
     return axios.get('recommendations');
 }
 
-export function readOneRecommendations(recommendationsId) {
-    return axios.get(`recommendations/${recommendationsId}`);
+export function readOneRecommendation(recommendationId) {
+    return axios.get(`recommendations/${recommendationId}`);
 }
 
-export function createRecommendations(recommendations) {
-    return axios.post('recommendations', recommendations);
+export function createRecommendation(recommendation) {
+    return axios.post('recommendations', recommendation);
 }
 
-export function updateRecommendations(recommendationsId, recommendations) {
-    return axios.put(`recommendations/${recommendationsId}`, recommendations);
+export function updateRecommendation(recommendationId, recommendations) {
+    return axios.put(`recommendations/${recommendationId}`, recommendations);
 }
 //////////////////////Diagnostics
 

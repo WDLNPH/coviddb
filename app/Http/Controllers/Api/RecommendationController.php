@@ -43,7 +43,10 @@ class RecommendationController extends Controller
      */
     public function readOne($id)
     {
-        return response()->json(DB::select("SELECT recommendation FROM recommendation WHERE recommendation_id = $id"));
+        $result = DB::select("SELECT * FROM recommendation WHERE recommendation_id = $id");
+
+        return response()->json((count($result) > 0 ? $result[0] : null),
+            count($result) > 0 ? 200 : 404);
     }
 
     /**
@@ -57,7 +60,7 @@ class RecommendationController extends Controller
     {
         $field  = $request->input('recommendation');
 
-        DB::update("UPDATE recommendation  SET recommendation = (?) WHERE recommendation_id = $id", [$field]); 
+        DB::update("UPDATE recommendation  SET recommendation = (?) WHERE recommendation_id = $id", [$field]);
     }
 
     /**
