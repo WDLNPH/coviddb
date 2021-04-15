@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use DB;
 
@@ -47,7 +48,8 @@ class RegionController extends Controller
      */
     public function readOne($id)
     {
-        //
+        return response()->json(DB::select("
+        SELECT * FROM Region WHERE $id = region_id"));
     }
 
     /**
@@ -59,7 +61,24 @@ class RegionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $newAlertId = $request->input('alert_id');
+        $currentAlertId = DB::select("SELECT alert_id FROM Region WHERE region_id = $id")[0]->alert_id ?? null;
 
+ 
+        try {
+            if (abs($newAlertId - $currentAlertId) > 1 && $newAlertId != 0 || !$currentAlertId) {
+                return response()->json(['message' => " wowow cant jump from more than 1 alert my guy!"], 400);
+            } else {
+
+                $this->doUpdate('Region', 'region_id', $id, collect(['alert_id = ?' => $newAlertId]));
+                $fieldsUpdated = 1;
+                return response()->json(['message' => $fieldsUpdated . " field(s) updated successfully!"], 200);
+            }
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return  response()->json(['message' => "alert does not exist!"], 400);
+            }
+        }
+
+    }
 }
