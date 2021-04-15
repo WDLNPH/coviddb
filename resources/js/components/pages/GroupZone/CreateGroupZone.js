@@ -3,5 +3,5 @@ import GroupZoneForm from "./GroupZoneForm";
 import {createGroupZone} from "../../../api";
 
 export default function () {
-    return <GroupZoneForm groupZonesRequestPromise={createGroupZone}/>
+    return <GroupZoneForm groupZoneRequestPromise={createGroupZone}/>
 }

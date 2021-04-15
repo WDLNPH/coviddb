@@ -1,5 +1,5 @@
 import React from 'react';
-import {Formik} from 'formik';
+import {Formik, Form} from 'formik';
 import {SmartField as Field} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
 import {Dropdown} from "../../common/forms/FormHelpers";
@@ -21,10 +21,10 @@ const GZSchema = Yup.object().shape({
 
 
 
-export default function ({groupeZoneRequestPromise, groupZone}) {
+export default function ({groupZoneRequestPromise, groupZone}) {
     async function handleSubmit(values) {
         try {
-            const {data} = await groupeZoneRequestPromise(values);
+            const {data} = await groupZoneRequestPromise(values);
             console.log(data);
             alert("done boi")
         } catch (exception) {
@@ -41,8 +41,9 @@ export default function ({groupeZoneRequestPromise, groupZone}) {
                 name: groupZone ? groupZone.name : '',
                 activity: groupZone ? groupZone.activity : '',
             }}
-                    validationSchema={GZSchema}
-                    onSubmit={handleSubmit}>
+            validationSchema={GZSchema}
+            onSubmit={handleSubmit}>
+                <Form>
                     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                         <div className="-mx-3 md:flex mb-6">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -71,9 +72,12 @@ export default function ({groupeZoneRequestPromise, groupZone}) {
                             </div>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <button type="submit" class="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit </button>
+                            <button type="submit" className="mp-button">
+                                Submit
+                            </button>
                         </div>
                     </div>
+                </Form>
             </Formik>
         </>
     )

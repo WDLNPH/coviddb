@@ -21,5 +21,5 @@ export default function () {
         loadGroupZone();
         // fetch the patient object from the db
     }, [groupZoneId]);
-    return loading ? <>please wait</> : <GroupZoneForm groupZonesRequestPromise={values => updateGroupZone(groupZoneId, values)} groupZone={groupZone}/>
+    return loading ? <>please wait</> : <GroupZoneForm groupZoneRequestPromise={values => updateGroupZone(groupZoneId, values)} groupZone={groupZone}/>
 }

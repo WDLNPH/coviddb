@@ -61,7 +61,21 @@ class GroupZoneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $groupZoneFieldsToUpdate = collect();
+
+        if ($request->filled('activity')) {
+            $groupZoneFieldsToUpdate->put('activity = ?', $request->activity);
+        }
+        if ($request->filled('name')) {
+            $groupZoneFieldsToUpdate->put('name = ?', $request->name);
+        }
+
+
+        $this->doUpdate('GroupZone', 'group_id', $id, $groupZoneFieldsToUpdate);
+
+        $fieldsUpdated = $groupZoneFieldsToUpdate->count();
+
+        return response()->json(['message' => $fieldsUpdated . " field(s) updated successfully!"], 200);
     }
 
     /**
