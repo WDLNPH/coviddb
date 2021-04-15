@@ -74,10 +74,24 @@ function ListWorkers() {
     })), []);
 
     return loading ? '...' : <>
-        <div>
-            <select className="mp-form-field" value={facilityId} onChange={(e) => setFacilityId(parseInt(e.target.value))}>
-                {facilities.map(f => <option key={f.health_center_id} value={f.health_center_id}>{f.name}</option>)}
-            </select>
+        <div className="flex mb-2">
+            <div className="flex flex-1 flex-col">
+                <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    Filter by Facility Name:
+                </label>
+                <div className="relative">
+                    <select className="mp-form-field" value={facilityId} onChange={(e) => setFacilityId(parseInt(e.target.value))}>
+                        {facilities.map(f => <option key={f.health_center_id} value={f.health_center_id}>{f.name}</option>)}
+                    </select>
+                    <div className="pointer-events-none absolute right-1 top-3 pin-y pin-r flex items-center px-2 text-grey-darker">
+                        <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-1"></div>
         </div>
         <Table onClick={(worker) =>  history.push(`/workers/${worker.health_worker_id}`)} columns={memoizedColumns} data={workers}/>
         </>
