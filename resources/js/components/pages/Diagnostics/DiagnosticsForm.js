@@ -1,7 +1,39 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import {NavLink} from "react-router-dom";
-import {Dropdown} from "../../common/forms/FormHelpers";
+
+
+const DiagnosticSchema = Yup.object().shape({
+    pid: Yup.number()
+        .min(2, 'patient id Too Short!')
+        .max(50, 'patient id Too Long!')
+        .required('patient id Required'),
+    first:  Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('first name Required'),
+    last:  Yup.string()
+        .min(10, 'last name Too Short!')
+        .max(10, 'last name Too Long!')
+        .required('last name Required'),
+    date:  Yup.date()
+        .required('Date Required'),
+    hwid: Yup.number()
+        .min(2, 'health worker id Too Short!')
+        .max(50, 'health worker id Too Long!')
+        .required('health worker id Required'),
+    hcid:  Yup.number()
+        .min(2, 'health center id invalid!')
+        .max(50, 'health center id invalid!')
+        .required('Required'),
+    result:  Yup.boolean()
+        .required('Required'),
+});
+
+
+
+
 
 export default function ({diagnosticsRequestPromise, diagnostics}) {
     async function handleSubmit(values) {
@@ -28,6 +60,7 @@ export default function ({diagnosticsRequestPromise, diagnostics}) {
                 hcid: diagnostics ? diagnostics.hcid : '',
                 result: diagnostics ? diagnostics.result : '', // Could represent a city_id
             }}
+                    validationSchema={DiagnosticSchema}
                     onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                     <div className="-mx-3 md:flex mb-6">
@@ -56,7 +89,7 @@ export default function ({diagnosticsRequestPromise, diagnostics}) {
                         <div className="md:w-1/2 px-3">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Health Worker ID </label>
                             <Field name="hwid"
-                                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"type="text" placeholder="0000"/>
+                                   className="mp-form-field"type="text" placeholder="0000"/>
                         </div>
 
                         <div className="md:w-1/2 px-3">
@@ -65,14 +98,14 @@ export default function ({diagnosticsRequestPromise, diagnostics}) {
                                 Health Facility ID
                             </label>
                             <Field name="hcid"
-                                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="text" placeholder="hopital "/>
+                                   className="mp-form-field" type="text" placeholder="hopital "/>
                         </div>
                     </div>
                     <div className="-mx-3 md:flex mb-6">
                         <div className="md:w-1/2 px-3">
                             <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Diagnostic Date </label>
                             <Field name="date"
-                                   className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"type="date" placeholder="0000"/>
+                                   className="mp-form-field"type="date" placeholder="0000"/>
                         </div>
 
                         <div className="md:w-1/2 px-3">

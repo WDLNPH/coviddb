@@ -1,9 +1,64 @@
 import React, {useEffect, useState} from 'react';
-import {Field, Form, Formik} from 'formik';
+import {Form, Formik} from 'formik';
+import {SmartField as Field} from "../../../common/forms/FormHelpers";
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 import {readAllFacilities, readAllPositions} from "../../../../api";
 import {Dropdown} from "../../../common/forms/FormHelpers";
 import {useHistory} from "react-router";
+import * as Yup from "yup";
+
+const WorkerSchema = Yup.object().shape({
+    first_name:  Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('first name Required'),
+    last_name:  Yup.string()
+        .min(10, 'last name Too Short!')
+        .max(10, 'last name Too Long!')
+        .required('last name Required'),
+    dob:  Yup.date()
+        .required('Date Required'),
+    medicare: Yup.number()
+        .min(12, 'Too Short!')
+        .max(12, 'medicare id Too Long!')
+        .required('medicare id Required'),
+    phone:  Yup.number()
+        .min(10, 'Phone Too Short!')
+        .max(10, 'Phone Too Long!')
+        .required('Phone Required'),
+    province: Yup.string()
+        .required('province is required'),
+    address: Yup.string()
+        .min(2, 'Address Too Short!')
+        .max(50, 'Address Too Long!')
+        .required('Address Required'),
+    city:  Yup.string()
+        .min(2, 'City invalid!')
+        .max(50, 'City invalid!')
+        .required('City Name Required'),
+    postal_code:  Yup.string()
+        .min(6, 'Postal Code invalid')
+        .max(7, 'Postal Code invalid')
+        .required('Postal code Required'),
+    postal_code_id:  Yup.number()
+        .required('Postal code ID Required'),
+    region:  Yup.string()
+        .min(2, 'Region invalid!')
+        .max(50, 'Region invalid!')
+        .required('Region Name Required'),
+    citizenship:  Yup.string()
+        .min(2, 'citizenship invalid!')
+        .max(50, 'citizenship invalid!')
+        .required('citizenship Name Required'),
+    email:  Yup.string()
+        .min(2, 'email invalid!')
+        .max(50, 'email invalid!')
+        .required('email Required'),
+    health_center_id: Yup.number()
+        .required('health center id required'),
+    position_id: Yup.number()
+        .required('position id required'),
+});
 
 
 export default function ({workerRequestPromise, worker}) {
@@ -99,6 +154,7 @@ export default function ({workerRequestPromise, worker}) {
                     },
                 },
             }}
+                    validationSchema={WorkerSchema}
             onSubmit={handleSubmit}>
                 {({values}) => (
                     <Form>

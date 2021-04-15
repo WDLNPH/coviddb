@@ -1,6 +1,15 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
+import {Formik} from 'formik';
+import {SmartField as Field} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
+import * as Yup from "yup";
+
+const RecSchema = Yup.object().shape({
+    name:  Yup.string()
+        .min(2, 'Rec Too Short!')
+        .max(50, 'Rec Too Long!')
+        .required('Rec Required')
+});
 
 export default function ({recommendationsRequestPromise, recommendations}) {
     async function handleSubmit(values) {
@@ -21,6 +30,7 @@ export default function ({recommendationsRequestPromise, recommendations}) {
             <Formik initialValues={{
                 name: recommendations ? recommendations.name : '',
             }}
+                    validationSchema={RecSchema}
                     onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                     <div className="-mx-3 md:flex mb-6">

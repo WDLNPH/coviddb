@@ -1,6 +1,14 @@
 import React from 'react';
-import {Field, Formik} from 'formik';
+import {Formik} from 'formik';
+import {SmartField as Field} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
+import * as Yup from "yup";
+const SympSchema = Yup.object().shape({
+    name:  Yup.string()
+        .min(2, 'Symptom Description Too Short!')
+        .max(50, 'Symptom Description too Long!')
+        .required('Symptom Description Required')
+});
 
 export default function ({symptomsRequestPromise, symptoms}) {
     async function handleSubmit(values) {
@@ -21,6 +29,7 @@ export default function ({symptomsRequestPromise, symptoms}) {
             <Formik initialValues={{
                 name: symptoms ? symptoms.name : '',
             }}
+                    validationSchema={SympSchema}
                     onSubmit={handleSubmit}>
                 <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                     <div className="-mx-3 md:flex mb-6">

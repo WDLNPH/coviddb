@@ -36,6 +36,7 @@
     "dependencies": {
         "date-fns": "^2.20.1",
         "formik": "^2.2.6",
-        "react-toastify": "^7.0.3"
+        "react-toastify": "^7.0.3",
+        "yup": "^0.32.9"
     }
 }
