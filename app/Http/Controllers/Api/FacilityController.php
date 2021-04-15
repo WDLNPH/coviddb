@@ -19,7 +19,7 @@ class FacilityController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT `health_center_id`, `name`, `phone`, `address`, `type` FROM PublicHealthCenter"));
+        return response()->json(DB::select("SELECT `health_center_id`, `name`, `phone`, `address`, `type`,`method`,`drive_thru` FROM PublicHealthCenter"));
     }
 
     /**
@@ -32,7 +32,7 @@ class FacilityController extends Controller
     {
         $result = DB::select("SELECT
                 `health_center_id`, `name`, `city`, `province`,
-                `postal_code`,`website`, `phone`, `address`, `type`
+                `postal_code`,`website`, `phone`, `address`, `type`,`method`,`drive_thru`
             FROM PublicHealthCenter WHERE health_center_id = '{$id}'");
         return response()->json((count($result) > 0 ? $result[0] : null),
             count($result) > 0 ? 200 : 404
