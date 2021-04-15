@@ -31,9 +31,14 @@ class FacilityController extends Controller
     public function readOne($id)
     {
         $result = DB::select("SELECT
-                `health_center_id`, `name`, `city`, `province`,
-                `postal_code`,`website`, `phone`, `address`, `type`,`method`,`drive_thru`
-            FROM PublicHealthCenter WHERE health_center_id = '{$id}'");
+                `health_center_id`, `name`, c.`city`, p.`province`,
+                `postal_code`, `website`, `phone`, `address`, `type`, `method`, `drive_thru`
+            FROM PublicHealthCenter phc
+            JOIN PostalCode pc ON phc.postal_code_id = pc.postal_code_id
+            JOIN City c ON pc.city_id = c.city_id
+            JOIN Region r ON c.region_id = r.region_id
+            JOIN Province p ON p.province_code = r.province_code
+            WHERE health_center_id = '{$id}'");
         return response()->json((count($result) > 0 ? $result[0] : null),
             count($result) > 0 ? 200 : 404
         );
@@ -54,11 +59,12 @@ class FacilityController extends Controller
             'name',
             'phone',
             'address',
-            'city',
-            'province',
             'postal_code',
+            'postal_code_id',
             'type',
             'website',
+            'method',
+            'drive_thru'
         ]));
         $id = $this->doInsertAndGetId('PublicHealthCenter', $parameters);
 
@@ -85,14 +91,8 @@ class FacilityController extends Controller
         if ($request->filled('address')) {
             $fieldsToUpdate->put('address = ?', $request->address);
         }
-        if ($request->filled('city')) {
-            $fieldsToUpdate->put('city = ?', $request->city);
-        }
-        if ($request->filled('province')) {
-            $fieldsToUpdate->put('province = ?', $request->province);
-        }
-        if ($request->filled('postal_code')) {
-            $fieldsToUpdate->put('postal_code = ?', $request->postal_code);
+        if ($request->filled('postal_code_id')) {
+            $fieldsToUpdate->put('postal_code = ?', $request->postal_code_id);
         }
         if ($request->filled('type')) {
             $fieldsToUpdate->put('type = ?', $request->type);

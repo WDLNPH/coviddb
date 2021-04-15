@@ -76,11 +76,11 @@ export function readOneFacility(facilityId) {
 }
 
 export function createFacility(facility) {
-    return axios.post('facility', facility);
+    return axios.post('facilities', facility);
 }
 
 export function updateFacility(facilityId, facility) {
-    return axios.put(`facility/${facilityId}`, facility);
+    return axios.put(`facilities/${facilityId}`, facility);
 }
 
 ////////////////////// Positions

@@ -38,10 +38,6 @@ const WorkerSchema = Yup.object().shape({
         .min(6, 'Postal Code invalid')
         .max(7, 'Postal Code invalid')
         .required('Postal code Required'),
-    region:  Yup.string()
-        .min(2, 'Region invalid!')
-        .max(50, 'Region invalid!')
-        .required('Region Name Required'),
     citizenship:  Yup.string()
         .min(2, 'citizenship invalid!')
         .max(50, 'citizenship invalid!')

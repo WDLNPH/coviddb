@@ -129,27 +129,28 @@ export default function () {
                         Province
                     </label>
                     <Dropdown name="province" id="province" disabled>
-                        <option value="AB">Alberta</option>
-                        <option value="BC">British Columbia</option>
-                        <option value="MN">Manitoba</option>
-                        <option value="NB">New Brunswick</option>
-                        <option value="NF">Newfoundland and Labrador</option>
-                        <option value="NS">Nova Scotia</option>
-                        <option value="ON">Ontario</option>
-                        <option value="PE">Prince Edward Island</option>
-                        <option value="QC">Quebec</option>
-                        <option value="SK">Saskatchewan</option>
+                        <option value="Alberta">Alberta</option>
+                        <option value="British Columbia">British Columbia</option>
+                        <option value="Manitoba">Manitoba</option>
+                        <option value="New Brunswick">New Brunswick</option>
+                        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                        <option value="Nova Scotia">Nova Scotia</option>
+                        <option value="Ontario">Ontario</option>
+                        <option value="Prince Edward Island">Prince Edward Island</option>
+                        <option value="Quebec">Quebec</option>
+                        <option value="Saskatchewan">Saskatchewan</option>
                     </Dropdown>
                 </div>
                 <div className="md:w-1/2 px-3">
                     <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                            htmlFor="grid-citizenship">
-                        Citizenship
+                        Country
                     </label>
-                    <Field
+                    <input
                         disabled
-                        name="citizenship"
+                        name="country"
                         className="mp-form-field"
+                        value="Canada"
                         id="grid-citizenship" type="text" placeholder="Canada"/>
                 </div>
             </div>
