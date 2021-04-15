@@ -172,7 +172,7 @@ export default function () {
                     <Field
                         name="phone"
                         className="mp-form-field"
-                        id="grid-zip" type="text" placeholder=""/>
+                        id="grid-phone" type="text" placeholder=""/>
                 </div>
             </div>
             <div className="-mx-3 md:flex mb-6">

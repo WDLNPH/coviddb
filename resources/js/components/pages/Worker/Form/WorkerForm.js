@@ -18,13 +18,11 @@ const WorkerSchema = Yup.object().shape({
         .required('last name Required'),
     dob:  Yup.date()
         .required('Date Required'),
-    medicare: Yup.number()
+    medicare: Yup.string()
         .min(12, 'Too Short!')
-        .max(12, 'medicare id Too Long!')
-        .required('medicare id Required'),
-    phone:  Yup.number()
-        .min(10, 'Phone Too Short!')
-        .max(10, 'Phone Too Long!')
+        .max(12, 'Medicare ID Too Long!')
+        .required('Medicare ID Required'),
+    phone:  Yup.string()
         .required('Phone Required'),
     province: Yup.string()
         .required('province is required'),
@@ -40,8 +38,6 @@ const WorkerSchema = Yup.object().shape({
         .min(6, 'Postal Code invalid')
         .max(7, 'Postal Code invalid')
         .required('Postal code Required'),
-    postal_code_id:  Yup.number()
-        .required('Postal code ID Required'),
     region:  Yup.string()
         .min(2, 'Region invalid!')
         .max(50, 'Region invalid!')
