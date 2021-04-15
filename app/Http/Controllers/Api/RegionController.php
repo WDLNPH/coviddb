@@ -35,9 +35,19 @@ class RegionController extends Controller
     public function readAll(Request $request)
     {
         return response()->json(DB::select("
-            SELECT r.region_id, r.region_name, a.alert_id, a.alert_info
+            SELECT
+                r.region_id,
+                r.region_name,
+                a.alert_id,
+                a.alert_info,
+                GROUP_CONCAT(c.city) as 'cities',
+                GROUP_CONCAT(pc.postal_code_id) as 'postal_codes'
             FROM Region r
-            JOIN Alert a ON r.alert_id = a.alert_id"));
+            JOIN Alert a ON r.alert_id = a.alert_id
+            JOIN City c ON c.region_id = r.region_id
+            JOIN PostalCode pc ON pc.city_id = c.city_id
+            GROUP BY r.region_id"));
+
     }
 
     /**
