@@ -19,6 +19,18 @@ class PersonController extends Controller
            
     }
 
+
+/*
+Q11 
+no idea where to put this --> special request
+
+SELECT ps.first_name, ps.last_name, ps.dob, ps.medicare, ps.phone, ps.citizenship, ps.email, group_concat(ps2.first_name , ' ', ps2.last_name) as parent_full_name FROM person ps
+JOIN carer c ON c.child_id = ps.person_id
+JOIN person ps2 ON c.parent_id = ps2.person_id
+WHERE ps.address = '489 Pauline Shoals Suite 850';
+*/
+
+
     /**
      * Display a listing of the resource.
      *
