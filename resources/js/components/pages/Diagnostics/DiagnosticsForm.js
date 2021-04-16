@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {NavLink} from "react-router-dom";
-import {DeleteButton} from "../../common/forms/FormHelpers";
+import {DeleteButton, withCrud} from "../../common/forms/FormHelpers";
 
 
 const DiagnosticSchema = Yup.object().shape({

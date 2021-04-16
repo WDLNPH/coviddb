@@ -24,7 +24,7 @@ export default withCrud(GroupZoneForm);
 
 
 
-function GroupZoneForm({handleSubmit, groupZone}) {
+function GroupZoneForm({handleSubmit, handleRemove, groupZone}) {
     return  (
         <>
             <div className="mp-page-header">

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Formik, useFormikContext,} from 'formik';
-import {DeleteButton, SmartField as Field} from "../../common/forms/FormHelpers";
+import {DeleteButton, withCrud, SmartField as Field} from "../../common/forms/FormHelpers";
 import * as Yup from 'yup';
 import {Dropdown} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";

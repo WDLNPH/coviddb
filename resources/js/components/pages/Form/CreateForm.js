@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Formik,Field} from 'formik';
+import {Formik} from 'formik';
+import {SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 import {fetchSymptoms} from '../../../api';
 
 export default withCrud(CreateForm);

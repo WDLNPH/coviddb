@@ -3,16 +3,7 @@ import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 import {DeleteButton} from "../../../common/forms/FormHelpers";
 import React from "react";
 
-export default function ({patient, patientRequestPromise}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await patientRequestPromise(values);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
-
+export default function ({patient, handleSubmit, handleRemove}) {
     return (
         <>
             <Formik initialValues={{

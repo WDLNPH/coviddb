@@ -43,6 +43,7 @@ Route::group(['prefix' => 'group-zones'], function () {
     Route::post('/', 'Api\\GroupZoneController@create');
     Route::get('/{groupZoneId}', 'Api\\GroupZoneController@readOne');
     Route::put('/{groupZoneId}', 'Api\\GroupZoneController@update');
+    Route::delete('/{groupZoneId}', 'Api\\GroupZoneController@delete');
 });
 
 Route::group(['prefix' => 'patients'], function () {
