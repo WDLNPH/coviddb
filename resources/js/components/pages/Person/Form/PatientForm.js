@@ -1,9 +1,11 @@
 import {Form, Formik,} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
-import {DeleteButton} from "../../../common/forms/FormHelpers";
+import {DeleteButton, withCrud} from "../../../common/forms/FormHelpers";
 import React from "react";
 
-export default function ({patient, handleSubmit, handleRemove}) {
+export default withCrud(PatientForm);
+
+function PatientForm({patient, handleSubmit, handleRemove}) {
     return (
         <>
             <Formik initialValues={{
