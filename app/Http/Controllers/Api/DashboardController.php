@@ -17,8 +17,8 @@ class DashboardController extends Controller
                 p.`person_id`,
                 c.`city`,
                 r.region_name,
+                al.alert_id,
                 al.alert_info,
-                al.alert_color,
                 (SELECT count(diagnostic_id)
                     FROM Diagnostic d
                     JOIN

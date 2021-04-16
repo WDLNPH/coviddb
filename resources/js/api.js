@@ -63,9 +63,14 @@ export function createWorker(worker) {
     return axios.post('workers', worker);
 }
 
-export function updateWorker(worker_Id, worker) {
-    return axios.put(`workers/${worker_Id}`, worker);
+export function updateWorker(workerId, worker) {
+    return axios.put(`workers/${workerId}`, worker);
 }
+
+export function deleteWorker(workerId) {
+    return axios.delete(`workers/${workerId}`);
+}
+
 ////////////////////// Facilities
 export function readAllFacilities() {
     return axios.get('facilities');

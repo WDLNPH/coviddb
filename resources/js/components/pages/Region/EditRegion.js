@@ -8,7 +8,11 @@ const ALERT_LEVEL_TWO = 2;
 const ALERT_LEVEL_THREE = 3;
 const ALERT_LEVEL_FOUR = 4;
 
-const ALERTS = {
+export function getAlertColor(alertLevel) {
+    return ALERTS[parseInt(alertLevel)]?.background;
+}
+
+export const ALERTS = {
     [ALERT_LEVEL_ONE]: {
         stringName: 'Level 1: Vigilance',
         header: 'Level 1',

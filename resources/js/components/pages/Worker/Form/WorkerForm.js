@@ -53,11 +53,12 @@ const WorkerSchema = Yup.object().shape({
 });
 
 
-export default function ({workerRequestPromise, worker}) {
+export default function ({workerRequestPromise, workerRemovePromise, worker}) {
     const [facilities, setFacilities] = useState([]);
     const [positions, setPositions] = useState([]);
     const [loadingF, setLoadingF] = useState(false);
     const [loadingP, setLoadingP] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -84,6 +85,17 @@ export default function ({workerRequestPromise, worker}) {
         loadFacilities();
         loadPositions()
     }, []);
+
+    async function handleRemove() {
+        try {
+            const {data} = await workerRemovePromise();
+            alert("done boi1")
+            history.push('/workers');
+        } catch (exception) {
+            // skip
+            alert(exception)
+        }
+    }
 
     async function handleSubmit(values) {
         try {
@@ -233,6 +245,26 @@ export default function ({workerRequestPromise, worker}) {
                                 <button type="submit" className="mp-button">
                                     {worker ? 'Update' : 'Create'} Worker
                                 </button>
+                                {worker ? (
+                                    <>
+                                        {isDeleting ? (
+                                            <>
+                                                <span>Are you sure?</span>
+                                                <button onClick={handleRemove} className="mp-button bg-red-600 text-white border-none">
+                                                    Yes
+                                                </button>
+                                                <button onClick={() => setIsDeleting(false)}>
+                                                    No
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <button onClick={() => setIsDeleting(true)} className="mp-button bg-red-600 text-white border-none">
+                                                Delete
+                                            </button>
+                                        )}
+
+                                    </>
+                                ): null}
                             </div>
                         </div>
                     </Form>

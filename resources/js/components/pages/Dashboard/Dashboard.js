@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {fetchStats} from '../../../api';
+import {ALERTS, getAlertColor} from "../Region/EditRegion";
 
 export default function () {
     const [stats, setStats] = useState();
@@ -91,7 +92,7 @@ export default function () {
                 </div>
 
                 <div className="-mx-2 pb-8 flex flex-row">
-                    <div className={`mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white  dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ${stats?.alert_color}`}>
+                    <div className={`mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white  dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ${getAlertColor(stats?.alert_id)}`}>
                         <div className="mx-1 flex justify-between">
                             <h1 className="text-2xl">Current Alert Level</h1>
                         </div>
