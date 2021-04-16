@@ -179,3 +179,10 @@ export function deleteDiagnostic(diagnosticsId) {
     return axios.delete(`diagnostics/${diagnosticsId}`);
 }
 
+//////////////////////Messages
+
+export function readAllMessages() {
+    return axios.get('messages');
+}
+
+
