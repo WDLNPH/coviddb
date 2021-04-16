@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {NavLink} from "react-router-dom";
+import {DeleteButton} from "../../common/forms/FormHelpers";
 
 
 const DiagnosticSchema = Yup.object().shape({
@@ -34,17 +35,9 @@ const DiagnosticSchema = Yup.object().shape({
 
 
 
+export default withCrud(DiagnosticForm);
 
-export default function ({diagnosticsRequestPromise, diagnostics}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await diagnosticsRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
+function DiagnosticForm({handleRemove, handleSubmit, diagnostics}) {
     return  (
         <>
             <div className="mp-page-header">
@@ -119,10 +112,16 @@ export default function ({diagnosticsRequestPromise, diagnostics}) {
                                    className="m-3 form-radio h-5 w-5 text-red-600"  type="radio" value="positive"/><span className="m-2 text-gray-700">positive</span>
                         </div>
                     </div>
-                 <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                        <button type="submit" class="bg-transparent hover:bg-grey text-grey-dark font-semibold hover:text-white py-2 px-4 border border-grey hover:border-transparent rounded mr-2"> Submit </button>
+                    <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                        <button type="submit" className="mp-button">
+                            Submit
+                        </button>
+                        {diagnostics ? (
+                            <DeleteButton onClick={handleRemove}/>
+                        ): null}
                     </div>
                 </div>
+
             </Formik>
         </>
     )

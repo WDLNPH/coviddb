@@ -10,7 +10,7 @@ export default function () {
                 <h1 className="mp-page-header-title">Create Worker Profile</h1>
                 <NavLink to={`/workers`} className="mp-button w-max">{'<'} Back to Workers</NavLink>
             </div>
-            <WorkerForm workerRequestPromise={createWorker}/>
+            <WorkerForm upsertPromise={createWorker}/>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import RecommendationsForm from "./RecommendationsForm";
-import {readOneRecommendation, updateRecommendation} from "../../../api";
+import {readOneRecommendation, deleteRecommendation, updateRecommendation} from "../../../api";
 import {useHistory, useParams} from "react-router";
 import {toast} from "react-toastify";
 
@@ -26,5 +26,5 @@ export default function () {
         loadRecommendation();
     }, [recommendationId]);
 
-    return loading ? <>please wait</> : <RecommendationsForm recommendationsRequestPromise={values => updateRecommendation(recommendationId, values)} recommendation={recommendation}/>
+    return loading ? <>please wait</> : <RecommendationsForm removePromise={() => deleteRecommendation(recommendationId)} upsertPromise={values => updateRecommendation(recommendationId, values)} recommendation={recommendation}/>
 }

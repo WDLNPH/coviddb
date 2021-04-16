@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {readOneGroupZone, updateGroupZone} from "../../../api";
+import {deleteGroupZone, readOneGroupZone, updateGroupZone} from "../../../api";
 import {useHistory, useParams} from "react-router";
 import GroupZoneForm from "./GroupZoneForm";
 import {toast} from "react-toastify";
@@ -26,5 +26,5 @@ export default function () {
         loadGroupZone();
         // fetch the patient object from the db
     }, [groupZoneId]);
-    return loading ? <>please wait</> : <GroupZoneForm groupZoneRequestPromise={values => updateGroupZone(groupZoneId, values)} groupZone={groupZone}/>
+    return loading ? <>please wait</> : <GroupZoneForm removePromise={() => deleteGroupZone(groupZoneId)} upsertPromise={values => updateGroupZone(groupZoneId, values)} groupZone={groupZone}/>
 }

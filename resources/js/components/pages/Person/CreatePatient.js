@@ -10,7 +10,7 @@ export default function () {
                 <h1 className="mp-page-header-title">Create Patient</h1>
                 <NavLink to={`/patients`} className="mp-button w-max">{'<'} Back to Patients</NavLink>
             </div>
-            <PatientForm patientRequestPromise={createPatient}/>
+            <PatientForm upsertPromise={createPatient}/>
         </>
     );
 }

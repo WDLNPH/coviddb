@@ -37,7 +37,7 @@ export default function () {
                 <h1 className="mp-page-header-title">(#{worker.health_worker_id}) {worker.first_name} {worker.last_name}</h1>
                 <NavLink to={`/workers`} className="mp-button w-max">{'<'} Back to Workers</NavLink>
             </div>
-            <WorkerForm workerRemovePromise={() => deleteWorker(workerId)} workerRequestPromise={values => updateWorker(workerId, values)} worker={worker}/>
+            <WorkerForm removePromise={() => deleteWorker(workerId)} upsertPromise={values => updateWorker(workerId, values)} worker={worker}/>
         </>
     );
 }

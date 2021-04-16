@@ -1,21 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Form, Formik} from 'formik';
-import {SmartField as Field} from "../../../common/forms/FormHelpers";
+import {DeleteButton, Dropdown, withCrud, SmartField as Field} from "../../../common/forms/FormHelpers";
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
 import {readAllFacilities, readAllPositions} from "../../../../api";
-import {Dropdown} from "../../../common/forms/FormHelpers";
-import {useHistory} from "react-router";
 import * as Yup from "yup";
 
 const WorkerSchema = Yup.object().shape({
     first_name:  Yup.string()
-        .min(2, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('first name Required'),
+        .required('First Name Required'),
     last_name:  Yup.string()
-        .min(10, 'last name Too Short!')
-        .max(10, 'last name Too Long!')
-        .required('last name Required'),
+        .required('Last Name Required'),
     dob:  Yup.date()
         .required('Date Required'),
     medicare: Yup.string()
@@ -52,14 +46,13 @@ const WorkerSchema = Yup.object().shape({
         .required('position id required'),
 });
 
+export default withCrud(WorkerForm);
 
-export default function ({workerRequestPromise, workerRemovePromise, worker}) {
+function WorkerForm({handleRemove, handleSubmit, worker}) {
     const [facilities, setFacilities] = useState([]);
     const [positions, setPositions] = useState([]);
     const [loadingF, setLoadingF] = useState(false);
     const [loadingP, setLoadingP] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
-    const history = useHistory();
 
     useEffect(() => {
         async function loadFacilities() {
@@ -85,28 +78,6 @@ export default function ({workerRequestPromise, workerRemovePromise, worker}) {
         loadFacilities();
         loadPositions()
     }, []);
-
-    async function handleRemove() {
-        try {
-            const {data} = await workerRemovePromise();
-            alert("done boi1")
-            history.push('/workers');
-        } catch (exception) {
-            // skip
-            alert(exception)
-        }
-    }
-
-    async function handleSubmit(values) {
-        try {
-            const {data} = await workerRequestPromise(values);
-            alert("done boi1")
-            history.push('/workers');
-        } catch (exception) {
-            // skip
-            alert(exception)
-        }
-    }
 
     return (
         <>
@@ -158,26 +129,26 @@ export default function ({workerRequestPromise, workerRemovePromise, worker}) {
                     },
                 },
             }}
-                    validationSchema={WorkerSchema}
+            validationSchema={WorkerSchema}
             onSubmit={handleSubmit}>
                 {({values}) => (
                     <Form>
                         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                             <PersonSectionForm/>
                             <div className="-mx-3 md:flex mb-2">
-                                {loadingP && (
+                                {!loadingP && (
                                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Position</label>
-                                        <Dropdown name="position">
+                                        <Dropdown name="position_id">
                                             {positions.map(position => (
-                                                <option value={position.id}>
+                                                <option value={position.position_id}>
                                                     {position.position}
                                                 </option>
                                             ))}
                                         </Dropdown>
                                     </div>
                                 )}
-                                {loadingF && (
+                                {!loadingF && (
                                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                         <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">Facility Name</label>
                                         <Dropdown name="health_center_id">
@@ -246,24 +217,7 @@ export default function ({workerRequestPromise, workerRemovePromise, worker}) {
                                     {worker ? 'Update' : 'Create'} Worker
                                 </button>
                                 {worker ? (
-                                    <>
-                                        {isDeleting ? (
-                                            <>
-                                                <span>Are you sure?</span>
-                                                <button onClick={handleRemove} className="mp-button bg-red-600 text-white border-none">
-                                                    Yes
-                                                </button>
-                                                <button onClick={() => setIsDeleting(false)}>
-                                                    No
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <button onClick={() => setIsDeleting(true)} className="mp-button bg-red-600 text-white border-none">
-                                                Delete
-                                            </button>
-                                        )}
-
-                                    </>
+                                    <DeleteButton onClick={handleRemove}/>
                                 ): null}
                             </div>
                         </div>

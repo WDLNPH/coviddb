@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import FacilityForm from "./FacilityForm";
-import {readOneFacility, updateFacility} from "../../../api";
+import {deleteFacility, readOneFacility, updateFacility} from "../../../api";
 import {useHistory, useParams} from "react-router";
 import {toast} from "react-toastify";
 
@@ -27,5 +27,5 @@ export default function () {
         // fetch the patient object from the db
     }, [facilityId]);
 
-    return loading ? <>please wait</> : <FacilityForm facilityRequestPromise={values => updateFacility(facilityId, values)} facility={facility}/>
+    return loading ? <>please wait</> : <FacilityForm removePromise={() => deleteFacility(facilityId)} upsertPromise={values => updateFacility(facilityId, values)} facility={facility}/>
 }

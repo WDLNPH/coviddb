@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Formik, useFormikContext,} from 'formik';
-import {SmartField as Field} from "../../common/forms/FormHelpers";
+import {DeleteButton, SmartField as Field} from "../../common/forms/FormHelpers";
 import * as Yup from 'yup';
 import {Dropdown} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
@@ -31,16 +31,10 @@ const FacilitySchema = Yup.object().shape({
 });
 
 
-export default function ({facilityRequestPromise, facility}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await facilityRequestPromise(values);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
 
+export default withCrud(FacilityForm);
+
+function FacilityForm({handleRemove, handleSubmit, facility}) {
     return  (
         <>
             <div className="mp-page-header">
@@ -169,6 +163,10 @@ export default function ({facilityRequestPromise, facility}) {
                                 <button type="submit" className="mp-button">
                                     Submit
                                 </button>
+
+                                {facility ? (
+                                    <DeleteButton onClick={handleRemove}/>
+                                ): null}
                             </div>
                         </div>
                     </Form>

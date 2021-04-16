@@ -1,4 +1,5 @@
 import {Field, useFormikContext} from "formik";
+import React, {useState} from "react";
 
 export function Dropdown ({children, disabled, name, id}) {
     return (
@@ -31,4 +32,55 @@ export function SmartField(props) {
             ) : null}
         </>
     );
+}
+
+export function DeleteButton({onClick}) {
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    return (
+        <>
+            {isDeleting ? (
+                <>
+                    <span>Are you sure?</span>
+                    <button onClick={onClick} className="mp-button bg-red-600 text-white border-none">
+                        Yes
+                    </button>
+                    <button onClick={() => setIsDeleting(false)}>
+                        No
+                    </button>
+                </>
+            ) : (
+                <button onClick={() => setIsDeleting(true)} className="mp-button bg-red-600 text-white border-none">
+                    Delete
+                </button>
+            )}
+        </>
+    );
+}
+
+
+export const withCrud = BaseComponent => ({ removePromise, redirectUrl, upsertPromise, ...props}) => {
+    async function handleRemove() {
+        try {
+            const {data} = await removePromise();
+            alert("done boi2")
+            history.push(redirectUrl);
+        } catch (exception) {
+            // skip
+            alert(exception)
+        }
+    }
+
+    async function handleSubmit(values) {
+        try {
+            const {data} = await upsertPromise(values);
+            alert("done boi1")
+            history.push(redirectUrl);
+        } catch (exception) {
+            // skip
+            alert(exception)
+        }
+    }
+
+    return <BaseComponent handleRemove={handleRemove} handleSubmit={handleSubmit} {...props} />
 }

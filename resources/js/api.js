@@ -32,7 +32,6 @@ export function updateRegion(regionId, regions) {
     return axios.put(`regions/${regionId}`, regions);
 }
 
-
 ////////////////////// Patients
 export function readAllPatients() {
     return axios.get('patients');
@@ -48,6 +47,10 @@ export function createPatient(patient) {
 
 export function updatePatient(patientId, patient) {
     return axios.put(`patients/${patientId}`, patient);
+}
+
+export function deletePatient(patientId) {
+    return axios.delete(`patients/${patientId}`);
 }
 
 ////////////////////// Workers
@@ -88,6 +91,9 @@ export function updateFacility(facilityId, facility) {
     return axios.put(`facilities/${facilityId}`, facility);
 }
 
+export function deleteFacility(facilityId) {
+    return axios.delete(`facilities/${facilityId}`);
+}
 ////////////////////// Positions
 
 export function readAllPositions() {
@@ -111,6 +117,10 @@ export function createGroupZone(groupZones) {
 export function updateGroupZone(groupZonesId, groupZones) {
     return axios.put(`group-zones/${groupZonesId}`, groupZones);
 }
+
+export function deleteGroupZone(groupZonesId) {
+    return axios.delete(`group-zones/${groupZonesId}`);
+}
 ////////////////////// Symptoms
 
 export function readAllSymptoms() {
@@ -127,6 +137,10 @@ export function createSymptoms(symptoms) {
 
 export function updateSymptoms(symptomsId, symptoms) {
     return axios.put(`symptoms/${symptomsId}`, symptoms);
+}
+
+export function deleteSymptom(symptomId) {
+    return axios.delete(`symptoms/${symptomId}`);
 }
 //////////////////////Recommendations
 
@@ -145,6 +159,9 @@ export function createRecommendation(recommendation) {
 export function updateRecommendation(recommendationId, recommendations) {
     return axios.put(`recommendations/${recommendationId}`, recommendations);
 }
+export function deleteRecommendation(recommendationId) {
+    return axios.delete(`recommendations/${recommendationId}`);
+}
 //////////////////////Diagnostics
 
 export function readAllDiagnostics() {
@@ -157,5 +174,8 @@ export function readOneDiagnostics(diagnosticsId) {
 
 export function createDiagnostics(diagnostics) {
     return axios.post('diagnostics', diagnostics);
+}
+export function deleteDiagnostic(diagnosticsId) {
+    return axios.delete(`diagnostics/${diagnosticsId}`);
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Formik} from 'formik';
 import * as Yup from "yup";
-import {SmartField as Field} from "../../common/forms/FormHelpers";
+import {SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 
 const RegionSchema = Yup.object().shape({
     alertLevel:  Yup.string()
@@ -10,13 +10,11 @@ const RegionSchema = Yup.object().shape({
         .required('Name Required')
 });
 
-export default function ({regionRequestPromise}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await regionRequestPromise(values);
-            alert("done boi")
-        } catch (exception) {}
-    }
+
+export default withCrud(RegionForm);
+
+
+function RegionForm({handleSubmit}) {
     return  (
         <>
             <Formik initialValues={{

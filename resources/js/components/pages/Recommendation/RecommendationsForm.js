@@ -1,6 +1,6 @@
 import React from 'react';
 import {Formik, Form} from 'formik';
-import {SmartField as Field} from "../../common/forms/FormHelpers";
+import {DeleteButton, SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
 import * as Yup from "yup";
 
@@ -8,19 +8,9 @@ const RecSchema = Yup.object().shape({
     recommendation:  Yup.string()
         .required('Rec Required')
 });
+export default withCrud(RecommendationForm);
 
-export default function ({recommendationsRequestPromise, recommendation}) {
-    async function handleSubmit(values) {
-        try {
-            console.log("op");
-            const {data} = await recommendationsRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-            console.log(exception);
-        }
-    }
+function RecommendationForm({handleSubmit, handleRemove, recommendation}) {
     return  (
         <>
             <div className="mp-page-header">
@@ -46,13 +36,17 @@ export default function ({recommendationsRequestPromise, recommendation}) {
                         </div>
 
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <button type="submit" className="mp-button"> Submit</button>
+                            <button type="submit" className="mp-button">
+                                Submit
+                            </button>
+                            {recommendation ? (
+                                <DeleteButton onClick={handleRemove}/>
+                            ): null}
                         </div>
                     </div>
                 </Form>
             </Formik>
         </>
     )
-
 }
 

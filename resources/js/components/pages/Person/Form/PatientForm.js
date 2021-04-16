@@ -1,5 +1,7 @@
 import {Form, Formik,} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
+import {DeleteButton} from "../../../common/forms/FormHelpers";
+import React from "react";
 
 export default function ({patient, patientRequestPromise}) {
     async function handleSubmit(values) {
@@ -38,6 +40,9 @@ export default function ({patient, patientRequestPromise}) {
                                 <button type="submit" className="mp-button">
                                     {patient ? 'Update' : 'Create'} Patient
                                 </button>
+                                {patient ? (
+                                    <DeleteButton onClick={handleRemove}/>
+                                ): null}
                             </div>
                         </div>
                     </Form>

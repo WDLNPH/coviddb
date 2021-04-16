@@ -3,5 +3,5 @@ import FacilityForm from "./FacilityForm";
 import {createFacility} from "../../../api";
 
 export default function () {
-    return <FacilityForm facilityRequestPromise={createFacility}/>
+    return <FacilityForm upsertPromise={createFacility}/>
 }

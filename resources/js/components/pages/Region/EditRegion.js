@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Formik, Field, Form} from "formik";
 import {useHistory, useParams} from "react-router";
 import {toast} from "react-toastify";
+import {DeleteButton} from "../../common/forms/FormHelpers";
 
 const ALERT_LEVEL_ONE = 1;
 const ALERT_LEVEL_TWO = 2;
@@ -75,6 +76,17 @@ export default function () {
     const {regionId} = useParams();
     const history = useHistory();
 
+
+    async function handleRemove() {
+        try {
+            const {data} = await deleteRegion(regionId);
+            alert("done boi2")
+            history.push('/workers');
+        } catch (exception) {
+            // skip
+            alert(exception)
+        }
+    }
     async function handleSubmit(values) {
         try {
             const {data} = await updateRegion(regionId, values);
@@ -182,7 +194,12 @@ export default function () {
                             ))}
                     </div>
                     <div className="mt-3 md:w-1/2 px-3 mb-6 md:mb-0">
-                        <button type="submit" className="mp-button">Submit</button>
+                        <button type="submit" className="mp-button">
+                            Submit
+                        </button>
+                        {region ? (
+                            <DeleteButton onClick={handleRemove}/>
+                        ): null}
                     </div>
                 </Form>
             )}

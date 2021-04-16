@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import SymptomsForm from "./SymptomsForm";
-import {readOneSymptoms, updateSymptoms} from "../../../api";
+import {deleteSymptom, readOneSymptoms, updateSymptoms} from "../../../api";
 import {useHistory, useParams} from "react-router";
 import {toast} from "react-toastify";
+import RecommendationsForm from "../Recommendation/RecommendationsForm";
 
 export default function () {
     const [symptoms, setSymptoms] = useState(null);
@@ -27,5 +28,5 @@ export default function () {
         // fetch the patient object from the db
     }, [symptomId]);
 
-    return loading ? <>please wait</> : <SymptomsForm symptomsRequestPromise={values => updateSymptoms(symptomId, values)} symptoms={symptoms}/>
+    return loading ? <>please wait</> : <SymptomsForm removePromise={() => deleteSymptom(symptomId)} upsertPromise={values => updateSymptoms(symptomId, values)} symptoms={symptoms}/>
 }
