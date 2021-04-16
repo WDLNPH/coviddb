@@ -12,7 +12,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 let token = document.head.querySelector('meta[name="user-token"]')
 console.log(token);
 if (token) {
-    window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ token.content;
+    window.axios.defaults.params = {}
+    window.axios.defaults.params['api_token'] = token.content;
+    // window.axios.defaults.headers.common['Authorization'] = 'Bearer '+ token.content;
 }
 
 window.axios.defaults.baseURL = process.env.MIX_APP_ENV === 'production' ? '/coviddb/api' : '/api';
