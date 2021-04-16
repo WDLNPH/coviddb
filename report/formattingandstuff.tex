@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\topmargin=0cm
+\oddsidemargin=0cm
+\textheight=22.0cm
+\textwidth=18cm
+\parindent=0cm
+\parskip=0.15cm
+\topskip=0truecm
+\raggedbottom
+\abovedisplayskip=3mm
+\belowdisplayskip=3mm
+\abovedisplayshortskip=0mm
+\belowdisplayshortskip=2mm
+\normalbaselineskip=10pt
+\normalbaselines
+\usepackage{pdfpages}
+\usepackage[pdftex]{graphicx}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{amsthm}
+\usepackage{tcolorbox}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{transparent}
+\usepackage{tabulary}
+\usepackage[affil-it]{authblk}
+\usepackage{graphicx}
+\graphicspath{ {./imgs/} }
+\usepackage{minted}
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\setminted[MYSQL]{ 
+    breaklines=true,
+    numbersep=5pt,
+    frame=single,
+    numbersep=5pt,
+    xleftmargin=1cm,
+    xrightmargin=4cm,
+    style = native,
+    bgcolor = LightGray
+    }
+\setminted[php]{ 
+    breaklines=true,
+    numbersep=5pt,
+    frame=single,
+    numbersep=5pt,
+    xleftmargin=1cm,
+    xrightmargin=4cm,
+    bgcolor = LightGray,
+    style = monokai
+    }
+    
+    \date{April 2021}
+
+\begin{document}
+           % \includepdf[pages=-]{EoO.pdf} %% Just to compile faster will add form later
+
+              \vspace*{3in}
+              \centerline{\bf\Large COMP 353, Winter 2021}
+              \centerline{\bf\Large Team Project - Final Project}
+
+              \vspace*{0.5in}
+              \centerline{\bf\Large Team 4 (ydc353\_4)}
+
+              \vspace*{0.5in}
+              \centerline{\today}
+
+              \vspace*{0.5in}
+              \begin{table}[htbp]
+                  \begin{center}
+                      \begin{tabular}{|r | c| c|}
+                          \hline
+                          Name & ID Number & GitHub Username \\
+                          \hline\
+                          Antoine Assal & 40022745 & @As.Antoine  \\
+                          \hline
+                          Benjamin Lofo Follo & 40008156 & @Benjamin Lofo Follo \\ 
+                          \hline
+                          Rami Bou Abboud & 40043011 & @Mr Robot \\
+                          \hline
+                          Ribelle El Ayoubi & 29276726  & @Belle-coder\\
+                          \hline
+                      \end{tabular}
+                  \end{center}
+              \end{table}
+              \newpage
+\tableofcontents
+\newpage
