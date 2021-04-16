@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import * as Yup from "yup";
 
 const MesSchema = Yup.object().shape({
-    recommendation:  Yup.string()
+    messages:  Yup.string()
         .required('Message Required')
 });
 export default withCrud(MessagesForm);
@@ -29,7 +29,7 @@ function MessagesForm({handleSubmit, handleRemove, messages}) {
                                 <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
                                     Name of Message
                                 </label>
-                                <Field name="recommendation"
+                                <Field name="messages"
                                        className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                                        id="messages" type="text" placeholder="Zone 1 moving to severity level 3"/>
                             </div>
