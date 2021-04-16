@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PatientForm, {PersonGroupZoneForm} from "./Form/PatientForm";
+import PatientForm from "./Form/PatientForm";
 import {readOnePatient, deletePatient, updatePatient} from "../../../api";
 import {useHistory, useParams} from "react-router";
 import {NavLink} from "react-router-dom";

@@ -1,5 +1,5 @@
 import React from 'react';
-import PatientForm, {PersonGroupZoneForm} from "./Form/PatientForm";
+import PatientForm from "./Form/PatientForm";
 import {createPatient} from "../../../api";
 import {NavLink} from "react-router-dom";
 

@@ -43,27 +43,6 @@ export default function ({patient, handleSubmit, handleRemove}) {
     )
 }
 
-export function PersonGroupZoneForm({personGZRequestPromise}) {
-
-    async function handleSubmit(values) {
-        try {
-            const {data} = await personGZRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
-
-    return (
-        <Formik initialValues={{groupZones: []}} onSubmit={handleSubmit}>
-
-
-
-        </Formik>
-    )
-}
-
 // TODO: move to form helpers
 export function Badge({name, onClick}) {
     return (
