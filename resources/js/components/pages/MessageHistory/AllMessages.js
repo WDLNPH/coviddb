@@ -1,28 +1,28 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import CreateRecommendations from "./CreateRecommendations";
-import EditRecommendations from "./EditRecommendations";
+import CreateMessages from "./CreateMessages";
+import EditMessages from "./EditMessages";
 import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
-import {readAllRecommendations} from "../../../api";
+import {readAllMessages} from "../../../api";
 
-const RECOMMENDATIONS_COLUMNS = ['recommendation'];
+const MESSAGES_COLUMNS = ['Messages'];
 
 export default function () {
-    //Recommendations
+    //Messages
     const match = useRouteMatch();
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateRecommendations}/>
-                <Route path={`${match.url}/:recommendationId`} component={EditRecommendations}/>
+                <Route path={`${match.url}/create`} component={CreateMessages}/>
+                <Route path={`${match.url}/:messagesId`} component={EditMessages}/>
                 <Route render={() => (
                     <>
                         <div className="mp-page-header">
-                            <h1 className="mp-page-header-title">List of All Recommendations</h1>
-                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Recommendations</NavLink>
+                            <h1 className="mp-page-header-title">List of All Messages</h1>
+                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Messages</NavLink>
                         </div>
-                        <ListRecommendations/>
+                        <ListMessages/>
                     </>
                 )}/>
             </Switch>
@@ -30,31 +30,31 @@ export default function () {
     )
 }
 
-function ListRecommendations() {
-    const [recommendations, setRecommendations] = useState([]);
+function ListMessages() {
+    const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const history = useHistory()
 
     // componentDidMount
     useEffect(() => {
-        async function loadRecommendations() {
+        async function loadMessages() {
             setLoading(true);
             try {
-                const {data} = await readAllRecommendations();
+                const {data} = await readAllMessages();
                 console.log(data);
-                setRecommendations(data);
+                setMessages(data);
             } catch (e) {
                 // skip
             }
             setLoading(false);
         }
-        loadRecommendations()
+        loadMessages()
     }, []);
 
-    const memoizedColumns = useMemo(() => RECOMMENDATIONS_COLUMNS.map(col => ({
+    const memoizedColumns = useMemo(() => MESSAGES_COLUMNS.map(col => ({
         Header: col,
         accessor: col
     })), []);
 
-    return loading ? '...' : <Table onClick={(recommendation) =>  history.push(`/recommendations/${recommendation.recommendation_id}`)} columns={memoizedColumns} data={recommendations}/>;
+    return loading ? '...' : <Table onClick={(messages) =>  history.push(`/messages/${messages.messages_id}`)} columns={memoizedColumns} data={messages}/>;
 }
