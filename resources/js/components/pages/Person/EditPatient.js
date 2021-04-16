@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import PatientForm, {PersonGroupZoneForm} from "./Form/PatientForm";
 import {readOnePatient, updatePatient} from "../../../api";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
 import {NavLink} from "react-router-dom";
+import {toast} from "react-toastify";
 
 export default function () {
     const [patient, setPatient] = useState(null);
     const [loading, setLoading] = useState(true);
     const {patientId} = useParams();
+    const history = useHistory();
+
     useEffect(() => {
         async function loadPatient() {
             setLoading(true);
@@ -16,6 +19,8 @@ export default function () {
                 setPatient(data)
             } catch (e) {
                 // skip
+                toast.error("Could not find patient");
+                history.push('/patient');
             }
             setLoading(false);
         }

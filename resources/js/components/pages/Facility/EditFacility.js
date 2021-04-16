@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import FacilityForm from "./FacilityForm";
 import {readOneFacility, updateFacility} from "../../../api";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
+import {toast} from "react-toastify";
 
 export default function () {
     const [facility, setFacility] = useState(null);
     const [loading, setLoading] = useState(false);
     const {facilityId} = useParams();
+    const history = useHistory();
+
     useEffect(() => {
         async function loadFacility() {
             setLoading(true);
@@ -15,6 +18,8 @@ export default function () {
                 setFacility(data)
             } catch (e) {
                 // skip
+                toast.error("Could not find facility");
+                history.push('/facilities');
             }
             setLoading(false);
         }

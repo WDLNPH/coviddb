@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {readOneGroupZone, updateGroupZone} from "../../../api";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
 import GroupZoneForm from "./GroupZoneForm";
+import {toast} from "react-toastify";
 
 export default function () {
     const [groupZone, setGroupZone] = useState(null);
     const [loading, setLoading] = useState(false);
     const {groupZoneId} = useParams();
+    const history = useHistory();
+
     useEffect(() => {
         async function loadGroupZone() {
             setLoading(true);
@@ -15,6 +18,8 @@ export default function () {
                 setGroupZone(data)
             } catch (e) {
                 // skip
+                toast.error("Could not find group zone");
+                history.push('/group-zones');
             }
             setLoading(false);
         }

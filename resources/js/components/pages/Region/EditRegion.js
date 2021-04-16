@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
     import {readOneRegion, updateRegion} from "../../../api";
 import {Formik, Field, Form} from "formik";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
+import {toast} from "react-toastify";
 
 const ALERT_LEVEL_ONE = 1;
 const ALERT_LEVEL_TWO = 2;
@@ -72,6 +73,8 @@ export default function () {
     const [region, setRegion] = useState(null);
     const [loading, setLoading] = useState(false);
     const {regionId} = useParams();
+    const history = useHistory();
+
     async function handleSubmit(values) {
         try {
             const {data} = await updateRegion(regionId, values);
@@ -89,6 +92,8 @@ export default function () {
                     setRegion(data)
             } catch (e) {
                 // skip
+                toast.error("Could not find region");
+                history.push('/regions');
             }
             setLoading(false);
         }
