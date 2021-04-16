@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllMessages} from "../../../api";
 
-const MESSAGES_COLUMNS = ['Messages'];
+const MESSAGES_COLUMNS = ['Message','msg_date'];
 
 export default function () {
     //Messages
