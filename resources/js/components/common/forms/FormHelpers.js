@@ -1,4 +1,7 @@
 import {Field, useFormikContext} from "formik";
+import React, {useState} from "react";
+import {useHistory} from "react-router";
+import {toast} from "react-toastify";
 
 export function Dropdown ({children, disabled, name, id}) {
     return (
@@ -31,4 +34,56 @@ export function SmartField(props) {
             ) : null}
         </>
     );
+}
+
+export function DeleteButton({onClick}) {
+    const [isDeleting, setIsDeleting] = useState(false);
+    return (
+        <>
+            {isDeleting ? (
+                <>
+                    <span>Are you sure?</span>
+                    <a onClick={onClick} className="mp-button bg-red-600 text-white border-none">
+                        Yes
+                    </a>
+                    <a onClick={() => setIsDeleting(false)}>
+                        No
+                    </a>
+                </>
+            ) : (
+                <a onClick={() => setIsDeleting(true)} className="mp-button bg-red-600 text-white border-none">
+                    Delete
+                </a>
+            )}
+        </>
+    );
+}
+
+
+export const withCrud = BaseComponent => ({ removePromise, redirectUrl, upsertPromise, ...props}) => {
+    const history = useHistory();
+
+    async function handleRemove() {
+        try {
+            const {data} = await removePromise();
+            toast.info("Removed successfully!")
+            history.push(redirectUrl ? redirectUrl : '/');
+        } catch (exception) {
+            // skip
+            toast.error(exception)
+        }
+    }
+
+    async function handleSubmit(values) {
+        try {
+            const {data} = await upsertPromise(values);
+            toast.info("Updated successfully!")
+            history.push(redirectUrl ? redirectUrl : '/');
+        } catch (exception) {
+            // skip
+            toast.error(exception)
+        }
+    }
+
+    return <BaseComponent handleRemove={handleRemove} handleSubmit={handleSubmit} {...props} />
 }

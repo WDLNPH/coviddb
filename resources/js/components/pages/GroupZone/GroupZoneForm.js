@@ -1,6 +1,6 @@
 import React from 'react';
 import {Formik, Form} from 'formik';
-import {SmartField as Field} from "../../common/forms/FormHelpers";
+import {DeleteButton, SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
 import {Dropdown} from "../../common/forms/FormHelpers";
 import * as Yup from "yup";
@@ -19,18 +19,12 @@ const GZSchema = Yup.object().shape({
 
 
 
+export default withCrud(GroupZoneForm);
 
 
-export default function ({groupZoneRequestPromise, groupZone}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await groupZoneRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
+
+
+function GroupZoneForm({handleSubmit, handleRemove, groupZone}) {
     return  (
         <>
             <div className="mp-page-header">
@@ -75,6 +69,9 @@ export default function ({groupZoneRequestPromise, groupZone}) {
                             <button type="submit" className="mp-button">
                                 Submit
                             </button>
+                            {groupZone ? (
+                                <DeleteButton onClick={handleRemove}/>
+                            ): null}
                         </div>
                     </div>
                 </Form>

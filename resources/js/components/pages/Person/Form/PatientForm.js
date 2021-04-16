@@ -1,16 +1,9 @@
 import {Form, Formik,} from 'formik';
 import PersonSectionForm from "../../../common/forms/PersonSectionForm";
+import {DeleteButton} from "../../../common/forms/FormHelpers";
+import React from "react";
 
-export default function ({patient, patientRequestPromise}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await patientRequestPromise(values);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
-
+export default function ({patient, handleSubmit, handleRemove}) {
     return (
         <>
             <Formik initialValues={{
@@ -38,33 +31,15 @@ export default function ({patient, patientRequestPromise}) {
                                 <button type="submit" className="mp-button">
                                     {patient ? 'Update' : 'Create'} Patient
                                 </button>
+                                {patient ? (
+                                    <DeleteButton onClick={handleRemove}/>
+                                ): null}
                             </div>
                         </div>
                     </Form>
                 )}
             </Formik>
         </>
-    )
-}
-
-export function PersonGroupZoneForm({personGZRequestPromise}) {
-
-    async function handleSubmit(values) {
-        try {
-            const {data} = await personGZRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
-
-    return (
-        <Formik initialValues={{groupZones: []}} onSubmit={handleSubmit}>
-
-
-
-        </Formik>
     )
 }
 

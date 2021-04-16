@@ -21,6 +21,9 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/NotFound/NotFound";
 import AllSymptoms from "./pages/Symptoms/AllSymptoms";
 import AllDiagnostics from "./pages/Diagnostics/AllDiagnostics";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
     return (
         <div className="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
@@ -47,6 +50,7 @@ function App() {
                     </div>
                     <StyledFooter/>
                 </div>
+                <ToastContainer />
             </BrowserRouter>
         </div>
     );

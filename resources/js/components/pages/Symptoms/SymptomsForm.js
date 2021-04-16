@@ -1,6 +1,6 @@
 import React from 'react';
 import {Formik} from 'formik';
-import {SmartField as Field} from "../../common/forms/FormHelpers";
+import {DeleteButton, SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 import {NavLink} from "react-router-dom";
 import * as Yup from "yup";
 const SympSchema = Yup.object().shape({
@@ -10,16 +10,9 @@ const SympSchema = Yup.object().shape({
         .required('Symptom Description Required')
 });
 
-export default function ({symptomsRequestPromise, symptoms}) {
-    async function handleSubmit(values) {
-        try {
-            const {data} = await symptomsRequestPromise(values);
-            console.log(data);
-            alert("done boi")
-        } catch (exception) {
-            // skip
-        }
-    }
+export default withCrud(SymptomsForm);
+
+function SymptomsForm({handleSubmit, symptoms}) {
     return  (
         <>
             <div className="mp-page-header">
@@ -44,7 +37,12 @@ export default function ({symptomsRequestPromise, symptoms}) {
                     </div>
 
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                        <button type="submit" className="mp-button"> Submit</button>
+                        <button type="submit" className="mp-button">
+                            Submit
+                        </button>
+                        {symptoms ? (
+                            <DeleteButton onClick={handleRemove}/>
+                        ): null}
                     </div>
                 </div>
             </Formik>

@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Formik,Field} from 'formik';
+import {Formik} from 'formik';
+import {SmartField as Field, withCrud} from "../../common/forms/FormHelpers";
 import {fetchSymptoms} from '../../../api';
 
-export default function () {
+export default withCrud(CreateForm);
+
+function CreateForm({handleSubmit}) {
     const [symptoms, setSymptoms] = useState([]);
 
     useEffect(() => {
@@ -19,7 +22,8 @@ export default function () {
         <Formik initialValues={{
             created_at: new Date(),
             symptoms: []
-        }}>
+        }}
+        onSubmit={handleSubmit}>
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                 <div className="-mx-3 md:flex mb-6">
                     <div className="md:w-1/2 px-3 mb-6 md:mb-0">
