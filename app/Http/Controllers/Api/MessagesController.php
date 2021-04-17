@@ -44,7 +44,11 @@ class MessagesController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT * FROM Messages"));
+        #Q10
+        #return every message within a specific perdiod of time
+        #example GET URL:   127.0.0.1:8000/api/messages?start_date='2021-04-13 23:59:59'&end_date='2021-04-17 23:59:59'
+
+        return response()->json(DB::select("SELECT * FROM messages WHERE msg_date > $request->start_date AND msg_date < $request->end_date"));
     }
 
     /**
