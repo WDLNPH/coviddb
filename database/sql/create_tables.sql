@@ -94,6 +94,7 @@ CREATE TABLE `Person`
     `email`       VARCHAR(64) NOT NULL,
     `phone`       VARCHAR(32) NOT NULL,
     `dob`         DATE        NOT NULL,
+    `preferred_communication` VARCHAR(10) DEFAULT 'none',
     PRIMARY KEY (`person_id`),
     KEY         `postal_code_id` (`postal_code_id`),
     CONSTRAINT `person_pc_id_fk_idx` FOREIGN KEY (`postal_code_id`) REFERENCES `PostalCode` (`postal_code_id`) ON DELETE CASCADE ON UPDATE CASCADE
