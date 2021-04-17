@@ -1,4 +1,4 @@
-# A++ Smart Text Editor
+# COVID DB Application
 COMP 354 Project that includes a Smart Text Editor
 
 ## Authors
