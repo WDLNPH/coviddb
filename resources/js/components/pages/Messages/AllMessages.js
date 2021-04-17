@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllMessages} from "../../../api";
 
-const MESSAGES_COLUMNS = ['Message','msg_date'];
+const MESSAGES_COLUMNS = ['message','msg_date'];
 
 export default function () {
     //Messages
@@ -14,13 +14,10 @@ export default function () {
     return  (
         <>
             <Switch>
-                <Route path={`${match.url}/create`} component={CreateMessages}/>
-                <Route path={`${match.url}/:messagesId`} component={EditMessages}/>
                 <Route render={() => (
                     <>
                         <div className="mp-page-header">
                             <h1 className="mp-page-header-title">List of All Messages</h1>
-                            <NavLink to={`${match.url}/create`} className="mp-button w-max">Create a new Messages</NavLink>
                         </div>
                         <ListMessages/>
                     </>
@@ -41,7 +38,6 @@ function ListMessages() {
             setLoading(true);
             try {
                 const {data} = await readAllMessages();
-                console.log(data);
                 setMessages(data);
             } catch (e) {
                 // skip
