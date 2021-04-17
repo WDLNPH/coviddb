@@ -10,7 +10,7 @@ class MessagesController extends Controller
 {
     /**
      * Create a newly created resource in storage.
-     *  
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -30,7 +30,7 @@ class MessagesController extends Controller
             'person_id',
             `message`,
         ]));
-        
+
         DB::insert("INSERT INTO Messages (region_id, msg_date, alert_id, person_id, message) VALUES (?,?,?,?,?)", [$parameters]);
 
 
@@ -47,8 +47,15 @@ class MessagesController extends Controller
         #Q10
         #return every message within a specific perdiod of time
         #example GET URL:   127.0.0.1:8000/api/messages?start_date='2021-04-13 23:59:59'&end_date='2021-04-17 23:59:59'
-
-        return response()->json(DB::select("SELECT * FROM messages WHERE msg_date > $request->start_date AND msg_date < $request->end_date"));
+        $queryString = collect();
+        if ($request->filled("start_date")) {
+            $queryString->put("msg_date > $request->start_date");
+        }
+        if ($request->filled("end_date")) {
+            $queryString->put("msg_date <= $request->start_date");
+        }
+        $string = $queryString->isNotEmpty() ? "WHERE " . $queryString->join(" AND ") : "";
+        return response()->json(DB::select("SELECT * FROM messages $string"));
     }
 
     /**

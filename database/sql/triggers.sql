@@ -4,7 +4,7 @@ CREATE TRIGGER alertTrigger
 AFTER UPDATE ON Region
 FOR EACH ROW
 BEGIN
-INSERT INTO messages(`message`, `region_id`, `msg_date`,`person_id`, `alert_id`)
+INSERT INTO Messages(`message`, `region_id`, `msg_date`,`person_id`, `alert_id`, `diagnostic_id`)
 SELECT
   CONCAT(
       'Bonsoir ', ps.first_name, ', (e-mail: ', ps.email, ')\n\n',
@@ -16,12 +16,13 @@ SELECT
   OLD.region_id AS 'region_id',
   NOW() AS 'msg_date',
   ps.person_id AS 'person_id',
-  NEW.alert_id AS 'alert_id'
+  NEW.alert_id AS 'alert_id',
+  null
 FROM
   Person ps
   JOIN PostalCode pc ON pc.postal_code_id = ps.postal_code_id
   JOIN City c ON c.city_id = pc.city_id
-  JOIN Region r ON r.region_id = OLD.region_id
+  JOIN Region r ON r.region_id = c.region_id AND r.region_id = OLD.region_id
   JOIN Alert a ON a.alert_id = OLD.alert_id
   JOIN Alert b ON b.alert_id = NEW.alert_id;
 END; //

@@ -40,14 +40,15 @@ class RegionController extends Controller
                 r.region_name,
                 a.alert_id,
                 a.alert_info,
+                count(p.person_id) as 'people_amount',
                 GROUP_CONCAT(c.city) as 'cities',
                 GROUP_CONCAT(pc.postal_code_id) as 'postal_codes'
             FROM Region r
             JOIN Alert a ON r.alert_id = a.alert_id
             JOIN City c ON c.region_id = r.region_id
             JOIN PostalCode pc ON pc.city_id = c.city_id
-            GROUP BY r.region_id"));
-
+            LEFT JOIN Person p ON p.postal_code_id = pc.postal_code_id
+            GROUP BY r.region_id ORDER BY count(p.person_id) DESC"));
     }
 
     /**
