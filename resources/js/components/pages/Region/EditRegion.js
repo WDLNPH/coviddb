@@ -81,7 +81,7 @@ export default function () {
         try {
             const {data} = await deleteRegion(regionId);
             alert("done boi2")
-            history.push('/workers');
+            history.push('/regions')
         } catch (exception) {
             // skip
             alert(exception)
@@ -90,8 +90,8 @@ export default function () {
     async function handleSubmit(values) {
         try {
             const {data} = await updateRegion(regionId, values);
-            console.log(data);
-            alert("done boi")
+            toast.info("region updated");
+            history.push('/regions')
         } catch (exception) {
             // skip
         }
@@ -141,22 +141,22 @@ export default function () {
                                     }
                                     return (
                                         <>
-                                            <button
+                                            <a
                                                 onClick={decrement}
                                                 className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                                 <span className="m-auto text-2xl font-thin">−</span>
-                                            </button>
+                                            </a>
                                             <input
                                                 disabled
                                                 onChange={() => {}}
                                                type="text"
                                                className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
                                                name="custom-input-number" value={ALERT_LEVEL_STRINGS[field.value]}/>
-                                            <button
+                                            <a
                                                 onClick={increment}
                                                 className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                                                 <span className="m-auto text-2xl font-thin">+</span>
-                                            </button>
+                                            </a>
                                         </>
                                     );
                                 }}

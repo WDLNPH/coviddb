@@ -21,6 +21,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import NotFound from "./pages/NotFound/NotFound";
 import AllSymptoms from "./pages/Symptoms/AllSymptoms";
 import AllDiagnostics from "./pages/Diagnostics/AllDiagnostics";
+import AllMessages from "./pages/Messages/AllMessages";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -44,6 +45,7 @@ function App() {
                             <Route path="/symptoms" component={AllSymptoms}/>
                             <Route path="/follow-up-form" component={CreateForm}/>
                             <Route path="/diagnostics" component={AllDiagnostics}/>
+                            <Route path="/messages" component={AllMessages}/>
                             <Route exact path="/" component={Dashboard}/>
                             <Route component={NotFound}/>
                         </Switch>

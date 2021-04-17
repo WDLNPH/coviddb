@@ -75,6 +75,7 @@ export default function () {
                         <MenuButton name="GroupZones" to={'/groupzones'}/>
                         <MenuButton name="Recommendations" to={'/recommendations'}/>
                         <MenuButton name="Symptoms" to={'/symptoms'}/>
+                        <MenuButton name="Messages" to={'/Messages'}/>
                     </MenuDropdown>
                     <MenuDropdown
                         name="User"

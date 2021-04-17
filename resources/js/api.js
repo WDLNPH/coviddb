@@ -179,3 +179,23 @@ export function deleteDiagnostic(diagnosticsId) {
     return axios.delete(`diagnostics/${diagnosticsId}`);
 }
 
+/////////////////////Messages
+
+export function readAllMessages() {
+    return axios.get('messages');
+}
+
+export function readOneMessages(messagesId) {
+    return axios.get(`messages/${messagesId}`);
+}
+
+export function createMessages(messages) {
+    return axios.post('messages', messages);
+}
+
+export function updateMessages(messagesId, messages) {
+    return axios.put(`messages/${messagesId}`, messages);
+}
+export function deleteMessages(messagesId) {
+    return axios.delete(`messages/${messagesId}`);
+}
