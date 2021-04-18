@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Http\Response;
@@ -21,9 +22,8 @@ class FollowUpFormController extends Controller
         $parameters = collect($request->only([
             'filled_by',
             'patient_id',
-            'form_id',
-            'created_at',
         ]));
+        $parameters->put('created_at', Carbon::now()->toDateTimeString());
 
         $id = $this->doInsertAndGetId('FollowUpForm', $parameters);
 

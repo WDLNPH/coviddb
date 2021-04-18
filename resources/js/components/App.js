@@ -5,7 +5,7 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import {Redirect} from "react-router";
+import {createFollowUpForm} from "../api";
 import Sidebar from "./layout/Sidebar";
 import Navbar from "./layout/Navbar";
 import React from "react";
@@ -43,7 +43,9 @@ function App() {
                             <Route path="/recommendations" component={AllRecommendations}/>
                             <Route path="/alerts" component={AllAlerts}/>
                             <Route path="/symptoms" component={AllSymptoms}/>
-                            <Route path="/follow-up-form" component={CreateForm}/>
+                            <Route path="/follow-up-form">
+                                <CreateForm upsertPromise={createFollowUpForm}/>
+                            </Route>
                             <Route path="/diagnostics" component={AllDiagnostics}/>
                             <Route path="/messages" component={AllMessages}/>
                             <Route exact path="/" component={Dashboard}/>

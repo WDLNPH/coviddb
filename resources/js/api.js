@@ -179,6 +179,11 @@ export function deleteDiagnostic(diagnosticsId) {
     return axios.delete(`diagnostics/${diagnosticsId}`);
 }
 
+/////////////////////Forms
+export function createFollowUpForm(form) {
+    return axios.post('forms', form);
+}
+
 /////////////////////Messages
 
 export function readAllMessages() {

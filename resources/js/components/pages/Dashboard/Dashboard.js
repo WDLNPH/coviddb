@@ -71,7 +71,7 @@ export default function () {
                 )}
 
                 <div className="-mx-2 pb-8 flex flex-row">
-                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
+                    <div className="mx-1 flex-1 flex-col flex px-4 py-4 justify-start bg-white dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
                         <div className="mx-1 flex justify-between">
                             <h1 className="text-2xl">Person Info</h1>
                         </div>
@@ -160,7 +160,7 @@ function WorkerLastDiagnostics({diags}) {
             </div>
             {diags.map(diag => (
                 <div className="my-2 flex capitalize text-gray-600 dark:text-gray-400">
-                    <span className="flex flex-1">{diag.date}</span>
+                    <span className="flex flex-1">{(new Date(diag.date)).toDateString()}</span>
                     <span className="flex flex-1 text-black dark:text-gray-200">
                         {diag.patient_name}
                                     </span>

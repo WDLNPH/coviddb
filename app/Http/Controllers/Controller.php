@@ -136,7 +136,7 @@ class Controller extends BaseController
             })->join(',');
 
             // run it boi
-            DB::insert("INSERT INTO FollowUpFormSymptomPivot (`person_id`, `symptom_id`)
+            DB::insert("INSERT INTO FollowUpFormSymptomPivot (`form_id`, `symptom_id`)
                 VALUES $stringAdd");
         }
         if ($toDelete->isNotEmpty()) {
