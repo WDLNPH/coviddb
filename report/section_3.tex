@@ -1,0 +1,563 @@
+\section{Relational Database Schema}
+Convert your E/R diagram into a relational database schema. Make refinements to
+the DB schema if necessary. Identify various integrity constraints such as primary
+keys, foreign keys, functional dependencies, and referential constraints. Make sure
+that your database schema is at least in 3NF.
+
+\subsection{Relational Model from Warm-up Project}
+This is the Relational schema we came up with for the warm-up project. Underline represents a primary key and \# represents a foreign key.
+\begin{itemize}
+    \item Person (\underline{person\_id}, medicare, first\_name, last\_name, address, city, postal\_code, province, citizenship, email, phone, dob)
+    \item Parental (\underline{parental\_id}, \#person\_id, parent\_1\_id, parent\_2\_id, guardian\_id, child\_id)
+    \item PublicHealthWorker (\underline{health\_worker\_id}, position, schedule,  \#health\_center\_id, \#person\_id)
+    \item PublicHealthCenter (\underline{health\_center\_id}, phone, name, address, city, province, postal\_code, type, website)
+    \item Diagnostic (\underline{diagnostic\_id}, diagnostic\_date, result, \#health\_worker\_id, \#health\_center\_id, \#person\_id)
+    \item Patient (\underline{patient\_id}, \#person\_id)
+    \item GroupZone (\underline{group\_id}, activity, name)
+    \item GroupZonePersonPivot (\underline{group\_id}, \underline{person\_id})
+\end{itemize}
+
+\subsection{Relational Model with Updated Information}
+For this project, we read the instructions carefully and started building on top of our schema to have a new one that includes all the new required information for our system.
+\begin{itemize}
+    \item Person (\underline{person\_id}, medicare, first\_name, last\_name, address, city, postal\_code, province, citizenship, email, phone, dob, password, api\_token)
+    \item Patient (\underline{patient\_id}, \#person\_id, symptoms, symptoms\_history)
+    \item Carer (\underline{parental\_id}, \#person\_id, parent\_1\_id, parent\_2\_id, guardian\_id, child\_id)
+    \item PublicHealthWorker (\underline{health\_worker\_id}, position, schedule,\#health\_center\_id, \#person\_id)
+    \item PublicHealthCenter (\underline{health\_center\_id}, phone, name, address, city, province, postal\_code, type, website, drive\_thru)
+    \item Diagnostic (\underline{diagnostic\_id}, diagnostic\_date, result,\#health\_worker\_id, \#health\_center\_id, \#patient\_id)
+    \item FollowupForm (\underline{form\_id}, \#health\_worker\_id, \#patient\_id)
+    \item GroupZone (\underline{group\_id}, activity, name)
+    \item Region (\underline{region\_id}, region\_name, city, postal\_code, province)
+    \item Alert (\underline{alert\_id}, alert\_name, alert\_level, alert\_region, alert\_status, alert\_date, alert\_time, current\_alert, past\_alert, message, \#person\_id, recommendation)
+    \end{itemize}
+
+\subsection{Model's Normal Form}
+It is safe to say that our model is at least in \textbf{1NF} for all the relations since all attributes are atomic and cannot contain more than one value. The only exception is symptoms \& symptoms\_history, which will be normalized later in this document.
+\subsubsection{Person}
+For the Person Relation we have the following non-trivial dependencies:\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item \{person\_id\} $\rightarrow$ first\_name
+    \item \{person\_id\} $\rightarrow$ last\_name
+    \item \{person\_id\} $\rightarrow$ medicare
+    \item \{person\_id\} $\rightarrow$ password
+    \item \{person\_id\} $\rightarrow$ address
+    \item \{person\_id\} $\rightarrow$ postal\_code
+    \item \{person\_id\} $\rightarrow$ citizenship
+    \item \{person\_id\} $\rightarrow$ email
+    \item \{person\_id\} $\rightarrow$ phone
+    \item \{person\_id\} $\rightarrow$ dob
+    \item \{person\_id\} $\rightarrow$ api\_token
+    \item \{address\} $\not \rightarrow$ first\_name
+    \item \{email\} $\not \rightarrow$ person\_id
+\end{itemize}
+\end{minipage}
+person\_id cannot be determined, is not on the RHS of any of the FDs, making it a super-key and the only candidate key.
+
+\begin{tcolorbox}
+\textbf{So our $F$ is}:
+\begin{multline}
+$ F = \{ person\_id \rightarrow first\_name,last\_name, medicare, password,\\
+address, postal\_code, citizenship, email, phone, dob, api\_token \} $
+\end{multline}
+\begin{multline}
+$person\_id^+ = \{person\_id, first\_name,last\_name, medicare, password,\\
+address,postal\_code, citizenship, email, phone, dob, api\_token \} $
+\end{multline}
+
+Key = $person\_id$\\
+This relation is \textbf{in 2NF}.\\
+This relation is \textbf{in 3NF}.\\
+This relation is \textbf{in BCNF}.
+\end{tcolorbox}
+\newpage
+
+\subsubsection{Carer}
+
+For the Carer Relation we have the following non-trivial dependencies:\\
+
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item \{person\_id\} $\rightarrow$ child\_id
+    \item \{person\_id\} $\rightarrow$ parent\_1\_id
+    \item \{person\_id\} $\rightarrow$ parent\_2\_id
+    \item \{person\_id\} $\rightarrow$ guardian\_id
+    \item \{parent\_1\_id\} $\rightarrow$ child\_id
+    \item \{parent\_2\_id\} $\rightarrow$ child\_id
+    \item \{parent\_1\_id, parent\_2\_id\} $\rightarrow$ child\_id
+    \item \{parent\_1\_id, parent\_2\_id, guardian\_id\} $\rightarrow$ child\_id
+\end{itemize}
+\end{minipage}
+
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+\begin{multline}
+$F = \{ \{ person\_id \rightarrow child\_id, parent\_1\_id, parent\_2\_id, guardian\_id \}, \\
+\{parent\_1\_id \rightarrow child\_id\} , \{parent\_2\_id \rightarrow child\_id\} , \\
+\{parent\_1\_id, parent\_2\_id, guardian\_id \rightarrow child\_id \} \} $
+\end{multline}
+This relation is \textbf{not in 2NF} because we have partial dependencies, \\
+For example $person\_id \rightarrow parent\_1\_id$ and we can split it into more tables. 
+\end{tcolorbox}
+
+\subsubsection{PublicHealthWorker}
+For the PublicHealthWorker Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item \{health\_worker\_id\} $\rightarrow$ position
+    \item\{health\_worker\_id\}  $\rightarrow$ schedule
+    \item \{health\_worker\_id\}  $\rightarrow$ health\_center\_id
+    \item \{health\_worker\_id\}  $\rightarrow$ person\_id
+    \item \{health\_center\_id\}  $\not \rightarrow$ health\_worker\_id\\
+\end{itemize}
+\end{minipage}
+\\
+health\_worker\_id cannot be determined, is not on the RHS of any of the FDs, making it a super-key and the only candidate key.
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+$F = \{health\_worker\_id \rightarrow position, schedule, health\_center\_id, person\_id\}$\\
+\\
+$health\_worker\_id^+ = \{health\_worker\_id, person\_id, position, schedule, health\_center\_id \}$\\
+\\
+Key = $health\_worker\_id$\\
+This relation is \textbf{in 2NF}.\\
+This relation is \textbf{in 3NF}.\\
+This relation is \textbf{in BCNF}.
+\end{tcolorbox}
+
+\subsubsection{PublicHealthCenter}
+For the PublicHealthCenter Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item \{health\_center\_id\} $\rightarrow$ phone
+    \item\{health\_center\_id\}  $\rightarrow$ name
+    \item \{health\_center\_id\}  $\rightarrow$ address
+    \item \{health\_center\_id\}  $\rightarrow$ city
+    \item \{health\_center\_id\}  $\rightarrow$ province
+    \item \{health\_center\_id\}  $\rightarrow$ postal\_code
+    \item \{health\_center\_id\}  $\rightarrow$ type
+    \item \{health\_center\_id\}  $\rightarrow$ website
+    \item \{health\_center\_id\}  $\rightarrow$ drive\_thru
+    \item \{postal\_code\}  $\rightarrow$ city
+    \item \{postal\_code\}  $\rightarrow$ province
+    \item \{city\}  $\rightarrow$ province
+\end{itemize}
+\end{minipage}
+
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+\begin{multline}
+$F = \{ \{health\_center\_id \rightarrow phone, name, address, city, province, postal\_code, type, website,\\ 
+drive\_thru\} , \{postal\_code \rightarrow city, province\}, \{city \rightarrow province\} \}$
+\end{multline}
+Key = $health\_worker\_id$ \\
+This relation is \textbf{in 2NF}.\\
+$postal\_code \rightarrow city, province$ \textbf{violates 3NF rules.}\\
+It is non-trivial, LHS is not a superkey and RHS contains a non-key attribute.\\
+This relation is \textbf{not in 3NF}.\\
+This relation is \textbf{not in BCNF}.
+\end{tcolorbox}
+\newpage
+\subsubsection{Diagnostic}
+For the Diagnostic Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item  \{diagnostic\_id\}   $\rightarrow$ diagnostic\_date
+    \item\ \{diagnostic\_id\}   $\rightarrow$ result
+    \item  \{diagnostic\_id\}   $\rightarrow$ health\_worker\_id
+    \item  \{diagnostic\_id\}   $\rightarrow$ health\_center\_id\
+    \item  \{diagnostic\_id\}   $\rightarrow$ patient\_id
+    \item  \{patient\_id\,health\_worker\_id\} $\not \rightarrow$ diagnostic\_id
+    \item  \{patient\_id\,health\_worker\_id\} $\not \rightarrow$ result
+\end{itemize}
+\end{minipage}
+
+\begin{tcolorbox}
+\textbf{So our $F$ is}:
+$F = \{diagnostic\_id \rightarrow diagnostic\_date, result, health\_worker\_id, health\_center\_id\}$\\
+Key = $diagnostic\_id$\\
+diagnostic\_id cannot be determined, is not on the RHS of any of the FDs, making it a super-key and the only candidate key.\\
+This relation is \textbf{in 2NF}.\\
+This relation is \textbf{in 3NF}.\\
+This relation is \textbf{in BCNF}.
+\end{tcolorbox}
+
+\subsubsection{FollowUpForm}
+For the FollowUpForm Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item  \{form\_id\}   $\rightarrow$ health\_worker\_id
+    \item  \{form\_id\}   $\rightarrow$ patient\_id
+\end{itemize}
+\end{minipage}
+form\_id cannot be determined, is not on the RHS of any of the FDs, making it a super-key and the only candidate key.
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+$F = \{form\_id \rightarrow health\_worker\_id, patient\_id\}$\\
+\\
+$form\_id^+ = \{form\_id, health\_worker\_id, patient\_id\}$\\
+\\
+Key = $form\_id$\\
+This relation is \textbf{in 2NF}.\\
+This relation is \textbf{in 3NF}.\\
+This relation is \textbf{in BCNF}.
+\end{tcolorbox}
+\newpage
+\subsubsection{GroupZone}
+For the Groupzone Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item  \{group\_id\}   $\rightarrow$ activity
+    \item  \{group\_id\}   $\rightarrow$ name
+\end{itemize}
+\end{minipage}
+group\_id cannot be determined, is not on the RHS of any of the FDs, making it a super-key and the only candidate key.
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+$F = \{group\_id \rightarrow activity, name \}$\\
+\\
+$group\_id^+ = \{group\_id, activity, name\}$\\
+\\
+Key = $group\_id$\\
+This relation is \textbf{in 2NF}.\\
+This relation is \textbf{in 3NF}.\\
+This relation is \textbf{in BCNF}.
+\end{tcolorbox}
+\subsubsection{Region}
+For the Region Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item  \{region\_id\}   $\rightarrow$ region\_name
+    \item  \{region\_id\}   $\rightarrow$ city
+    \item  \{region\_id\}   $\rightarrow$ postal\_code
+    \item  \{region\_id\}   $\rightarrow$ province
+    \item \{postal\_code\}  $\rightarrow$ city
+    \item \{postal\_code\}  $\rightarrow$ province
+    \item \{city\}  $\rightarrow$ province
+
+\end{itemize}
+\end{minipage}
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+\begin{multline}
+$F = \{ \{region\_id \rightarrow region\_name, city, postal\_code, province\}, \\
+\{postal\_code \rightarrow city, province\}, \{city \rightarrow province\} \}$
+\end{multline*}
+\\
+This relation is \textbf{in 2NF}.\\
+$postal\_code \rightarrow city, province$ \textbf{violates 3NF rules.}\\
+It is non-trivial, LHS is not a superkey and RHS contains a non-key attribute.\\
+This relation is \textbf{not in 3NF}.\\
+This relation is \textbf{not in BCNF}.
+\end{tcolorbox}
+
+\newpage
+\subsubsection{Alert}
+For the Alert Relation we have the following non-trivial dependencies:\\
+\\
+\begin{minipage}{\textwidth}
+\begin{itemize}
+    \item \{alert\_id\}   $\rightarrow$ alert\_name
+    \item \{alert\_id\}   $\rightarrow$ alert\_level
+    \item \{alert\_id\}   $\rightarrow$ alert\_region
+    \item \{alert\_id\}   $\rightarrow$ alert\_status
+    \item \{alert\_id\}   $\rightarrow$ alert\_date
+    \item \{alert\_id\}   $\rightarrow$ alert\_time
+    \item \{alert\_id\}   $\rightarrow$ current\_alert
+    \item \{alert\_id\}   $\rightarrow$ past\_alert
+    \item \{alert\_id\}   $\rightarrow$ message
+    \item \{alert\_id\}   $\rightarrow$ person\_id
+    \item \{alert\_id\}   $\rightarrow$ recommendation
+    \item \{alert\_region\}   $\rightarrow$ alert\_status
+    \item \{alert\_region\}   $\rightarrow$ alert\_level
+    \item \{alert\_region\}   $\rightarrow$ message
+    \item \{message\}   $\rightarrow$ recommendation
+    \item \{person\_id} $\rightarrow$ message
+\end{itemize}
+\end{minipage}
+
+\begin{tcolorbox}
+    \textbf{So our $F$ is}:
+\begin{multline}
+$F = \{ \{alert\_id \rightarrow alert\_name, alert\_level, alert\_region, alert\_status, alert\_date, \\ alert\_time, current\_alert, past\_alert, message, person\_id, recommendation\} , \\
+\{alert\_region \rightarrow alert\_status, alert\_level, message\}, \\
+\{message \rightarrow recommendation\}, \{person\_id \rightarrow message \}\}$
+\end{multline}
+Key = $alert\_id$\\
+This relation is \textbf{in 2NF}.\\
+$alert\_region \rightarrow alert\_status, alert\_level, message$ \textbf{violates 3NF rules.}\\
+It is non-trivial, LHS is not a superkey and RHS contains a non-key attribute.\\
+This relation is \textbf{not in 3NF}.\\
+This relation is \textbf{not in BCNF}.
+\end{tcolorbox}
+\newpage
+\subsection{Few Relation instances}
+\subsubsection{Person}
+api\_token and password are randomly generated numbers or hashed strings. Shortened them for the report.
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=1.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} 
+        \hline
+        person\_id & medicare & first\_name & last\_name & address & city & postal\_code & province & citizenship & email & phone & dob & password & api\_token \\
+        \hline 
+4 & GBUJ46611976 & Anne & Paquette & 6577 Sébastien Plains & Sainte-Catherine & G3N 0O9 & QC & KN & bstpierre@lapierre.com & 1-882-823-4013, & 1977-02-08 & KxsFhruN & gwh0XS \\    
+16 & EEKJ96363064 & Marc & Gauthier & 756 Tessier Prairie & Montreal & H1H 7D2 & QC & TF & brigitte92@lambert.com & 470-997-1115, & 1990-06-29 & zd9Znke & xO3TUV\\        
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized person relation instance}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=1.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|} 
+        \hline
+        person\_id & medicare & first\_name & last\_name & address & postal\_code & postal\_code\_id & citizenship & email & phone & dob & password & api\_token \\
+        \hline 
+4 & GBUJ46611976 & Anne & Paquette & 6577 Sébastien Plains & G3N 0O9 & G3N & KN & bstpierre@lapierre.com & 1-882-823-4013, & 1977-02-08 & KxsFhruN & gwh0XS \\    
+16 & EEKJ96363064 & Marc & Gauthier & 756 Tessier Prairie & H1H 7D2 & H1H & TF & brigitte92@lambert.com & 470-997-1115, & 1990-06-29 & zd9Znke & xO3TUV\\        
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized person relation instance}
+\end{table}
+
+
+\subsubsection{Patient}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.5\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|} 
+        \hline
+        patient\_id & person\_id & symptoms & symptoms\_history \\ 
+        \hline
+        1 & 11 & cough,fever & cough,fever,loss of taste\\
+        6 & 16 & NULL & NULL\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized patient relation instance}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|} 
+        \hline
+        patient\_id & person\_id \\ 
+        \hline
+        1 & 11 \\
+        6 & 16 \\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized patient relation instance}
+\end{table}
+
+
+
+\subsubsection{Carer}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.6\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|l|} 
+        \hline
+        parental\_id & person\_id & parent\_1\_id & parent\_2\_id & guardian\_id & child\_id\\ 
+        \hline
+        1 & 4 & 5 & 7 & NULL & 4\\
+        2 & 9 & NULL & NULL & 11 & 9\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized carer relation instance}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|} 
+        \hline
+        child\_id & parent\_id \\ 
+        \hline
+        4 & 5 \\
+        4 & 7 \\
+        9 & 11 \\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized carer relation instance}
+\end{table}
+
+\newpage
+\subsubsection{PublicHealthWorker}
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        health\_worker\_id & person\_id & position & schedule & health\_center\_id\\ 
+        \hline
+        1 & 18 & Doctor & Mon: 19:00-03:00, Tue: 07:00-15:00 & 4\\
+        2 & 12 & Nurse & Thu: 04:00-12:00, Fri: 17:00-01:00, Sat: 09:00-17:00 & 5\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized PublicHealthWorker relation instance}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{width=1\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        health\_worker\_id & person\_id & position & schedule & health\_center\_id\\ 
+        \hline
+        1 & 18 & 1 & Mon: 19:00-03:00, Tue: 07:00-15:00 & 4\\
+        2 & 12 & 2 & Thu: 04:00-12:00, Fri: 17:00-01:00, Sat: 09:00-17:00 & 5\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized PublicHealthWorker relation instance}
+\end{table}
+
+\subsubsection{Position}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|} 
+        \hline
+        position\_id & position \\ 
+        \hline
+        1 & Doctor \\
+        2 & Nurse \\
+        3 & Intern \\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized Position relation instance}
+\end{table}
+
+
+\subsubsection{PublicHealthCenter}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=1.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} 
+        \hline
+        health\_center\_id & phone & name & address & city & province & postal\_code & type & website & drive\_thru\\ 
+        \hline
+        4 & (828) 624-4739 & Boucher-Jacques & 1717 Boucher Well & Saint-Laurent & QC & H4T 4V7 & Hospital & www.simard.biz & 0\\
+        5 & +1.903.423.4085 & Guay Ltd & T448 Girard Lane Suite 134 & Laval & QC & H7N 5N3 & Clinic & www.gangon.info & 1\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized PublicHealthCenter relation instance}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=1.2\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} 
+        \hline
+        health\_center\_id & phone & name & address & postal\_code\_id& postal\_code & type & website & method & drive\_thru\\ 
+        \hline
+        4 & (828) 624-4739 & Boucher-Jacques & 1717 Boucher Well & H4T & H4T 4V7 & Hospital & www.simard.biz & appointment & 0\\
+        5 & +1.903.423.4085 & Guay Ltd & T448 Girard Lane Suite 134 & H7N & H7N 5N3 & Clinic & www.gangon.info & walk-in & 1\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized PublicHealthCenter relation instance}
+\end{table}
+
+\subsubsection{PostalCode}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.25\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|} 
+        \hline
+        postal\_code\_id & city\_id \\ 
+        \hline
+        V1R & 229 \\
+        V2K & 244 \\
+        V7A & 304 \\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized PostalCode relation instance}
+\end{table}
+
+\subsubsection{City}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.35\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|} 
+        \hline
+        city\_id & city & region\_id \\ 
+        \hline
+        229 & Trail & 95 \\
+        244 & Prince George North & 101 \\
+        304 & Richmond South  & 126\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized City relation instance}
+\end{table}
+
+\subsubsection{Region}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.45\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        region\_id & region\_name & city & postal\_code & province \\ 
+        \hline
+        95 & Trail & Trail & V1R & British Columbia \\
+        101 & Prince George & Prince George North & V2K & British Columbia \\
+        126 & Richmond & Richmond South & V7A & British Columbia\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Un-normalized Region relation instance}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.45\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        region\_id & region\_name & alert\_id & province\_id \\ 
+        \hline
+        95 & Trail & 1 & BC \\
+        101 & Prince George North & 1 & BC\\
+        126 & Richmond South  & 1 & BC\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized Region relation instance}
+\end{table}
+
+
+\subsubsection{Province}
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=0.35\textwidth,center=\textwidth}
+\begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        province\_id & province \\ 
+        \hline
+        BC & British Columbia\\
+        SK & Saskatchewan\\
+        QC & Quebec\\
+        \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Normalized Province relation instance}
+\end{table}

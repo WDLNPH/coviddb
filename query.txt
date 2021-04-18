@@ -1,0 +1,46 @@
+Q11
+
+SELECT ps.first_name, ps.last_name, ps.dob, ps.medicare, ps.phone, ps.citizenship, ps.email, group_concat(ps2.first_name , ' ', ps2.last_name) as parent_full_name FROM person ps
+JOIN carer c ON c.child_id = ps.person_id
+JOIN person ps2 ON c.parent_id = ps2.person_id
+WHERE ps.address = '3239 Isaac Lake Apt. 198'
+GROUP BY medicare;
+
+
+6.7
+
+SELECT ps.first_name, ps.last_name, ps.dob, ps.phone, ps.email, diagnostic_date, result
+FROM diagnostic
+NATURAL JOIN patient pt
+NATURAL JOIN person ps
+WHERE diagnostic_date > '2020-07-01 02:26:24'
+ORDER BY result DESC;
+
+
+
+6.8
+
+SELECT ps.first_name, ps.last_name, health_worker_id FROM publichealthworker
+NATURAL JOIN Person ps
+WHERE health_center_id = '3'
+
+
+
+6.9(1)
+
+ALL WORKERS WITH COVID ON THIS DATE AT THIS FACILITY
+
+SELECT * FROM diagnostic
+NATURAL JOIN patient pt
+NATURAL JOIN person ps
+JOIN publichealthworker pw ON pw.person_id = ps.person_id
+WHERE result = '1' AND diagnostic_date > 0 AND pw.health_center_id = 2;
+
+
+
+6.9(2)
+
+RETURN WORKER THAT WORKS AT SAME FACILITY (WE DONT LOG WORK DATES CALMER VOUS UN PEU)
+
+SELECT * FROM publichealthworker
+WHERE health_center_id = 2

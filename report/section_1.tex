@@ -1,0 +1,10 @@
+\section{Assumptions}
+Show your reasonable Assumptions made in the proposed database design.
+\begin{itemize}
+    \item Every user in our database is a Person. However, for a Person to exist they must be a Patient or a Health Care worker.
+    \item A Healthcare worker can be a patient, not mutually exclusive.
+    \item Auto-incrementing identifiers for our entities avoids user input which eliminates the possibility of errors of having multiple instance of an entity with the same ID.
+    \item Our database system will be used to cover Canada and it's region/cities.
+    \item Our data focuses on Quebec.
+    \item Regions, GroupZones, and Recommendation do not need a delete call in CRUD.
+\end{itemize}

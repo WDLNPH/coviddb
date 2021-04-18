@@ -1,0 +1,132 @@
+\section{Normalization}
+Simple definitions for deriving normal forms :
+\begin{itemize}
+    \item 1NF : The key (remove repeating groups)
+    \item 2NF : The whole key (remove partial dependence)
+    \item 3NF : And nothing but the key (remove indirect dependence)
+\end{itemize}
+
+\subsection{Functional Dependency}
+Already analysed each relation's $FD$s in section 3.3
+\subsection{Normalization Steps}
+\subsubsection{2NF}
+\begin{tcolorbox}
+    \textbf{Second Normal Form 2NF}: achieved by first making sure the table is in first normal form, and then removing attributes that only partially depend on the key by creating new tables. So the steps are :
+    \begin{itemize}
+        \item The Database is in \textbf{1NF}
+        \item For every non-trivial dependency $X\rightarrow A$ either
+        \begin{itemize}
+            \item $X$ is not a proper subset of any candidate key OR
+            \item $A$ is a key attribute
+        \end{itemize}
+    \end{itemize}
+     \textbf{Key attribute}: An attribute that is part of some candidate key.\\
+     \textbf{Super key}: A combination of fields that can uniquely determine a row \\
+    \textbf{Candidate key}: A Super key that is also minimal. Meaning that :
+     \begin{itemize}
+         \item All candidate keys are super keys. 
+         \item If we remove any field it's not a super key anymore.
+     \end{itemize}
+\end{tcolorbox}
+We have already shown that the Carer relation is not in 2NF and needs to be normalized.
+
+\paragraph{Carer}
+We have redundant attributes, and we can simplify it by getting rid of \\
+$parent\_1\_id$, $parent\_2\_id$ and $guardian\_id$.\\
+Now our Carer relation is \\
+Carer (\#parent\_id, \#child\_id)\\
+This relation is now \textbf{in 2NF}.\\
+This relation is now \textbf{in 3NF}.\\
+This relation is now \textbf{in BCNF}.
+
+\subsubsection{3NF}
+\begin{tcolorbox}
+    \textbf{Third Normal Form 3NF}: achieved by first making sure the table is in second normal form, and making sure that there are no non-key attributes that are transitively dependent on any candidate key.So the steps are :
+    \begin{itemize}
+        \item The Relation is in \textbf{2NF}
+        \item If it's in 2NF and it's non-key attributes are fully and directly dependent on the key, then it is also in \textbf{3NF}
+        \item For every non-trivial dependency $X\rightarrow A$ either
+        \begin{itemize}
+            \item $X$ is a superkey or 
+            \item $A$ is a key attribute
+        \end{itemize}
+    \end{itemize}
+\end{tcolorbox}
+We have already shown that the \textbf{PublicHealthCenter, Region} and \textbf{Alert} relations are not in 3NF and need to be normalized.
+\paragraph{PublicHealthCenter}
+\begin{itemize}
+    \item The set of candidate keys for this relation is $\{health\_center\_id\}$.
+    \item Merge the $FDs$ we provided in 3.3.4, combining the same LHS whose RHS are non-key attributes.
+    \item $R_1 = health\_center\_id \rightarrow drive\_thru, website, type, postal\_code, address, name, phone$
+    \item $R_2 = postal\_code \rightarrow city$
+    \item $R_3 = city \rightarrow province$
+    \item Now $R_1$ is in 3NF.
+    \item $R_2$ \& $R_3$ violate 3NF since their LHS is not a superkey and RHS is a set of non-key attributes.
+    \item We will make a new table for them:
+    \item Province(\underline{province\_code}, province)
+    \item City(\underline{city\_id}, city, \#region\_id)
+    \item Now PublicHealthCenter(\underline{health\_center\_id}, phone, name, address, postal\_code,\#postal\_code\_id, type, website, drive\_thru)
+\end{itemize}
+This relation is \textbf{in 2NF}.\\
+This relation is now \textbf{in 3NF}.\\
+This relation is now \textbf{in BCNF}.
+\paragraph{Region} 
+\begin{itemize}
+    \item Same process is used as PublicHealthCenter so we get:
+    \item Province(\underline{province\_code}, province)
+    \item City(\underline{city\_id}, city, \#region\_id)
+    \item Region(\underline{region\_id}, region\_name, \#province\_code)
+    \end{itemize}
+This relation is \textbf{in 2NF}.\\
+This relation is now \textbf{in 3NF}.\\
+This relation is now \textbf{in BCNF}.
+\subsubsection{BCNF}
+
+\begin{tcolorbox}
+    \textbf{Boyce-Codd Normal Form BCNF}: achieved by first making sure the table is in third normal form. So the steps are :
+    \begin{itemize}
+        \item The Relation is in \textbf{3NF}
+        \item For every non-trivial dependency $X\rightarrow A$, $A$ is a superkey.
+    \end{itemize}
+\end{tcolorbox}
+
+We have already showed that Person, PublicHealthWorker, PublicHealthCenter, Region, Diagnostic, FollowUpForm, GroupZone and Alert are all in \textbf{BCNF}.
+
+\subsection{Final Normalized Model}
+\begin{tcolorbox}
+\textbf{This is our final normalized model of the system.} All
+\begin{itemize}
+    \item Person (\underline{person\_id}, medicare, first\_name, last\_name, address, postal\_code, \#postal\_code\_id, citizenship, email, phone, dob, password, api\_token)
+    \item Patient (\underline{patient\_id}, \# person\_id)
+    \item Carer (\#child\_id, \#parent\_id)
+    \item Administrator(\underline{admin\_id}, \#person\_id
+    \item PublicHealthWorker (\underline{health\_worker\_id}, \#position\_id, schedule,\#health\_center\_id, \#person\_id)
+    \item PublicHealthCenter (\underline{health\_center\_id}, phone, name, address, postal\_code,\#postal\_code\_id, type, website, method, drive\_thru)
+    \item Position (\underline{position\_id}, position)
+    \item Diagnostic (\underline{diagnostic\_id}, diagnostic\_date, result,\#health\_worker\_id, \#health\_center\_id, \#patient\_id)
+    \item FollowUpForm (\underline{form\_id}, \#filled\_by, \#patient\_id, created\_at)
+    \item Symptom (\underline{symptom\_id}, symptom)
+    \item FollowUpFormSymptomPivot(\#symptom\_id, form\_id)
+    \item GroupZone (\underline{group\_id}, activity, name)
+    \item GroupZonePersonPivot(\#group\_id, \#person\_id)
+    \item Region (\underline{region\_id}, region\_name, \#alert\_id, \#province\_code)
+    \item Alert (\underline{alert\_id}, alert\_info)
+    \item Province(\underline{province\_code}, province)
+    \item City(\underline{city\_id}, city, \#region\_id)
+    \item PostalCode (\underline{postal\_code\_id}, \#city\_id)
+    \item Recommendation (\underline{recommendation\_id}, recommendation)
+    \item Messages (\underline{msg\_id},\#region\_id, msg\_date, \#alert\_id, \#person\_id)
+    \end{itemize}
+    \end{tcolorbox}
+\newpage
+\subsection{Analysis of 3NF and BCNF}
+The database design has been normalised to comply with the normalisation rules up to Third Normal Form (3NF). There are no redundant data that are related, as we split them all into their own tables. These tables are each identified by their own ID (primary key). 
+If some data is related to more than one record, there has been a separate table created for it. Such tables are connected through foreign keys or, in some \textbf{special cases}, a separate pivot table has been created. Additionally, there are no values in the tables that do not depend on the key and we did not need any composite keys\\
+Below is a list of all the \textbf{special cases} that required pivot tables.
+\begin{itemize}
+    \item \textbf{FollowupFormSymptomPivot}: Used to map a specific record of followup form to multiple records of symptom.
+    \item \textbf{GroupZonePersonPivot}: Used to map a specific record of person form to multiple records of person.
+\end{itemize}
+We have shown in earlier sections that every relation has its own single super key and candidate key. 
+There are no attributes that depend on non-key attributes in our tables. All dependent non-key attributes, do depend on the table's primary key. In other words, for every non-trivial functional dependency listed there is no dependency of the form $A\rightarrow B, B \rightarrow C, C \rightarrow A,$ and for every functional dependency $X\rightarrow Y$, X will be the superkey of the table.
+As we have proved that our schema is in BCNF form, all data redundancy based on functional dependencies have been removed.
