@@ -103,4 +103,46 @@ class Controller extends BaseController
             });
         }
     }
+
+    public function syncSymptoms($formId, $symptoms)
+    {
+        $toDelete = collect();
+        $toAdd = collect();
+
+        if (!$formId) {
+            abort(500);
+        }
+
+        // delete anything that isn't in the symptoms
+        $dbGroupIds = collect(DB::select("SELECT fs.symptom_id FROM FollowUpFormSymptomPivot fs
+	            WHERE form_id = '{$formId}'"))->pluck('symptom_id')->toArray();
+
+        // Remove every Group Zone that no longer apply
+        foreach ($dbGroupIds as $dbGroupId) {
+            if (!in_array($dbGroupId, $symptoms)) {
+                $toDelete->push($dbGroupId);
+            }
+        }
+        // Add groupzones that need to be added to db
+        foreach ($symptoms as $symptom) {
+            if (!in_array($symptom, $dbGroupIds)) {
+                $toAdd->push($symptom);
+            }
+        }
+
+        if ($toAdd->isNotEmpty()) {
+            $stringAdd = $toAdd->map(function ($symptomId) use (&$formId) {
+                return "($formId,$symptomId)";
+            })->join(',');
+
+            // run it boi
+            DB::insert("INSERT INTO FollowUpFormSymptomPivot (`person_id`, `symptom_id`)
+                VALUES $stringAdd");
+        }
+        if ($toDelete->isNotEmpty()) {
+            $toDelete->map(function ($id) use (&$personId) {
+                DB::insert("DELETE FROM FollowUpFormSymptomPivot WHERE form_id=$personId and symptom_id=$id");
+            });
+        }
+    }
 }

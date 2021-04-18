@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Response;
 
 class FollowUpFormController extends Controller
 {
@@ -24,7 +25,11 @@ class FollowUpFormController extends Controller
             'created_at',
         ]));
 
-        DB::insert("INSERT INTO FollowUpForm (filled_by, patient_id, form_id, created_at) VALUES (?,?,?,?)", [$parameters]);
+        $id = $this->doInsertAndGetId('FollowUpForm', $parameters);
+
+        $this->syncSymptoms($id, $request->symptoms);
+
+        return response()->json(['form_id' => $id], $id ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
 
     }
 
@@ -39,9 +44,9 @@ class FollowUpFormController extends Controller
         #Q9
         #choose patient and choose date this will return symptom progression after THAT date for THIS patient
         #Example GET URL 127.0.0.1:8000/api/form?patient_id=1&start_date='2021-04-17 23:59:59'
-        return response()->json(DB::select("SELECT (`form_id`),(`patient_id`),(`created_at`),(`symptom`) FROM followupformsymptompivot 
+        return response()->json(DB::select("SELECT (`form_id`),(`patient_id`),(`created_at`),(`symptom`) FROM followupformsymptompivot
         NATURAL JOIN followupform
-        NATURAL JOIN symptom 
+        NATURAL JOIN symptom
         WHERE patient_id = $request->patient_id AND created_at > $request->start_date"));
 
 
@@ -81,7 +86,7 @@ class FollowUpFormController extends Controller
         }
         if ($request->filled('created_at')) {
             $FollowUpFormFieldsToUpdate->put('created_at = ?', $request->created_at);
-        }    
+        }
 
             $this->doUpdate('Person','person_id', $id, $FollowUpFormFieldsToUpdate);
             $fieldsUpdated = $FollowUpFormFieldsToUpdate->count();
