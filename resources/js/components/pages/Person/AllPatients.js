@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllPatients} from "../../../api";
 
-const PATIENT_COLUMNS = ['first_name','last_name', 'medicare','dob'];
+const PATIENT_COLUMNS = ['first_name','last_name', 'address', 'medicare','dob'];
 
 
 export default function () {
@@ -34,19 +34,21 @@ export default function () {
 function ListPatients() {
     const [patients, setPatients] = useState([]);
     const [loading, setLoading] = useState(false);
-    const history = useHistory()
+    const [address, setAddress] = useState('');
+    const history = useHistory();
+
+    async function loadPatients() {
+        setLoading(true);
+        try {
+            const {data} = await readAllPatients({address});
+            setPatients(data);
+        } catch (e) {
+            // skip
+        }
+        setLoading(false);
+    }
     // componentDidMount
     useEffect(() => {
-        async function loadPatients() {
-            setLoading(true);
-            try {
-                const {data} = await readAllPatients();
-                setPatients(data);
-            } catch (e) {
-                // skip
-            }
-            setLoading(false);
-        }
         loadPatients()
     }, []);
 
@@ -56,5 +58,23 @@ function ListPatients() {
     })), []);
 
     // row.original <--- {patient_id: 1, first_name: 'Bruce', last_name: 'Wayne'}
-    return loading ? '...' : <Table onClick={(patient) => history.push(`/patients/${patient.patient_id}`)} columns={memoizedColumns} data={patients}/>;
+    return loading ? '...' : <>
+        <div className="flex mb-2">
+            <div className="flex flex-1 flex-col">
+                <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    Filter by Address:
+                </label>
+                <div className="relative">
+                    <input type="text" className="mp-form-field" value={address} onChange={(e) => setAddress(e.target.value)}/>
+                </div>
+            </div>
+            <div className="flex flex-1 flex-col justify-left">
+                <label className="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    &nbsp;
+                </label>
+                <button className="ml-2 w-32 mp-button" onClick={loadPatients}>Search</button>
+            </div>
+        </div>
+        <Table onClick={(patient) => history.push(`/patients/${patient.patient_id}`)} columns={memoizedColumns} data={patients}/>
+    </>;
 }

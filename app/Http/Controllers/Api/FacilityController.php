@@ -19,7 +19,19 @@ class FacilityController extends Controller
      */
     public function readAll(Request $request)
     {
-        return response()->json(DB::select("SELECT `health_center_id`, `name`, `phone`, `address`, `type`,`method`,`drive_thru` FROM PublicHealthCenter"));
+        return response()->json(DB::select("
+            SELECT
+                   phc.`health_center_id`,
+                   phc.`name`,
+                   phc.`phone`,
+                   phc.`address`,
+                   phc.`type`,
+                   phc.`method`,
+                   COUNT(w.health_worker_id) as 'worker_amount',
+                   if (phc.`drive_thru`, 'Yes','No') as 'drive_thru'
+            FROM PublicHealthCenter phc
+            JOIN PublicHealthWorker w ON w.health_center_id = phc.health_center_id
+            GROUP BY phc.health_center_id"));
     }
 
     /**

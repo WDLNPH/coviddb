@@ -33,8 +33,8 @@ export function updateRegion(regionId, regions) {
 }
 
 ////////////////////// Patients
-export function readAllPatients() {
-    return axios.get('patients');
+export function readAllPatients(params) {
+    return axios.get('patients', {params});
 }
 
 export function readOnePatient(patientId) {

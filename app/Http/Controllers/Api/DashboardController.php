@@ -30,6 +30,12 @@ class DashboardController extends Controller
                     AND d.`result` = 1
                     AND d.`diagnostic_date` >= NOW() - INTERVAL 2 WEEK
                 ) as recently_tested_positive,
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                       'group_zone_name', ar.name,
+                       'affected', ar.affected
+                    )
+                ) as 'group_zones',
                 (SELECT JSON_ARRAYAGG(
                    JSON_OBJECT(
                        'date', f.created_at
@@ -76,6 +82,21 @@ class DashboardController extends Controller
                 MAX(d.diagnostic_date) as 'last_diagnostic_date'
                 FROM
                      Person p
+                LEFT JOIN (
+                    SELECT '{$id}' as
+                        person_id,
+                        gz.group_id,
+                        gz.name,
+                        group_concat(ps.person_id) as 'people',
+                        if(max(d.result), 'Yes', 'No') as 'affected'
+                    FROM GroupZone gz
+                    JOIN GroupZonePersonPivot gzp ON gz.group_id = gzp.group_id
+                    JOIN Person ps on ps.person_id = gzp.person_id
+                    LEFT JOIN Patient pt ON ps.person_id = pt.person_id
+                    LEFT JOIN Diagnostic d ON pt.patient_id = d.patient_id
+                    GROUP BY gz.group_id
+                    HAVING FIND_IN_SET('{$id}', people)
+                ) ar ON ar.person_id = p.person_id
                 LEFT JOIN
                     Administrator a ON a.person_id = p.person_id
                 LEFT JOIN
@@ -96,6 +117,7 @@ class DashboardController extends Controller
                 GROUP BY
                     p.person_id");
         if (count($result) > 0) {
+            $result[0]->group_zones = json_decode($result[0]->group_zones, true) ?? [];
             $result[0]->diagnostics_taken = json_decode($result[0]->diagnostics_taken, true) ?? [];
             $result[0]->diagnostics_handled = json_decode($result[0]->diagnostics_handled, true) ?? [];
             $result[0]->follow_up_forms = json_decode($result[0]->follow_up_forms, true) ?? [];

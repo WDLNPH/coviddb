@@ -6,7 +6,7 @@ import {useHistory, useRouteMatch} from "react-router";
 import Table from "../../Table";
 import {readAllFacilities} from "../../../api";
 
-const FACILITIES_COLUMNS = ['name', 'type', 'address', 'phone', 'method', 'drive_thru'];
+const FACILITIES_COLUMNS = ['name', 'type', 'worker_amount', 'address', 'phone', 'method', 'drive_thru'];
 
 
 export default function () {

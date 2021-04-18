@@ -33,7 +33,7 @@ export default function () {
                     </div>
                 </div>
 
-                {(user.role === 'patient' && stats?.recently_tested_positive && stats?.missing_forms?.length > 0) && (
+                {(user.role === 'patient' && stats?.recently_tested_positive && stats?.follow_up_forms?.length < 14) ? (
                     <div className="my-4 flex px-4 py-4 justify-between bg-white
                         dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer bg-yellow-300">
                         <div className="flex flex-1 justify-between">
@@ -51,7 +51,7 @@ export default function () {
                             </div>
                         </div>
                     </div>
-                )}
+                ) : null}
 
                 {/* If the last test came positive */}
                 {user.role === 'patient' && (
@@ -112,7 +112,7 @@ export default function () {
                         <div className="mx-1 flex justify-between">
                             <h1 className="text-2xl">Group Zone Situation</h1>
                         </div>
-                        <GroupZoneBox/>
+                        <GroupZoneBox groupZones={stats?.group_zones?.length > 0 ? [...new Set(stats.group_zones)] : []}/>
                     </div>
                 </div>
             </div>
@@ -120,11 +120,28 @@ export default function () {
     );
 }
 
-function GroupZoneBox() {
+function GroupZoneBox({groupZones}) {
     return  (
-        <>
-
-        </>
+        <div className="flex flex-1 flex-col">
+            <div className="my-2 border-b flex capitalize text-gray-600 dark:text-gray-400">
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                    Group Zone Name
+                </span>
+                <span className="flex flex-1 uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 dark:text-gray-200">
+                    Affected
+                </span>
+            </div>
+            {groupZones.map(groupZone => (
+                <div className="my-2 flex capitalize text-gray-600 dark:text-gray-400">
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {groupZone.group_zone_name}
+                    </span>
+                    <span className="flex flex-1 text-black dark:text-gray-200">
+                        {groupZone.affected}
+                    </span>
+                </div>
+            ))}
+        </div>
     );
 }
 function WorkerLastDiagnostics({diags}) {
@@ -192,25 +209,25 @@ function PersonInfoCard() {
                 <span className="mt-2">Phone</span>
             </div>
 
-            <div className="ml-12 flex flex-col capitalize text-gray-600 dark:text-gray-400">
-                                <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.first_name} {user.last_name}
-                                </span>
+            <div className="ml-12 flex-1 flex flex-col text-gray-600 dark:text-gray-400">
                 <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.medicare}
-                                </span>
+                    {user.first_name} {user.last_name}
+                </span>
                 <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.dob}
-                                </span>
+                    {user.medicare}
+                </span>
                 <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.address}, {user.city}, {user.province}, {user.postal_code}
-                                </span>
+                    {user.dob}
+                </span>
                 <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.email}
-                                </span>
+                    {user.address}, {user.postal_code}
+                </span>
                 <span className="mt-2 text-black dark:text-gray-200">
-                                    {user.phone}
-                                </span>
+                    {user.email}
+                </span>
+                <span className="mt-2 text-black dark:text-gray-200">
+                    {user.phone}
+                </span>
             </div>
         </div>
     );

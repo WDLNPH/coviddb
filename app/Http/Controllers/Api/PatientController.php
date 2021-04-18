@@ -18,9 +18,15 @@ class PatientController extends Controller
      */
     public function readAll(Request $request)
     {
+        $criteria = collect();
+        if ($request->filled('address')) {
+            $criteria->push("address LIKE '%{$request->address}%'");
+        }
+
+        $stringQuery = $criteria->count() > 0 ? 'WHERE ' . $criteria->join(',') : '';
         return response()->json(DB::select("SELECT p.patient_id, ps.*
             FROM Patient p
-            JOIN Person ps ON p.person_id = ps.person_id"));
+            JOIN Person ps ON p.person_id = ps.person_id $stringQuery"));
     }
 
     /**
