@@ -1,7 +1,6 @@
 # COVID DB Application
 COMP 353 Project
 
-Overleaf link for report https://www.overleaf.com/project/606b509ebe363f1f16d9370f
 ## Authors
 
 - [Antoine Assal (40022745)](https://github.com/AntoineAssal)
