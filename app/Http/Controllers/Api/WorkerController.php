@@ -72,6 +72,8 @@ class WorkerController extends Controller
         $result = DB::select("SELECT
                 w.health_worker_id,
                 pst.position,
+                pst.position_id,
+                w.health_center_id,
                 w.schedule,
                 ps.*,
                 c.city,
