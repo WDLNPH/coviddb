@@ -19,8 +19,6 @@ const FacilitySchema = Yup.object().shape({
     phone:  Yup.string()
         .required('Phone Required'),
     website:  Yup.string()
-        .min(2, 'website Too Short!')
-        .max(50, 'website Too Long!')
         .required('website Required'),
     address: Yup.string()
         .min(2, 'Address Too Short!')
