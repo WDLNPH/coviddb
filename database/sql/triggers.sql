@@ -37,7 +37,7 @@ CREATE TRIGGER diagTrigger
 AFTER INSERT ON Diagnostic
 FOR EACH ROW
 BEGIN
-INSERT INTO Messages(`message`, `region_id`, `msg_date`,`person_id`, `alert_id`, `diagnostic_id`)
+INSERT INTO Messages (`message`, `region_id`, `msg_date`,`person_id`, `alert_id`, `diagnostic_id`)
 SELECT
   CONCAT('Hello ', ps.first_name, '.\n\n',
       'This is regarding the diagnostic you have taken on ',
@@ -76,7 +76,7 @@ IF (NEW.result = 1) THEN
       NEW.diagnostic_id AS 'diagnostic_id'
     FROM
       Person ps
-      JOIN patient pc ON pc.person_id = ps.person_id AND NEW.patient_id = pc.patient_id;
+      JOIN Patient pc ON pc.person_id = ps.person_id AND NEW.patient_id = pc.patient_id;
 END IF;
 
 END; //

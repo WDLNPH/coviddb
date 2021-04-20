@@ -30,7 +30,7 @@ class FacilityController extends Controller
                    COUNT(w.health_worker_id) as 'worker_amount',
                    if (phc.`drive_thru`, 'Yes','No') as 'drive_thru'
             FROM PublicHealthCenter phc
-            JOIN PublicHealthWorker w ON w.health_center_id = phc.health_center_id
+            LEFT JOIN PublicHealthWorker w ON w.health_center_id = phc.health_center_id
             GROUP BY phc.health_center_id"));
     }
 
